@@ -1,0 +1,179 @@
+%! suppress = Unicode
+\documentclass[10pt]{article}
+
+% Math related packages.
+\usepackage{amsfonts, amsthm, amsmath, amssymb, amstext}
+\usepackage{mathtools}
+\usepackage{physics}
+\usepackage{cancel, textcomp}
+\usepackage[mathscr]{euscript}
+\usepackage[nointegrals]{wasysym}
+\usepackage[a4paper, left=1.5cm, right=1.7cm, top=2.3cm, bottom=2cm]{geometry}
+
+\usepackage{esvect}
+\usepackage{IEEEtrantools}
+
+% Font related packages.
+\usepackage[french]{babel}
+\usepackage[unicode]{hyperref}
+\usepackage[fontsize = 10pt]{scrextend}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[finemath]{kotex}
+\usepackage{dhucs-nanumfont}
+\usepackage{mathpazo}
+\usepackage{FiraMono}
+\usepackage{mathrsfs}
+
+% A more colorful world.
+\usepackage{xcolor}
+
+% Display Source Code
+\usepackage{listings}
+\lstset{
+    language=Python,
+    basicstyle=\small\ttfamily\mdseries,
+    numberstyle=\color{gray},
+    stringstyle=\color[HTML]{933797},
+    commentstyle=\color[HTML]{228B22},
+    emph={[2]from,with,import,as,pass,return,and,or,not},
+    emphstyle={[2]\color[HTML]{DD52F0}},
+    emph={[3]range,format,enumerate,print},
+    emphstyle={[3]\color[HTML]{D17032}},
+    emph={[4]if,elif,else,for,while,in,def,lambda,int,float,all,len},
+    emphstyle={[4]\color{blue}},
+    emph={[5]abs},
+    emphstyle={[5]\color{black}},
+    showstringspaces=false,
+    breaklines=true,
+    prebreak=\mbox{{\color{gray}\tiny$\searrow$}},
+    numbers=left,
+    xleftmargin=15pt
+}
+
+% OPTIONS
+\everymath{\displaystyle}
+
+% COMMANDS
+\newcommand{\f}[1]{\texttt{#1}}
+\newcommand{\chpt}[1]{\newpage\begin{flushright}\huge\textbf{#1}\end{flushright}}
+\newcommand{\urlsymbol}{\kern1pt\vbox to .5ex{}\raise.10ex\hbox{\pdfliteral{%
+    q .8 0 0 .8 0 0 cm
+    2.5 5 m 1 j 1 J .8 w
+    1 5 l 0 5 0 4 y 0 1 l 0 0 1 0 y 4 0 l 5 0 5 1 y 5 2.5 l S
+    3 3 m 6 6 l S 4 6 m 6 6 l 6 4 l S
+Q}}\kern5pt}
+
+\def\N{\mathbb N}
+\def\Z{\mathbb Z}
+\def\Q{\mathbb Q}
+\def\R{\mathbb R}
+\def\C{\mathbb C}
+\def\K{\mathbb K}
+
+\title{\huge\textbf{Analyse-Synthèse}}
+\author{Amar AHMANE\\ MP2I}
+\date{}
+
+\begin{document}
+    \maketitle
+    \subsubsection*{10}
+    \paragraph{Énoncé} Soit $f:[0,1]\to \R$ une fonction continue.
+    \begin{enumerate}
+        \item Montrer que $f$ s'écrit, de manière unique, sous la forme $f=a+g$, où \[a\in\R\quad\text{et}\quad\int_0^1g(t)\dd t=0\]
+        \item Montrer que $f$ s'écrit, de manière unique, sous la forme $f=P+g$, où \[P\text{ est affine}\quad\text{et}\quad\int_0^1g(t)\dd t=\int_0^1tg(t)\dd t=0\]
+    \end{enumerate}
+
+    \paragraph{Solution proposée} Soit $f:[0,1]\to \R$ une fonction continue.
+    \begin{enumerate}
+        \item On raisonne par analyse synthèse.
+
+
+        \paragraph{Analyse} Supposons qu'il existe un réel $a$ et une fonction $g$ vérifiant \[\int_0^1g(t)\dd t=0\] tels que $f=a+g$. 
+
+
+        La continuité de $f$ nous permet d'écrire que
+        \begin{align*}
+            \int_0^1f(t)\dd t &= \int_0^1(a+g(t))\dd t\\
+                              &= \int_0^1a\dd t+\int_0^1g(t)\dd t\quad \text{par linéarité de l'intégrale}\\
+                              &= \int_0^1a\dd t\\
+                              &= \Big[at\Big]_0^1\\
+                              &= a
+        \end{align*}
+        Ceci ayant été établi, on a également que $\forall x\in[0,1],\quad g(x)=f(x)-\int_0^1f(t)\dd t$.
+
+
+        \paragraph{Synthèse} Posons $a=\int_0^1f(t)\dd t$ et $g=f-a$, vérifions alors que le couple $(a,g)$ convient.
+
+
+        Soit $x\in[0, 1]$, \[g(x)+a=f(x)-a+a=f(x)\]
+        Ensuite
+        \begin{align*}
+            \int_0^1g(t)\dd t &= \int_0^1(f(t)-a)\dd t\\
+                              &= \int_0^1f(t)\dd t-\int_0^1a\dd t\\
+                              &= a - \Big[at\Big]_0^1\\
+                              &= 0
+        \end{align*}
+        Et, comme $f$ est à valeurs dans $\R$, on a que $a\in\R$. Ce qui conclut notre raisonnement.
+
+        \item On raisonne par analyse synthèse.
+
+        \paragraph{Analyse} Supposons qu'il existe une fonction $P$ affine et une fonction $g$ vérifiant \[\int_0^1g(t)\dd t = \int_0^1tg(t)\dd t\] telles que $f=P+g$. Il existe alors $(a,b)\in\R^2$ tel que $\forall x\in[0,1],\quad P(x)=ax+b$.
+
+
+        En ce cas, la continuité de $f$ et des fonctions affines (et donc de $P$) nous permet d'écrire que
+
+        \begin{align*}
+            \int_0^1f(t)\dd t &= \int_0^1(P(t)+g(t))\dd t\\
+                              &= \int_0^1P(t)\dd t +\int_0^1g(t)\dd t\quad \text{par linéarité de l'intégrale}\\
+                              &= \int_0^1(at+b)\dd t\\
+                              &=\Big[\frac{at^2}2+bt\Big]_0^1\\
+                              &=\frac a2+b
+        \end{align*}
+        Donc \[\frac a2+b=\int_0^1f(t)\dd t \tag{1}\]
+        Or, \[\forall x\in[0,1], xf(x)=xP(x)+xg(x)\]
+        Donc, comme le produit de fonctions continues est une fonction continue, on a que
+
+        \begin{align*}
+            \int_0^1tf(t)\dd t &= \int_0^1(tP(t)+tg(t))\dd t\\
+                              &= \int_0^1tP(t)\dd t +\int_0^1tg(t)\dd t\quad \text{par linéarité de l'intégrale}\\
+                              &= \int_0^1(at^2+bt)\dd t\\
+                              &=\Big[\frac{at^3}3+\frac{bt^2}2\Big]_0^1\\
+                              &=\frac a3+\frac b2
+        \end{align*}
+        Donc \[\frac a3+\frac b2=\int_0^1tf(t)\dd t\tag{2}\]
+        De (1) on a que \[b=\int_0^1f(t)\dd t - \frac a2\]
+        En remplaçant dans (2) on obtient \[\frac {2a}3=2\int_0^1tf(t)\dd t - \left(\int_0^1f(t)\dd t - \frac a2\right)\]
+        Donc 
+        \begin{alignat*}{3}
+            &\frac {2a}3-\frac a2 & &= 2\int_0^1tf(t)\dd t - \int_0^1f(t)\dd t\\
+            \Leftrightarrow & \qquad\ \ \frac a6  & &= \int_0^1f(t)(2t-1)\dd t\\
+            \Leftrightarrow &\qquad\ \ \ a  & &= 6\int_0^1f(t)(2t-1)\dd t
+        \end{alignat*}
+
+        De même, \[b=2\int_0^1f(t)(2-3t)\dd t\]
+
+        Et, enfin, \[g=f-P\]
+    \end{enumerate}
+    \paragraph{Synthèse} Posons $a=6\int_0^1f(t)(2t-1)\dd t$, $b=2\int_0^1f(t)(2-3t)\dd t$, $P:x\mapsto ax+b$ et $g=f-P$. On vérifie aisément que $f=P+g$; $P$ est affine et
+    \begin{align*}
+        \int_0^1g(t)\dd t &= \int_0^1(f(t)-P(t))\dd t\\
+                          &= \int_0^1f(t)\dd t - \int_0^1P(t)\dd t\\
+                          &= \int_0^1f(t)\dd t - \int_0^1(at+b)\dd t\\
+                          &= \int_0^1f(t)\dd t - \Big[\frac {at^2}2+bt\Big]_0^1\\
+                          &= \int_0^1f(t)\dd t - \left(\frac a2 +b\right)
+    \end{align*}
+    Or \[\frac a2 +b=3\int_0^1f(t)(2t-1)\dd+2\int_0^1f(t)(2-3t)\dd t=\int_0^1f(t)(6t-3+4-6t)\dd t=\int_0^1f(t)\dd t\]
+    Donc \[\int_0^1g(t)\dd t=0\]
+    De même 
+    \begin{align*}
+        \int_0^1tg(t)\dd t &= \int_0^1(tf(t)-tP(t))\dd t\\
+                          &= \int_0^1tf(t)\dd t - \int_0^1tP(t)\dd t\\
+                          &= \int_0^1tf(t)\dd t - \int_0^1(at^2+bt)\dd t\\
+                          &= \int_0^1tf(t)\dd t - \Big[\frac {at^3}3+\frac{bt^2}2\Big]_0^1\\
+                          &= \int_0^1tf(t)\dd t - \left(\frac a3 +\frac b2\right)
+    \end{align*}
+    Or \[\frac a3 +\frac b2=2\int_0^1f(t)(2t-1)\dd+\int_0^1f(t)(2-3t)\dd t=\int_0^1f(t)(4t-2+2-3t)\dd t=\int_0^1tf(t)\dd t\]
+    Donc \[\int_0^1tg(t)\dd t=0\]
+    Le couple $(P,g)$ convient. Ceci conclut notre raisonnement.
+\end{document}

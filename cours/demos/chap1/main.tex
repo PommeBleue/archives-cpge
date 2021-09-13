@@ -1,0 +1,149 @@
+%! suppress = Unicode
+\documentclass[10pt]{article}
+
+% Math related packages.
+\usepackage{amsfonts, amsthm, amsmath, amssymb, amstext}
+\usepackage{mathtools}
+\usepackage{physics}
+\usepackage{cancel, textcomp}
+\usepackage[mathscr]{euscript}
+\usepackage[nointegrals]{wasysym}
+\usepackage[a4paper, left=1.5cm, right=1.7cm, top=2.3cm, bottom=2cm]{geometry}
+
+\usepackage{esvect}
+\usepackage{IEEEtrantools}
+
+% Font related packages.
+\usepackage[french]{babel}
+\usepackage[unicode]{hyperref}
+\usepackage[fontsize = 10pt]{scrextend}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[finemath]{kotex}
+\usepackage{dhucs-nanumfont}
+\usepackage{mathpazo}
+\usepackage{FiraMono}
+\usepackage{mathrsfs}
+
+% A more colorful world.
+\usepackage{xcolor}
+
+% Display Source Code
+\usepackage{listings}
+\lstset{
+    language=Python,
+    basicstyle=\small\ttfamily\mdseries,
+    numberstyle=\color{gray},
+    stringstyle=\color[HTML]{933797},
+    commentstyle=\color[HTML]{228B22},
+    emph={[2]from,with,import,as,pass,return,and,or,not},
+    emphstyle={[2]\color[HTML]{DD52F0}},
+    emph={[3]range,format,enumerate,print},
+    emphstyle={[3]\color[HTML]{D17032}},
+    emph={[4]if,elif,else,for,while,in,def,lambda,int,float,all,len},
+    emphstyle={[4]\color{blue}},
+    emph={[5]abs},
+    emphstyle={[5]\color{black}},
+    showstringspaces=false,
+    breaklines=true,
+    prebreak=\mbox{{\color{gray}\tiny$\searrow$}},
+    numbers=left,
+    xleftmargin=15pt
+}
+
+% OPTIONS
+\everymath{\displaystyle}
+
+% COMMANDS
+\newcommand{\f}[1]{\texttt{#1}}
+\newcommand{\chpt}[1]{\newpage\begin{flushright}\huge\textbf{#1}\end{flushright}}
+\newcommand{\urlsymbol}{\kern1pt\vbox to .5ex{}\raise.10ex\hbox{\pdfliteral{%
+    q .8 0 0 .8 0 0 cm
+    2.5 5 m 1 j 1 J .8 w
+    1 5 l 0 5 0 4 y 0 1 l 0 0 1 0 y 4 0 l 5 0 5 1 y 5 2.5 l S
+    3 3 m 6 6 l S 4 6 m 6 6 l 6 4 l S
+Q}}\kern5pt}
+
+\def\N{\mathbb N}
+\def\Z{\mathbb Z}
+\def\Q{\mathbb Q}
+\def\R{\mathbb R}
+\def\C{\mathbb C}
+\def\K{\mathbb K}
+
+\title{\huge\textbf{Exponentielle et fonctions associées.\\ Quelques preuves du cours.}}
+\date{}
+
+\begin{document}
+    \maketitle
+    \subsubsection*{Théorème 4}
+    \begin{equation}
+        \boxed{\forall x\in \mathbb{R},\ \forall y\in\mathbb{R},\quad  \exp(x+y)=\exp(x)\exp(y)}
+    \end{equation}
+    Il suffit de considérer la fonction $f:x\mapsto \frac{\exp(x+a)}{\exp(a)}$.\\
+    Reste à prouver ce qui suit :
+    \begin{itemize}
+        \item \(\forall x\in\mathbb{R},\quad \exp(-x)=\frac1{\exp(x)}\).
+        \item \(\forall x\in \mathbb{R},\ \forall y\in\mathbb{R},\quad \exp(x-y)=\frac{\exp(x)}{\exp(y)}\).
+        \item \(\forall x\in\mathbb{R},\ \forall p\in\mathbb{Z},\quad \exp(px)=\exp(x)^p\).
+    \end{itemize}
+    Les preuves dans l'ordre :
+    \begin{itemize}
+        \item Soit $x\in\mathbb{R}$,
+        \begin{align*}
+            1=\exp(0)&=\exp(x-x)\\
+                     &=\exp(x)\exp(-x)
+        \end{align*}
+        D'où il vient que $\exp(x)=\frac1{\exp(x)}$.\\
+        Ceci étant vrai pour tout $x\in\mathbb{R}$, on a prouvé la propriété voulue.
+        \item Soient $x,y\in\mathbb{R}$,
+        \begin{align*}
+            \exp(x-y)&=\exp(x+(-y))\\
+                     &=\exp(x)\exp(-y)\\
+                     &=\frac{\exp(x)}{\exp(y)}
+        \end{align*}
+        Ceci étant vrai pour tout $x,y\in\mathbb{R}$, on a prouvé la propriété voulue.
+        \item Soit $x\in\mathbb{R},\ n\in\mathbb{N}$,\
+        \begin{align*}
+            \exp(nx)&=\exp\left(\sum_{k=1}^nx\right)\\
+                    &=^*\prod_{k=1}^n\exp(x)\\
+                    &=\exp(x)^n
+        \end{align*}
+        On justifie * par la propriété de morphisme (1) prouvée plus haut.
+        Ainsi, ceci étant vrai pour tout $x\in\mathbb{R}$ et pour tout $n\in\mathbb{N}$, on a montré ce qui suit : 
+        \begin{equation*}
+            \forall x\in\mathbb{R},\ \forall n\in\mathbb{N},\quad \exp(nx)=\exp(x)^n
+        \end{equation*}
+        Soit à présent $x\in\mathbb{R}$ et $n\in\mathbb{Z}\backslash\mathbb{N}$.
+        \begin{align*}
+            \exp(nx)&=\exp(-(-n)x)\\
+                    &=\frac1{\exp((-n)x)}\\
+                    &=\frac1{\exp(x)^{-n}}\\
+                    &=\exp(x)^n
+        \end{align*}
+        Ceci montre la même propriété pour les entiers négatifs.
+    \end{itemize}
+
+    \subsubsection*{Proposition 7}
+    On sait que 
+    \begin{equation}
+        \forall x\in\R,\quad \exp(x)\geq x + 1
+    \end{equation}
+    Montrons que 
+    \begin{equation}
+        \forall x\in\R^*_+,\quad \ln(x)\leq x - 1
+    \end{equation}
+    Soit $x\in\R^*_+$, en ce cas $\ln(x)\in\R$ et 
+    \begin{alignat*}{3}
+        &\exp(\ln(x)) &&\geq \ln(x) + 1\\
+        \Leftrightarrow& \quad x-1 &&\geq \ln(x)
+    \end{alignat*}
+    Ceci étant vrai pour tout $x\in\R^*_+$, on a montré (3).
+
+    \subsubsection*{Proposition 8}
+    On montre que 
+    \begin{equation}
+        \forall x,y\in\R^*_+,\quad \ln(xy)=\ln(x)+\ln(y)
+    \end{equation}
+    On tire profit de la propriété de morphisme de $\exp$.
+\end{document}

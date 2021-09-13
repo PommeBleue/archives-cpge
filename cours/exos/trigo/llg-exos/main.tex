@@ -1,0 +1,137 @@
+%! suppress = Unicode
+\documentclass[14pt]{article}
+
+% Math related packages.
+\usepackage{amsfonts, amsthm, amsmath, amssymb, amstext}
+\usepackage{mathtools}
+\usepackage{physics}
+\usepackage{cancel, textcomp}
+\usepackage[mathscr]{euscript}
+\usepackage[nointegrals]{wasysym}
+\usepackage[a4paper, left=1.5cm, right=1.7cm, top=2.3cm, bottom=2cm]{geometry}
+
+\usepackage{esvect}
+\usepackage{IEEEtrantools}
+
+% Font related packages.
+\usepackage[french]{babel}
+\usepackage[unicode]{hyperref}
+\usepackage[fontsize = 10pt]{scrextend}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[finemath]{kotex}
+\usepackage{dhucs-nanumfont}
+\usepackage{mathpazo}
+\usepackage{FiraMono}
+\usepackage{mathrsfs}
+
+% A more colorful world.
+\usepackage{xcolor}
+
+% Display Source Code
+\usepackage{listings}
+\lstset{
+    language=Python,
+    basicstyle=\small\ttfamily\mdseries,
+    numberstyle=\color{gray},
+    stringstyle=\color[HTML]{933797},
+    commentstyle=\color[HTML]{228B22},
+    emph={[2]from,with,import,as,pass,return,and,or,not},
+    emphstyle={[2]\color[HTML]{DD52F0}},
+    emph={[3]range,format,enumerate,print},
+    emphstyle={[3]\color[HTML]{D17032}},
+    emph={[4]if,elif,else,for,while,in,def,lambda,int,float,all,len},
+    emphstyle={[4]\color{blue}},
+    emph={[5]abs},
+    emphstyle={[5]\color{black}},
+    showstringspaces=false,
+    breaklines=true,
+    prebreak=\mbox{{\color{gray}\tiny$\searrow$}},
+    numbers=left,
+    xleftmargin=15pt
+}
+
+% OPTIONS
+\everymath{\displaystyle}
+
+% COMMANDS
+\newcommand{\f}[1]{\texttt{#1}}
+\newcommand{\chpt}[1]{\newpage\begin{flushright}\huge\textbf{#1}\end{flushright}}
+\newcommand{\urlsymbol}{\kern1pt\vbox to .5ex{}\raise.10ex\hbox{\pdfliteral{%
+    q .8 0 0 .8 0 0 cm
+    2.5 5 m 1 j 1 J .8 w
+    1 5 l 0 5 0 4 y 0 1 l 0 0 1 0 y 4 0 l 5 0 5 1 y 5 2.5 l S
+    3 3 m 6 6 l S 4 6 m 6 6 l 6 4 l S
+Q}}\kern5pt}
+
+\def\N{\mathbb N}
+\def\Z{\mathbb Z}
+\def\Q{\mathbb Q}
+\def\R{\mathbb R}
+\def\C{\mathbb C}
+\def\K{\mathbb K}
+
+\title{\huge\textbf{Chapitre 2}}
+\author{Amar AHMANE\\ MP2I}
+\date{}
+
+\begin{document}
+    \maketitle
+    \subsubsection*{Exercice 10}
+    \paragraph{Énoncé} 
+    \begin{enumerate}
+        \item Exprimer $\tan(a+b+c)$ en fonction de $\tan(a),\ \tan(b)$ et $\tan(c)$.
+        \item Généraliser à $\tan\left(\sum_{k=1}^na_k\right)$.
+    \end{enumerate}
+    
+
+    \paragraph{Solution proposée} 
+    \begin{enumerate}
+        \item Soit $(a,b,c)\in\R^3$ tel que $\tan(a),\ \tan(b)$ et $\tan(c)$ soient définis.\\
+
+        \begin{align*}
+            \tan(a+b+c) &=\frac{\tan(a+b)+\tan(c)}{1-\tan(a+b)\tan(c)}\\
+                        &=\frac{\frac{\tan(a)+\tan(b)}{1-\tan(a)\tan(b)}+\tan(c)}{1-\frac{\tan(a)+\tan(b)}{1-\tan(a)\tan(b)}\tan(c)}\\
+                        &=\frac{\tan(a)+\tan(b)+\tan(c)(1-\tan(a)\tan(b))}{1-\tan(a)\tan(b)-\tan(c)(\tan(a)+\tan(b))}\\
+                        &=\frac{\tan(a)+\tan(b)+\tan(c)-\tan(a)\tan(b)\tan(c)}{1-\tan(a)\tan(b)-\tan(a)\tan(c)-\tan(c)\tan(b)}
+        \end{align*}
+
+        \item Soit $(a,b,c,d)\in\R^4$ tel que $\tan(a),\ \tan(b),\ \tan(c)$ et $\tan(d)$ soient définis.\\
+
+        \begin{align*}
+            \tan\left(\sum_{k=1}^4a_k\right) &=\frac{\tan\left(\sum_{k=1}^3a_k\right)+\tan(a_4)}{1-\tan\left(\sum_{k=1}^3a_k\right)\tan(a_4)}\\
+                          &=\frac{
+                                \frac{
+                                    \sum_{k=1}^3\tan(a_k)-\prod_{k=1}^3\tan(a_k)
+                                    }
+                                    {
+                                    1-\sum_{k=1}^3\prod_{i=1;\ i\neq k}^3a_k
+                                    }
+                                    +\tan(a_4)
+                                }
+                                {
+                                1-\left(
+                                    \frac
+                                    {
+                                    \sum_{k=1}^3\tan(a_k)-\prod_{k=1}^3\tan(a_k)
+                                    }
+                                    {
+                                    1-\sum_{k=1}^3\prod_{i=1;\ i\neq k}^3a_k
+                                    }\right)\tan(a_4)
+                                }\\
+                          &=\frac{
+                            \sum_{k=1}^3\tan(a_k)-\prod_{k=1}^3\tan(a_k)+\tan(a_4)\left(1-\sum_{k=1}^3\prod_{i=1;\ i\neq k}^3a_k\right)
+                          }
+                          {
+                            1-\sum_{k=1}^3\prod_{i=1;\ i\neq k}^3a_k-\left(\sum_{k=1}^3\tan(a_k)-\prod_{k=1}^3\tan(a_k)\right)\tan(a_4)
+                          }\\
+                          &=\frac{
+                            \sum_{k=1}^4\tan(a_k)-\prod_{k=1}^3\tan(a_k)-\sum_{k=1}^3\prod_{i=1;\ i\neq k}^4a_k
+                          }
+                          {
+                            1-\sum_{k=1}^3\prod_{i=1;\ i\neq k}^3a_k-\tan(a_4)\sum_{k=1}^3\tan(a_k)+\prod_{k=1}^4\tan(a_k)
+                          }
+        \end{align*}
+    \end{enumerate}
+
+\end{document}
