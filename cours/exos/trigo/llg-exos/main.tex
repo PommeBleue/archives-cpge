@@ -55,6 +55,7 @@
 \everymath{\displaystyle}
 
 % COMMANDS
+\newcommand{\pr}[1]{\left(#1\right)}
 \newcommand{\f}[1]{\texttt{#1}}
 \newcommand{\chpt}[1]{\newpage\begin{flushright}\huge\textbf{#1}\end{flushright}}
 \newcommand{\urlsymbol}{\kern1pt\vbox to .5ex{}\raise.10ex\hbox{\pdfliteral{%
@@ -71,6 +72,9 @@ Q}}\kern5pt}
 \def\C{\mathbb C}
 \def\K{\mathbb K}
 
+\def\ssi{\Leftrightarrow}
+\def\Ssi{\Longleftrightarrow}
+
 \def\lb{\lbrace}
 \def\rb{\rbrace}
 
@@ -80,6 +84,47 @@ Q}}\kern5pt}
 
 \begin{document}
     \maketitle
+    \subsubsection*{Exercice 1}
+    \paragraph{Énoncé} Calculer $\sin\pr{\frac{45\pi}{12}}$ et $\cos\pr{\frac{45\pi}{12}}$
+    \paragraph{Solution proposée} On a
+    \begin{align*}
+        \sin\pr{\frac{45\pi}{12}} &= \sin\pr{\frac{3^2\times 5\times\pi}{2^2\times 3}}\\
+                                  &= \sin\pr{\frac{15\pi}{4}}\\
+                                  &= \sin\pr{4\pi-\frac{\pi}{4}}\\
+                                  &= -\sin\pr{\frac\pi4}\\
+                                  &= -\frac{\sqrt{2}}2
+    \end{align*}
+    et
+    \begin{align*}
+        \cos\pr{\frac{45\pi}{12}} &= \cos\pr{4\pi-\frac{\pi}{4}}\\
+                                  &= \cos\pr{\frac\pi4}\\
+                                  &= \frac{\sqrt{2}}2
+    \end{align*}
+
+    \subsubsection*{Exercice 2}
+    \paragraph{Énoncé} Résoudre dans $\R$ l'équation $\sin\pr{x+\frac{3\pi}4}=\cos\pr{2x-\frac\pi3}$.
+    \paragraph{Solution proposée} Soit $x\in\R$, \[\sin\pr{x+\frac{3\pi}4}=\cos\pr{2x-\frac\pi3}\ssi \sin\pr{x+\frac{3\pi}4}=\sin\pr{2x-\frac\pi3+\frac\pi2}\]
+    Donc
+    \begin{align*}
+        &\begin{cases}x+\frac{3\pi}4\equiv 2x+\frac\pi6[2\pi]\\ \text{ou}\\x+\frac{3\pi}4\equiv\pi- 2x-\frac\pi6[2\pi] \end{cases}\\
+        \Ssi&\begin{cases}-x\equiv\frac{2\pi}{12}-\frac{9\pi}{12}[2\pi]\\ \text{ou}\\3x\equiv\frac{12\pi}12-\frac{9\pi}{12}-\frac{2\pi}{12}[2\pi] \end{cases}\\
+    \end{align*}
+    \newpage
+    \begin{align*}
+        \Ssi&\begin{cases}x\equiv\frac{7\pi}{12}[2\pi]\\ \text{ou}\\x\equiv\frac\pi{36}\left[\frac{2\pi}3\right] \end{cases}\\
+    \end{align*}
+
+    \subsubsection*{Exercice 3}
+    \paragraph{Énoncé} Résoudre dans $\R$ l'équation $\sin\pr{5x+\frac\pi2}=\sin(2x)$.
+    \paragraph{Solution proposée} Soit $x\in\R$,
+    Donc
+    \begin{align*}
+        &\sin\pr{5x+\frac\pi2}=\sin(2x)\\
+        \Ssi&\begin{cases}5x+\frac\pi2\equiv 2x[2\pi]\\ \text{ou}\\5x+\frac\pi2\equiv\pi- 2x[2\pi] \end{cases}\\
+        \Ssi&\begin{cases}3x\equiv-\frac\pi2[2\pi]\\ \text{ou}\\7x\equiv\pi-\frac\pi2[2\pi] \end{cases}\\
+        \Ssi&\begin{cases}x\equiv-\frac\pi6\left[\frac{2\pi}3\right]\\\text{ou}\\x\equiv\frac\pi{14}\left[\frac{2\pi}7\right] \end{cases}
+    \end{align*}
+
     \subsubsection*{Exercice 10}
     \paragraph{Énoncé} 
     \begin{enumerate}
@@ -123,16 +168,16 @@ Q}}\kern5pt}
                                     }\right)\tan(a_4)
                                 }\\
                           &=\frac{
-                            \sum_{k=1}^3\tan(a_k)-\prod_{k=1}^3\tan(a_k)+\tan(a_4)\left(1-\sum_{k=1}^3\prod_{i=1;\ i\neq k}^3a_k\right)
+                            \sum_{k=1}^3\tan(a_k)-\prod_{k=1}^3\tan(a_k)+\tan(a_4)\left(1-\sum_{k=1}^3\prod_{i=1;\ i\neq k}^3\tan(a_k)\right)
                           }
                           {
-                            1-\sum_{k=1}^3\prod_{i=1;\ i\neq k}^3a_k-\left(\sum_{k=1}^3\tan(a_k)-\prod_{k=1}^3\tan(a_k)\right)\tan(a_4)
+                            1-\sum_{k=1}^3\prod_{i=1;\ i\neq k}^3\tan(a_k)-\left(\sum_{k=1}^3\tan(a_k)-\prod_{k=1}^3\tan(a_k)\right)\tan(a_4)
                           }\\
                           &=\frac{
-                            \sum_{k=1}^4\tan(a_k)-\prod_{k=1}^3\tan(a_k)-\sum_{k=1}^3\prod_{i=1;\ i\neq k}^4a_k
+                            \sum_{k=1}^4\tan(a_k)-\prod_{k=1}^3\tan(a_k)-\sum_{k=1}^3\prod_{i=1;\ i\neq k}^4\tan(a_k)
                           }
                           {
-                            1-\sum_{k=1}^3\prod_{i=1;\ i\neq k}^3a_k-\tan(a_4)\sum_{k=1}^3\tan(a_k)+\prod_{k=1}^4\tan(a_k)
+                            1-\sum_{k=1}^3\prod_{i=1;\ i\neq k}^3\tan(a_k)-\tan(a_4)\sum_{k=1}^3\tan(a_k)+\prod_{k=1}^4\tan(a_k)
                           }
         \end{align*}
     \end{enumerate}
