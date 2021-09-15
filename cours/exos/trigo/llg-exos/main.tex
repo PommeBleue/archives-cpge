@@ -1,5 +1,5 @@
 %! suppress = Unicode
-\documentclass[14pt]{article}
+\documentclass[10pt]{article}
 
 % Math related packages.
 \usepackage{amsfonts, amsthm, amsmath, amssymb, amstext}
@@ -52,9 +52,10 @@
 }
 
 % OPTIONS
-\everymath{\displaystyle}
+\everymath\expandafter{\the\everymath\displaystyle}
 
 % COMMANDS
+\newcommand{\floor}[1]{\lfloor#1\rfloor}
 \newcommand{\pr}[1]{\left(#1\right)}
 \newcommand{\f}[1]{\texttt{#1}}
 \newcommand{\chpt}[1]{\newpage\begin{flushright}\huge\textbf{#1}\end{flushright}}
@@ -174,12 +175,13 @@ Q}}\kern5pt}
                             1-\sum_{k=1}^3\prod_{i=1;\ i\neq k}^3\tan(a_k)-\left(\sum_{k=1}^3\tan(a_k)-\prod_{k=1}^3\tan(a_k)\right)\tan(a_4)
                           }\\
                           &=\frac{
-                            \sum_{k=1}^4\tan(a_k)-\prod_{k=1}^3\tan(a_k)-\sum_{k=1}^3\prod_{i=1;\ i\neq k}^4\tan(a_k)
+                            \sum_{k=1}^4\tan(a_k)-\sum_{k=1}^4\prod_{i=1;\ i\neq k}^4\tan(a_k)
                           }
                           {
                             1-\sum_{k=1}^3\prod_{i=1;\ i\neq k}^3\tan(a_k)-\tan(a_4)\sum_{k=1}^3\tan(a_k)+\prod_{k=1}^4\tan(a_k)
                           }
         \end{align*}
+        Pour tout $n\in\N$, posons $P(n)$ la propriété que \[\forall (a_1,a_2,\dots,a_n)\in\R,\quad \tan\pr{\sum_{k=1}^na_k}=\frac{\displaystyle\sum_{k=0}^{\floor{\frac n2}}(-1)^k\displaystyle\sum_{\begin{smallmatrix}A\in\mathcal{P}(\lb1,2,\dots,n\rb)\\ |A|=2k+1\end{smallmatrix}}\displaystyle\prod_{i\in A}\tan(a_i)}{\displaystyle\sum_{k=0}^{\floor{\frac n2}}(-1)^k\displaystyle\sum_{\begin{smallmatrix}A\in\mathcal{P}(\lb1,2,\dots,n\rb)\\ |A|=2k\end{smallmatrix}}\prod_{i\in A}\tan(a_i)}\]
     \end{enumerate}
 
 \end{document}
