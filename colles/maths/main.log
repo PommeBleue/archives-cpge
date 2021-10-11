@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2021.5.1)  7 OCT 2021 20:09
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2021.5.1)  11 OCT 2021 19:07
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -837,25 +837,25 @@ LaTeX Font Info:    Trying to load font information for U+rsfs on input line 94
 File: ursfs.fd 1998/03/24 rsfs font definition file (jk)
 )
 LaTeX Font Info:    Font shape `U/msa/m/n' will be
-(Font)              scaled to size 10.42007pt on input line 97.
+(Font)              scaled to size 10.42007pt on input line 99.
 LaTeX Font Info:    Font shape `U/msa/m/n' will be
-(Font)              scaled to size 7.91925pt on input line 97.
+(Font)              scaled to size 7.91925pt on input line 99.
 LaTeX Font Info:    Font shape `U/msa/m/n' will be
-(Font)              scaled to size 6.25204pt on input line 97.
+(Font)              scaled to size 6.25204pt on input line 99.
 LaTeX Font Info:    Font shape `U/msb/m/n' will be
-(Font)              scaled to size 10.42007pt on input line 97.
+(Font)              scaled to size 10.42007pt on input line 99.
 LaTeX Font Info:    Font shape `U/msb/m/n' will be
-(Font)              scaled to size 7.91925pt on input line 97.
+(Font)              scaled to size 7.91925pt on input line 99.
 LaTeX Font Info:    Font shape `U/msb/m/n' will be
-(Font)              scaled to size 6.25204pt on input line 97.
+(Font)              scaled to size 6.25204pt on input line 99.
 LaTeX Font Info:    Trying to load font information for U+fplmbb on input line 
-97.
+99.
 
 (/usr/local/texlive/2021/texmf-dist/tex/latex/psnfss/ufplmbb.fd
 File: ufplmbb.fd 2003/10/30 Fontinst v1.914 font definitions for U/fplmbb.
 )
 
-LaTeX Warning: Command \textbackslash invalid in math mode on input line 104.
+LaTeX Warning: Command \textbackslash invalid in math mode on input line 106.
 
 [1
 
@@ -865,9 +865,9 @@ Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
  ) 
 Here is how much of TeX's memory you used:
- 16773 strings out of 479002
- 248568 string characters out of 5858341
- 802187 words of memory out of 5000000
+ 16774 strings out of 479002
+ 248579 string characters out of 5858341
+ 803187 words of memory out of 5000000
  33882 multiletter control sequences out of 15000+600000
  437960 words of font info for 121 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -880,10 +880,10 @@ ive/2021/texmf-dist/fonts/type1/public/mathpazo/fplmbb.pfb></usr/local/texlive/
 texmf-dist/fonts/type1/urw/palatino/uplb8a.pfb></usr/local/texlive/2021/texmf-d
 ist/fonts/type1/urw/palatino/uplr8a.pfb></usr/local/texlive/2021/texmf-dist/fon
 ts/type1/urw/palatino/uplri8a.pfb>
-Output written on main.pdf (1 page, 70340 bytes).
+Output written on main.pdf (1 page, 71019 bytes).
 PDF statistics:
- 59 PDF objects out of 1000 (max. 8388607)
- 48 compressed objects within 1 object stream
- 16 named destinations out of 1000 (max. 500000)
+ 60 PDF objects out of 1000 (max. 8388607)
+ 49 compressed objects within 1 object stream
+ 17 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
