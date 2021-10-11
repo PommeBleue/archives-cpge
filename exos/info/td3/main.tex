@@ -1,0 +1,169 @@
+%! suppress = Unicode
+\documentclass[10pt]{article}
+
+% Math related packages.
+\usepackage{amsfonts, amsthm, amsmath, amssymb, amstext}
+\usepackage{mathtools}
+\usepackage{physics}
+\usepackage{cancel, textcomp}
+\usepackage[mathscr]{euscript}
+\usepackage[nointegrals]{wasysym}
+\usepackage[a4paper, left=2cm, right=2cm, top=2.3cm, bottom=2cm]{geometry}
+
+\usepackage{esvect}
+\usepackage{IEEEtrantools}
+
+% Font related packages.
+\usepackage[french]{babel}
+\usepackage[unicode]{hyperref}
+\usepackage[fontsize = 10pt]{scrextend}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[finemath]{kotex}
+\usepackage{dhucs-nanumfont}
+\usepackage{mathpazo}
+\usepackage{FiraMono}
+\usepackage{mathrsfs}
+
+% Other
+\usepackage{tabularx}
+
+% A more colorful world.
+\usepackage{xcolor}
+
+% Display Source Code
+\usepackage{listings}
+\lstset{
+    language=C,
+    basicstyle=\small\ttfamily\mdseries,
+    numberstyle=\color{gray},
+    stringstyle=\color[HTML]{933797},
+    commentstyle=\color[HTML]{228B22},
+    emph={[2]from,with,import,as,pass,return,and,or,not},
+    emphstyle={[2]\color[HTML]{DD52F0}},
+    emph={[3]range,format,enumerate,print},
+    emphstyle={[3]\color[HTML]{D17032}},
+    emph={[4]if,elif,else,for,while,in,def,lambda,int,float,all,len},
+    emphstyle={[4]\color{blue}},
+    emph={[5]abs},
+    emphstyle={[5]\color{black}},
+    showstringspaces=false,
+    breaklines=true,
+    prebreak=\mbox{{\color{gray}\tiny$\searrow$}},
+    numbers=left,
+    xleftmargin=15pt
+}
+
+% OPTIONS
+\everymath\expandafter{\the\everymath\displaystyle}
+
+% COMMANDS
+\newcommand{\f}[1]{\texttt{#1}}
+\newcommand{\chpt}[1]{\newpage\begin{flushright}\huge\textbf{#1}\end{flushright}}
+\newcommand{\urlsymbol}{\kern1pt\vbox to .5ex{}\raise.10ex\hbox{\pdfliteral{%
+    q .8 0 0 .8 0 0 cm
+    2.5 5 m 1 j 1 J .8 w
+    1 5 l 0 5 0 4 y 0 1 l 0 0 1 0 y 4 0 l 5 0 5 1 y 5 2.5 l S
+    3 3 m 6 6 l S 4 6 m 6 6 l 6 4 l S
+Q}}\kern5pt}
+
+
+\def\N{\mathbb N}
+\def\Z{\mathbb Z}
+\def\Q{\mathbb Q}
+\def\R{\mathbb R}
+\def\Rpe{\mathbb R_+^*}
+\def\C{\mathbb C}
+\def\K{\mathbb K}
+
+\def\ssi{\Leftrightarrow}
+\def\Ssi{\Leftrightarrow}
+\def\implique{\Longrightarrow}
+
+\def\O{\mathcal{O}}
+
+\newcommand{\q}[1]{\paragraph{Question #1}}
+
+\title{\Huge\textbf{TD3 : Ordres de grandeur et complexités simples.}}
+\author{Amar AHMANE.\\ MP2I}
+\date{}
+
+\begin{document}
+
+    % Defining column types
+    \newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+
+    \maketitle
+    \subsubsection*{1 – Classement}
+    Étant donné les conditions données sur les classes, on peut en former 7 avc les fonctions données. Tout est résumé dans ce joli petit tableau :\\
+    \begin{center}
+        \begin{tabular}{| C{2cm} | C{1.5cm} | C{2.5cm} | C{2cm} | C{2.5cm} | C{2cm} | C{2cm} |}
+            \hline
+            \(\Theta_1\) & \(\Theta_2\) & \(\Theta_3\) & \(\Theta_4\) & \(\Theta_5\) & \(\Theta_6\) & \(\Theta_7\)\\
+            \hline
+            \(n\mapsto \log n\) & \(n\mapsto \sqrt{n} \) & \(n\mapsto n^2+\sqrt{n}\) & \(n\mapsto n^2\sqrt{n}\) & \(n\mapsto 2n^2+n^3\) & \(n\mapsto 2^n \) & \(n\mapsto 3^n\)\\
+            \(n\mapsto \log n^2\) & – & \(n\mapsto 3n^2-5n\) & – & – & \(n\mapsto 2^{n+2} \) & –\\
+            \(n\mapsto \log 2n\) & – & – & –  & – & – & –\\
+            \hline
+        \end{tabular} 
+    \end{center}  
+
+    \subsubsection*{2 – Min et Max}
+    Soient $f,g\in(\R_+^*)^\N$.
+    \paragraph{Question 1} Montrons que $f=\Theta(g)\ssi g=\Theta(f)$.\\
+
+
+    $\boxed{\Rightarrow}$\quad Supposons que $f=\Theta(g)$. Il existe alors $c,d\in\R_+^*$ et $n_0\in\N$ tels que \[\forall n\in\N,\quad n\geq n_0\implique dg(n) \leq f(n)\leq cg(n)\]
+    Soit $n\in\N$. Supposons que $n\geq n_0$. D'une part \[f(n)\leq cg(n) \ssi \frac1c f(n) \leq g(n)\]
+    D'autre part \[dg(n)\leq f(n) \ssi g(n)\leq\frac1d f(n) \]
+    Finalement, \[\frac1c f(n)\leq g(n)\leq\frac1d f(n)\]
+    En posant $(c^\prime, d^\prime)=\left(\frac1d, \frac1c \right)$, on a \[\boxed{d^\prime f(n)\leq g(n)\leq c^\prime f(n)}\]
+
+    $\boxed{\Leftarrow}$\quad Le problème est symétrique.\\
+
+
+    \paragraph{Question 2} Montrons que $\max(f,g)=\Theta(f+g)$.\\
+    Soit $n\in\N$. On a, puisque on a toujours soit $\max(f,g)=f$ soit $\max(f,g)=g$, et comme $f$ et $g$ sont à valeurs dans $\Rpe$ : \[\max(f,g)(n)\leq f(n)+g(n)\]
+    Mais aussi, comme \[f(n)\leq \max(f,g)(n)\quad \text{et} g(n)\leq \max(f,g)(n)\]
+    Il en découle que \[f(n)+g(n)\leq 2\max(f,g)\ssi \frac{f(n)+g(n)}2\leq \max(f,g)(n)\]
+    Donc, finalement, \[\frac{f(n)+g(n)}2\leq\max(f,g)(n) \leq f(n)+g(n)\]
+
+    \paragraph{Question 3} Tout ce que l'on peut dire de $\min(f, g)$ est que \[\min(f,g)=\O(f)\ \text{(ou }\O(g)\text{ ou }\O(f+g)\text{ )}\]
+
+    \subsubsection*{3 – Boucles}
+    \paragraph{Question 4} 
+    \begin{lstlisting}
+    for(int i = 0; i < n; i++){
+        for(int j = 0; j < n; j++){
+            for(int k = 0; k < n; k++){
+                // cout constant
+            }
+        }
+    }
+    \end{lstlisting}
+    En supposant que l'on fasse $p$ opérations de coût constant après être entré dans la troisième boucle, on fera ainsi le nombre d'opérations suivant :
+    \begin{align*}
+        \sum_{i=0}^{n-1}\sum_{j=0}^{n-1}\sum_{k=0}^{n-1}1 &= \sum_{i=0}^{n-1}\sum_{j=0}^{n-1}np\\
+                                                    &= \sum_{i=0}^{n-1}n\times np\\
+                                                    &= n\times n^2p=n^3p
+    \end{align*}
+    Ainsi, en notant $T_1(n)$ le nombre d'opérations total de coût constant effectuées à la fin du programme, on a que $T_1(n)=\O(n^3)$.\\
+
+    \begin{lstlisting}
+    for(int i = 0; i < n; i++){
+        for(int j = 0; j < i; j++){
+        }
+    }
+    \end{lstlisting}
+    Pour ce second programme, on supposera encore que l'on est en train d'effectuer $p$ opérations de coût constant après entre entré dans la seconde boucle. On fera ainsi le nombre d'opérations suivant :
+    \begin{align*}
+        \sum_{i=0}^{n-1}\sum_{j=0}^{i-1}p &= \sum_{i=0}^{n-1}ip\\
+                                      &= p\frac{n(n-1)}2
+    \end{align*}
+    Ainsi, en notant $T_2(n)$ le nombre d'opérations de coût constant total effectuées à la fin du programme, on a que $T_2(n)=\O(n^2)$.
+
+    \paragraph{Question 6} $\Theta((f\cdot g)(n))$.
+
+    \subsubsection*{4 – Exponentiation rapide}
+    
+\end{document}

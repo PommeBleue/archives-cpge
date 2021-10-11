@@ -1,0 +1,115 @@
+%! suppress = Unicode
+\documentclass[10pt]{article}
+
+% Math related packages.
+\usepackage{amsfonts, amsthm, amsmath, amssymb, amstext}
+\usepackage{mathtools}
+\usepackage{physics}
+\usepackage{cancel, textcomp}
+\usepackage[mathscr]{euscript}
+\usepackage[nointegrals]{wasysym}
+\usepackage[a4paper, left=2cm, right=2cm, top=2.3cm, bottom=2cm]{geometry}
+
+\usepackage{esvect}
+\usepackage{IEEEtrantools}
+
+% Font related packages.
+\usepackage[french]{babel}
+\usepackage[unicode]{hyperref}
+\usepackage[fontsize = 10pt]{scrextend}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[finemath]{kotex}
+\usepackage{dhucs-nanumfont}
+\usepackage{mathpazo}
+\usepackage{FiraMono}
+\usepackage{mathrsfs}
+
+% Other
+\usepackage{tabularx}
+
+% A more colorful world.
+\usepackage{xcolor}
+
+% Display Source Code
+\usepackage{listings}
+\lstset{
+    language=C,
+    basicstyle=\small\ttfamily\mdseries,
+    numberstyle=\color{gray},
+    stringstyle=\color[HTML]{933797},
+    commentstyle=\color[HTML]{228B22},
+    emph={[2]from,with,import,as,pass,return,and,or,not},
+    emphstyle={[2]\color[HTML]{DD52F0}},
+    emph={[3]range,format,enumerate,print},
+    emphstyle={[3]\color[HTML]{D17032}},
+    emph={[4]if,elif,else,for,while,in,def,lambda,int,float,all,len},
+    emphstyle={[4]\color{blue}},
+    emph={[5]abs},
+    emphstyle={[5]\color{black}},
+    showstringspaces=false,
+    breaklines=true,
+    prebreak=\mbox{{\color{gray}\tiny$\searrow$}},
+    numbers=left,
+    xleftmargin=15pt
+}
+
+% OPTIONS
+\everymath\expandafter{\the\everymath\displaystyle}
+
+% COMMANDS
+\newcommand{\f}[1]{\texttt{#1}}
+\newcommand{\chpt}[1]{\newpage\begin{flushright}\huge\textbf{#1}\end{flushright}}
+\newcommand{\urlsymbol}{\kern1pt\vbox to .5ex{}\raise.10ex\hbox{\pdfliteral{%
+    q .8 0 0 .8 0 0 cm
+    2.5 5 m 1 j 1 J .8 w
+    1 5 l 0 5 0 4 y 0 1 l 0 0 1 0 y 4 0 l 5 0 5 1 y 5 2.5 l S
+    3 3 m 6 6 l S 4 6 m 6 6 l 6 4 l S
+Q}}\kern5pt}
+
+
+\def\N{\mathbb N}
+\def\Z{\mathbb Z}
+\def\Q{\mathbb Q}
+\def\R{\mathbb R}
+\def\Rpe{\mathbb R_+^*}
+\def\C{\mathbb C}
+\def\K{\mathbb K}
+
+\def\ssi{\Leftrightarrow}
+\def\Ssi{\Longleftrightarrow}
+\def\implique{\Longrightarrow}
+
+\def\O{\mathcal{O}}
+
+\newcommand{\q}[1]{\paragraph{Question #1}}
+
+\title{\Huge\textbf{Khôlles de Mathématiques en MP2I.}}
+\author{Amar AHMANE.\\ MP2I}
+\date{}
+
+\begin{document}
+
+    \maketitle
+
+    \subsection*{Semaine 1}
+    \subsubsection*{Question de cours}
+    \paragraph{Énoncé} Soit $n\in\Z$. Montrer que \[n\text{ est pair}\Ssi n^2\text{ est pair}\]
+
+    \subsubsection*{Exercices}
+    \paragraph{Exercice} Soit $f:\R\to\R$ la fonction définie par \[\forall x\in\R,\quad f(x)=x\exp(x)\]
+    \begin{enumerate}
+        \item Étudier les variations de la fonction $f$ et donner l'équation de sa tangente en $0$.
+        \item Montrer que $f$ induit une bijection de $[-1,+\infty[$ sur un intervalle à préciser.
+        \item On note $w$ la bijection réciproque de la restriction de $f$ à $[-1,+\infty[$. Montrer que $w$ est dérivable sur $]-1/e,+\infty[$ et que \[\forall y\in]-1/e,+\infty[\textbackslash\lbrace 0\rbrace,\quad w^\prime(y)=\frac{w(y)}{y(1+w(y))}\]
+    \end{enumerate}
+
+    \subsection*{Semaine 2}
+    \subsubsection*{Question de cours}
+    \paragraph{Énoncé} Énoncer puis démonter la formule du binôme de Newton.
+
+    \subsubsection*{Exercices}
+    \paragraph{Exercice 1} Calculer \(\sum_{n=0}^{+\infty}\sum{k=n}^{+\infty}\frac1{k!}\).
+
+    \paragraph{Exercice 1} Soit $n\in\N$. Montrer que \(\sum_{0\leq i,j \leq n}ij=\sum_{k=0}^nk^3\).
+\end{document}

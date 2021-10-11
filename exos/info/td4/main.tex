@@ -1,0 +1,272 @@
+% Preamble
+\documentclass[10pt]{article}
+
+% Math related packages.
+\usepackage{amsfonts, amsthm, amsmath, amssymb, amstext}
+\usepackage{mathtools}
+\usepackage{physics}
+\usepackage{cancel, textcomp}
+\usepackage[mathscr]{euscript}
+\usepackage[nointegrals]{wasysym}
+\usepackage[left=3cm, right=3cm, top=1.5cm, bottom=1.5cm]{geometry}
+
+\usepackage{esvect}
+\usepackage{IEEEtrantools}
+
+% Font related packages.
+\usepackage[french]{babel}
+\usepackage[unicode]{hyperref}
+\usepackage[fontsize = 10pt]{scrextend}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[finemath]{kotex}
+\usepackage{dhucs-nanumfont}
+\usepackage{mathpazo}
+\usepackage{FiraMono}
+\usepackage{mathrsfs}
+
+% Other
+\usepackage{enumerate}
+\usepackage[shortlabels]{enumitem}
+\usepackage{tabularx}
+\usepackage[object=vectorian]{pgfornament}
+\usepackage{pgf}
+\usepackage{pgfpages}
+
+
+% A more colorful world.
+\usepackage{xcolor}
+
+% Display Source Code
+\usepackage{listings}
+\lstset{
+    language=C,
+    basicstyle=\small\ttfamily\mdseries,
+    numberstyle=\color{gray},
+    stringstyle=\color[HTML]{933797},
+    commentstyle=\color[HTML]{228B22},
+    emph={[2]from,with,import,as,pass,return,and,or,not},
+    emphstyle={[2]\color[HTML]{DD52F0}},
+    emph={[3]range,format,enumerate,print},
+    emphstyle={[3]\color[HTML]{D17032}},
+    emph={[4]if,elif,else,for,while,in,def,lambda,int,float,all,len},
+    emphstyle={[4]\color{blue}},
+    emph={[5]abs},
+    emphstyle={[5]\color{black}},
+    showstringspaces=false,
+    breaklines=true,
+    prebreak=\mbox{{\color{gray}\tiny$\searrow$}},
+    numbers=left,
+    xleftmargin=15pt
+}
+
+% OPTIONS
+\everymath\expandafter{\the\everymath\displaystyle}
+
+% COMMANDS
+\newcommand{\f}[1]{\texttt{#1}}
+\newcommand{\sct}[1]{
+	\begin{center}
+		\Large\textbf{#1}
+	\end{center}
+}
+\newcommand{\subsct}[1]{
+	\begin{center}
+		\large\textbf{#1}
+	\end{center}
+}
+\newcommand{\q}[1]{\textbf{#1.}\quad}
+\newcommand{\urlsymbol}{\kern1pt\vbox to .5ex{}\raise.10ex\hbox{\pdfliteral{%
+    q .8 0 0 .8 0 0 cm
+    2.5 5 m 1 j 1 J .8 w
+    1 5 l 0 5 0 4 y 0 1 l 0 0 1 0 y 4 0 l 5 0 5 1 y 5 2.5 l S
+    3 3 m 6 6 l S 4 6 m 6 6 l 6 4 l S
+Q}}\kern5pt}
+
+
+\def\N{\mathbb N}
+\def\Z{\mathbb Z}
+\def\Q{\mathbb Q}
+\def\R{\mathbb R}
+\def\Rpe{\mathbb R_+^*}
+\def\C{\mathbb C}
+\def\K{\mathbb K}
+\def\L{\mathbb L}
+
+\def\P{\mathscr{P}}
+
+\def\ssi{\Leftrightarrow}
+\def\Ssi{\Longleftrightarrow}
+\def\implique{\Longrightarrow}
+
+% CUSTOM TITLE
+\makeatletter
+\def\@maketitle{%
+	\newpage
+	%  \null% DELETED
+	%  \vskip 2em% DELETED
+	\begin{center}%
+		\let \footnote \thanks
+		{\LARGE \@title \par}%
+		\vskip 1em%
+		{\large
+			\lineskip .5em%
+			\begin{tabular}[t]{c}%
+				\@author
+			\end{tabular}\par}%
+		\vskip 1em%
+		{\large \@date}%
+	\end{center}%
+	\par
+	\vskip -1em}
+\makeatother
+
+\title{\textbf{TD 4 : Calculs de complexité}}
+\author{Amar AHMANE \\ MP2I}
+\date{}
+
+
+% DOCUMENT
+\begin{document}
+	\maketitle
+	\subsct{Exercice 3 : Couleur Majoritaire}
+	Soit $n\in\N^*$. On pose $E=[\![1, n]\!]$. Soit $\L$ un ensemble dont les éléments sont des couleurs, on note alors $R$ l'application définie par 
+
+
+	\[R:\begin{array}{c c c}E&\to& \L\\ x&\mapsto& R(x)\end{array}\]
+
+	On fait alors quelques définitions :
+	\begin{enumerate}[(i)]
+		\item Soient $x\in E$, $c\in\L$. On dit que $x$ est de couleur $c$ si et seulement si $R(x)=c$.
+		\item On dit que deux entiers $i$ et $j$ de $E$ sont "de même couleur" si et seulement si $R(i)=R(j)$. 
+		\item Soit $c\in\L$, on note $E_c$ l'ensemble des entiers dans $E$ de couleur $c$. Alors \[E_c=\lbrace x\in E\ |\ R(x)=c\rbrace\]
+		\item Soit $c\in\L$, on dit que $c$ est majoritaire dans $E$ si et seulement si $|E_c|>\frac{|E|}2$.
+	\end{enumerate}
+
+	On peut considérer que cette portion de code est écrite en début de fichier, et que cette structure peut être utilisée dans les fonctions que l'on programmera dans la suite :
+	\begin{lstlisting}
+	struct ec {
+		int couleur;
+	}
+	\end{lstlisting}
+
+	\vspace{2mm}
+
+	\begin{enumerate}[start=9,label={\bfseries \arabic*}]
+		\item $n$ désigne la taille du pointeur sur \f{ec}.
+
+
+		\begin{lstlisting}
+		int count(struc ec x, struct ec* ecs, int n){
+			int result = 0;
+			for(int i = 0; i < n; i++){
+				if(ecs[i].couleur == x.couleur) result++;
+			}
+			return result;
+		}
+		\end{lstlisting}
+		Il s'agit d'un algorithme en $\Theta(n)$.
+		\item O
+		\begin{lstlisting}
+		bool has_max(struct ec* ecs, int n, int l){
+			int* colours = (int*) malloc(l*sizeof(int));
+			for(int i = 0; i < l; i++){
+				colours[i] = -1;
+			}
+			for(int i = 0; i < n; i++){
+				if(colours[ecs[i].couleur] == -1){
+					int occ_in_i = count(ecs[i], ecs, n);
+					if(occ_in_i > n/2) return true;
+				}
+			}
+			return false;
+		}
+		\end{lstlisting}
+		\item Soient $c\in\L$, $k\in\N$ et $(E_i)_{i\in [\![1, k]\!]}$ une partition de $E$. Supposons que $c$ est majoritaire dans $E$, montrons, par l'absurde, qu'il existe $i\in[\![1, k]\!]$ tel que $c$ est majoritaire dans $E_i$.\\
+		Supposons alors que pour tout $i\in[\![1, k]\!]$, $c$ n'est pas majoritaire dans $E_i$, i.e $E_{ic}\leq \frac{|E_i|}2$. En ce cas \[\sum_{i=1}^k|E_{ic}|\leq \sum_{i=1}^k \frac{|E_i|}2 \tag{1}\]
+		Or
+		\begin{align*}
+			\sum_{i=1}^k \frac{|E_i|}2 &= \frac12\sum_{i=1}^k\sum_{x\in E_i}1\\
+									   &=\footnotemark[1] \frac12\sum_{x\in E}1\\
+									   &= \frac{|E|}2
+		\end{align*}
+		Montrons que $(E_{ic})_{i\in[\![1, k]\!]}$ est un recouvrement disjoint de $E_c$.
+		\begin{enumerate}[(i)]
+			\item Soit $(i, j)\in[\![1, k]\!]^2$. On a $E_{ic}\subset E_i$ et $E_{jc}\subset E_j$, or $E_i\cap E_j=\emptyset$, donc $E_{ic}\cap E_{jc}=\emptyset$.
+			\item \[\bigcup_{i=1}^kE_{ic}=\bigcup_{i=1}^kE_i\cap E_c=E_c\cap\bigcup_{i=1}^kE_i=E_c\cap E= E_c\]
+		\end{enumerate}
+		Donc, on a 
+		\begin{align*}
+			\sum_{i=1}^k |E_{ic}| &= \sum_{i=1}^k\sum_{x\in E_{ic}}1\\
+						          &=\footnotemark[2] \sum_{x\in E_c}1\\
+							      &= |E_c|
+		\end{align*}
+		Donc d'après (1) \[|E_c|\leq \frac{|E|}2\]
+		Autrement dit $c$ n'est pas majoritaire dans $E$, ce qui est absurde.
+		\item L'idée est la suivante pour cet algorithme : les couleurs majoritaires dans chacun des $E_i$ sont des couleurs candidates, du fait de l'implication prouvée plus haut. Le travail de l'algorithme sera ainsi d'établir une liste d'au plus $k$ candidats, puis ensuite de vérifier s'il y en a un qui est majortaire dans $E$. Le tout se fait en $\mathcal O(n\sqrt{n})$.
+		\begin{lstlisting}
+		bool has_max_bis(struct ec* ecs, int k, int* bornes, int l){
+			int* pmax = (int*) malloc(k*sizeof(int));
+			int* colours = (int*) malloc(l*sizeof(int));
+			int occ_in_i;
+			int p = 0;
+			for(int i = 0; i < k; i++){
+				for(int j = 0; j < l; j++){
+					colours[i] = -1;
+				}
+				for(int j = bornes[i]; j <= bornes[i + 1]; j++){
+					if(colours[ecs[j].couleur] == -1){
+						occ_in_i = 0;
+						for(int k = bornes[i]; k <= bornes[i + 1; k++){
+							if(ecs[k].couleur == ecs[j].couleur) occ_in_i++;
+						}
+						if(occ_in_i > k/2) {
+							pmax[i] = ecs[j];
+							p++;
+							break;
+						}
+					}
+				}
+			}
+			for(int i = 0; i < p; i++){
+				if(count(pmax[i], ecs, bornes[k] + 1) > (bornes[k] + 1)/2) return true;
+			}
+			return false;
+		}
+		\end{lstlisting}
+		\item On continue d'utiliser l'implication prouvée en question 11 dans cette partie. La seule différence est que l'on possède ici, à chaque fois, au plus deux candidats. À chaque instance, les lignes \f{4} et \f{5} nous les fournissent, il suffit alors de faire la vérification. Celle-ci se faisant en temps $n$, on a que $T(n)\leq T(1)+n\log_2(n)$, donc $T(n)=\mathcal O(n\log n)$
+		\begin{lstlisting}
+		struct ec max_dicho(struc ec* ecs, int first, int last){
+			struct ec default_x;
+			int mid = (first + last)/2;
+			int occ = 0;
+			struct ec x1 = max_dicho(ecs, first, mid);
+			struct ec x2 = max_dicho(ecs, mid + 1, last);
+			default_x.couleur = -1;
+			if(last == first){
+				return ecs[first];
+			} else if(last > first || first > last){
+				return default_x;
+			}
+			if(x1.couleur != -1){
+				for(int i = first; i <= last; i++){
+					if(ecs[i].couleur == x1.couleur) occ++;
+				}
+				if(occ > (first - last)/2) return x1;
+				occ = 0;
+			}
+			if(x2.couleur != -1){
+				for(int i = first; i <= last; i++){
+					if(ecs[i].couleur == x2.couleur) occ++;
+				}
+				if(occ > (first - last)/2) return x2;
+				free(occ);
+			}
+			return default_x;
+		}
+		\end{lstlisting}
+		\item Supposons que $n\geq 3$. Soient $x,y\in E$ deux entiers distincts de couleurs distinctes. Soit $c\in\L$, supposons que $c$ est majoritaire dans $E$. Les ensembles $E\backslash\lbrace x,y\rbrace$ et $\lbrace x,y\rbrace$ forment une partition de $E$. Or, il n'existe pas de couleur majoritaire dans $\lbrace x,y\rbrace$, donc $c$ est majoritaire dans $E\backslash\lbrace x,y\rbrace$.
+	\end{enumerate}
+	\footnotetext[1]{$(E_i)_{i\in [\![1, k]\!]}$ est une partition de $E$.}
+	\footnotetext[1]{$(E_{ic})_{i\in [\![1, k]\!]}$ est un recouvrement disjoint de $E_c$.}
+\end{document}

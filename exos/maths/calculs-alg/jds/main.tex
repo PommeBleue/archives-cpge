@@ -1,0 +1,272 @@
+% Preamble
+\documentclass[7pt, twocolumn]{extarticle}
+
+% Math related packages.
+\usepackage{amsfonts, amsthm, amsmath, amssymb, amstext}
+\usepackage{mathtools}
+\usepackage{physics}
+\usepackage{cancel, textcomp}
+\usepackage[mathscr]{euscript}
+\usepackage[nointegrals]{wasysym}
+\usepackage[left=2mm, right=2mm, top=1.5cm, bottom=1.5cm]{geometry}
+
+\usepackage{esvect}
+\usepackage{IEEEtrantools}
+
+% Font related packages.
+\usepackage[french]{babel}
+\usepackage[unicode]{hyperref}
+\usepackage[fontsize = 10pt]{scrextend}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[finemath]{kotex}
+\usepackage{dhucs-nanumfont}
+\usepackage{mathpazo}
+\usepackage{FiraMono}
+\usepackage{mathrsfs}
+
+% Other
+\usepackage{enumerate}
+\usepackage[shortlabels]{enumitem}
+\usepackage{tabularx}
+\usepackage[object=vectorian]{pgfornament}
+\usepackage{pgf}
+\usepackage{pgfpages}
+
+% Columns
+\usepackage{multicolrule}
+\setlength\columnsep{1cm}
+
+\SetMCRule{width=0.4pt, line-style=solid-circles,
+	width=1pt, extend-fill, extend-top=1ex}
+
+% A more colorful world.
+\usepackage{xcolor}
+
+% Display Source Code
+\usepackage{listings}
+\lstset{
+    language=C,
+    basicstyle=\small\ttfamily\mdseries,
+    numberstyle=\color{gray},
+    stringstyle=\color[HTML]{933797},
+    commentstyle=\color[HTML]{228B22},
+    emph={[2]from,with,import,as,pass,return,and,or,not},
+    emphstyle={[2]\color[HTML]{DD52F0}},
+    emph={[3]range,format,enumerate,print},
+    emphstyle={[3]\color[HTML]{D17032}},
+    emph={[4]if,elif,else,for,while,in,def,lambda,int,float,all,len},
+    emphstyle={[4]\color{blue}},
+    emph={[5]abs},
+    emphstyle={[5]\color{black}},
+    showstringspaces=false,
+    breaklines=true,
+    prebreak=\mbox{{\color{gray}\tiny$\searrow$}},
+    numbers=left,
+    xleftmargin=15pt
+}
+
+% OPTIONS
+\everymath\expandafter{\the\everymath\displaystyle}
+
+% COMMANDS
+\newcommand{\f}[1]{\texttt{#1}}
+\newcommand{\sct}[1]{
+	\begin{center}
+		\Large\textbf{#1}
+	\end{center}
+}
+\newcommand{\subsct}[1]{
+	\begin{center}
+		\large\textbf{#1}
+	\end{center}
+}
+\newcommand{\q}[1]{\textbf{#1.}\quad}
+\newcommand{\urlsymbol}{\kern1pt\vbox to .5ex{}\raise.10ex\hbox{\pdfliteral{%
+    q .8 0 0 .8 0 0 cm
+    2.5 5 m 1 j 1 J .8 w
+    1 5 l 0 5 0 4 y 0 1 l 0 0 1 0 y 4 0 l 5 0 5 1 y 5 2.5 l S
+    3 3 m 6 6 l S 4 6 m 6 6 l 6 4 l S
+Q}}\kern5pt}
+
+
+\def\N{\mathbb N}
+\def\Z{\mathbb Z}
+\def\Q{\mathbb Q}
+\def\R{\mathbb R}
+\def\Rpe{\mathbb R_+^*}
+\def\C{\mathbb C}
+\def\K{\mathbb K}
+
+\def\P{\mathscr{P}}
+
+\def\ssi{\Leftrightarrow}
+\def\Ssi{\Longleftrightarrow}
+\def\implique{\Longrightarrow}
+
+% CUSTOM TITLE
+\makeatletter
+\def\@maketitle{%
+	\newpage
+	%  \null% DELETED
+	%  \vskip 2em% DELETED
+	\begin{center}%
+		\let \footnote \thanks
+		{\LARGE \@title \par}%
+		\vskip 1em%
+		{\large
+			\lineskip .5em%
+			\begin{tabular}[t]{c}%
+				\@author
+			\end{tabular}\par}%
+		\vskip 1em%
+		{\large \@date}%
+	\end{center}%
+	\par
+	\vskip -1em}
+\makeatother
+
+\title{\textbf{Calculs Algébriques}}
+\date{}
+
+% PGF BOXED
+\pgfpagesdeclarelayout{boxed}
+{
+	\edef\pgfpageoptionborder{0pt}
+}
+{
+	\pgfpagesphysicalpageoptions
+	{%
+		logical pages=1,%
+	}
+	\pgfpageslogicalpageoptions{1}
+	{
+		border code=\pgfsetlinewidth{0.5pt}\pgfstroke,%
+		border shrink=\pgfpageoptionborder,%
+		resized width=.95\pgfphysicalwidth,%
+		resized height=.95\pgfphysicalheight,%
+		center=\pgfpoint{.5\pgfphysicalwidth}{.5\pgfphysicalheight}%
+	}%
+}
+
+
+% DOCUMENT
+\pgfpagesuselayout{boxed}
+\begin{document}
+	\maketitle
+	Dans tout ce qui va suivre, pour $n\in\N^*$, on notera $I_n=[\![1,n]\!]$.
+	\sct{Sommes}
+	\subsct{Sommes télescopiques}
+
+	\vspace{2mm}
+
+	\begin{enumerate}[start=1,label={\bfseries \arabic*}]
+		\item Calculer la somme \(\sum_{k=1}^n\sqrt{1+\frac1{k^2}+\frac1{(k+1)^2}}\).
+		\item La suite de Fibonacci est définie comme suit \[F_0=1;\ F_1=1;\quad \forall n\in\N,\ F_{n+2}=F_{n+1}+F_n\]
+		Calculer 
+		\begin{tabular}{c c c}
+			\q1 \(\sum_{k=1}^nF_k\) & \q2 \(\sum_{k=1}^nF_k^2\) & \q3 \(\sum_{k=2}^n\frac1{F_{k-1}F_{k+1}}\)
+		\end{tabular}
+		\item 
+		\begin{enumerate}[start=1, label={\bfseries \arabic*.}]
+			\item Calculer les sommes suivantes
+				\begin{enumerate}[(a)]
+					\item \(\sum_{k=0}^n{\binom{k}{p}}\) avec $p,n\in\N$;
+					\item \(\sum_{k=0}^p(-1)^k{\binom{n}{k}}\) avec $p\in\N$ et $n\in\N^*$.
+				\end{enumerate}
+			\item Soit $n\in\N^*$
+				\begin{enumerate}[(a)]
+					\item Simplifier la somme $S_{n,p}=\sum_{k=1}^n\prod_{l=0}^p(k+l)$ pour tout $p\in\N$.
+					\item Retrouver la valeur de $\sum_{k=1}^nk^2$.
+					\item Calculer la somme $\sum_{k=0}^n\frac{\binom{n}{k}}{\binom{2n-1}{k}}$.
+				\end{enumerate}
+		\end{enumerate}
+	\end{enumerate}
+
+	\subsct{Calcul de sommes}
+
+	\vspace{2mm}
+	\begin{enumerate}[start=4,label={\bfseries \arabic*}]
+		\item Soit $n\in\N^*$. Montrer que pour toute famille $(x_i)_{i\in I_n}$ de nombres complexes :
+		\begin{enumerate}[start=1, label={\bfseries \arabic*.}]
+			\item \(\sum_{i=1}^n\left(x_i-\frac1n\sum_{j=1}^nx_j\right)=0\).
+			\item \(\frac1n\sum_{i=1}\left(x_i-\frac1n\sum_{j=1}^nx_j\right)^2=\frac1n\sum_{i=1}^nx_i^2-\left(\frac1n\sum_{i=1}^nx_i\right)^2\).
+		\end{enumerate}
+		\item Calculer, pour tout $n\in\N$, les sommes suivantes.
+		\begin{tabular}{c c}
+			\q{1} \(A_n=\sum_{0\leq i\leq j\leq n}\frac i{j+1}\). & \q{2} \(B_n=\sum_{k=1}^n(-1)^kk^2\).\\
+			\q{3} \(C_n=\sum_{k=0}^n\binom{2n+1}k\).
+		\end{tabular}
+		\item Soit $N$ un nombre entier de $n$ chiffres. Soit $s$ la somme de ses chiffres, et $t$ la somme de tous les nombres obtenus en combinant $2$ quelconques des chiffres de $N$ de rangs distincts (si $2$ chiffres sont égaux, un même nombre peut apparaître plusieurs fois dans la somme).\\
+		Exprimer $t$ en fonction de $s$.
+		\item Calculer, pour $n\in\N$, les sommes suivantes 
+		\begin{tabular}{c c}
+			\q{1} \(A_n=\sum_{1\leq i\leq j\leq n}(i+j)\). & \q{2} \(B_n=\sum_{1\leq i,j\leq n}\min(i,j)\).
+		\end{tabular}
+		\item Calculer de deux façons les sommes suivantes\\
+		\begin{tabular}{c c}
+			\q{1} \(A_n=\sum_{1\leq i,j\leq n}ij\). & \q{2} \(B_n=\sum_{1\leq i,j\leq n}i^2j\).
+		\end{tabular}\\
+		Retrouver la valeur de $\sum_{k=1}^nk^3$ et calculer $\sum_{k=1}^nk^4$.
+		\item On pose, pour tout $n\in\N$, $S_n=\sum_{k=0}^n(-1)^{\lfloor \sqrt{k}\rfloor}$.
+		\begin{enumerate}[start=1, label={\bfseries \arabic*.}]
+			\item Calculer $S_{(2m)^2-1}$ pour tout $m\in\N$.
+			\item Montrer que, pour tout $n\in\N$, on a \[|S_n|\leq \sqrt{n+1}\]
+			Préciser le cas de l'égalité.
+		\end{enumerate}
+		\item Soit $E$ un ensemble fini de cardinal $n$.\\
+		En considérant l'involution $X\mapsto \overline{X}$ de $\mathscr{P}(E)$, montrer les formules suivantes
+		\begin{enumerate}[start=1, label={\bfseries \arabic*.}]
+			\item \(\sum_{X\in\mathscr{P}(E)}|X|=n2^{n-1}\).
+			\item
+			\begin{enumerate}[(a)]
+				\item \(\sum_{(X,Y)\in\P(E)^2}|X\cap Y|=n4^{n-1}\).
+				\item \(\sum_{(X,Y)\in\P(E)^2}|X\cup Y|=3n4^{n-1}\).
+			\end{enumerate}
+		\end{enumerate}
+	\end{enumerate}
+
+	\subsct{Formule du binôme}
+	\begin{enumerate}[start=11,label={\bfseries \arabic*}]
+		\item Soit $n$ un entier naturel.
+		\begin{enumerate}[start=1, label={\bfseries \arabic*.}]
+			\item Montrer qu'il existe deux entiers $a_n$ et $b_n$ tels que \[(1+\sqrt{2})^n=a_n+b_n\sqrt{2}\quad \text{et}\quad (1-\sqrt{2})^n=a_n-b_n\sqrt{2}.\]
+			\item Calculer $a_n^2-2b_n^2$ et déduire qu'il existe un entier $p-n$ tel que \[(1+\sqrt{2})^n=\sqrt{p_n}+\sqrt{p_n+1}.\]
+		\end{enumerate}
+		\item Calculer, pour tout $n\in\N^*$, les sommes suivantes\\
+		\begin{tabular}{p{4cm} p{4cm}}
+			\q{1} \(A_n=\sum_{k=0}^nk\binom nk\) & \q{2} \(B_n=\sum_{k=0}^n(-1)^k\binom nk\)\\
+			\q{3} \(C_n=\sum_{k=0}^nk^2\binom nk\) & \q{4} \(D_n=\sum_{k=0}^n\frac{\binom nk}{k+1}\)
+		\end{tabular}
+		\item Calculer, pour tous $p,q\in\N$, la somme \[\sum_{k=0}^p\binom{p+q}k\binom{p+q-k}{p-k}\]
+		\item 
+		\begin{enumerate}[start=1, label={\bfseries \arabic*.}]
+			\item Soit $(n,p,q)\in\N^3$.
+			\begin{enumerate}[(a)]
+				\item En utilisant l'identité polynomiale \[(1+x)^p(1+x)^q=(1+x)^{p+q},\]
+				montrer que $\sum_{k=0}^n\binom pk\binom q{n-k}=\binom{p+q}n$.
+				\item Calculer la somme suivante \[A_{n,p,q}=\sum_{k=0}^nk\binom pk\binom p{n-k}.\]
+			\end{enumerate}
+			\item Montrer que, pour tout $n\in\N$, \[\sum_{k=0}^{\lfloor n/2\rfloor}\left(\binom nk - \binom n{k-1}\right)^2=\frac1{n+1}\binom{2n}n\]
+		\end{enumerate}
+		\item Calculer les sommes suivantes
+		\begin{enumerate}[start=1, label={\bfseries \arabic*.}]
+			\item \(\sum_{k=0}^n(-1)^k\binom nk^2\), pour tout $n\in\N$.
+			\item \(\sum_{k=1}^pk\binom n{p-k}\binom nk\), pour tous $n,p\in\N^*$.
+		\end{enumerate}
+		\item Soit $n\in\N^*$.
+		\begin{enumerate}[start=1, label={\bfseries \arabic*.}]
+			\item Montrer que \(\sum_{j=0}^nj\binom{2n}{n-j}=n\binom{2n-1}n\).
+			\item En déduire la valeur des somme suivantes
+			\begin{align*}
+				A_n &=\sum_{\begin{smallmatrix}0\leq k\leq n\\ 0\leq \ell \leq n\end{smallmatrix}}\min(k,\ell)\binom nk\binom n\ell,\\
+				B_n &=\sum_{\begin{smallmatrix}0\leq k\leq n\\ 0\leq \ell \leq n\end{smallmatrix}}\max(k,\ell)\binom nk\binom n\ell.
+			\end{align*}
+		\end{enumerate}
+		\item 
+		\begin{enumerate}[start=1, label={\bfseries \arabic*.}]
+			\item Montrer que, pour tout $p,q,n\in\N$, on a \[\sum_{k=0}^n\binom{n-k}p\binom kq=\binom{n+1}{p+q+1}.\]
+			\item En déduire que, pour tout $n\in\N$, on a \[\sum_{k=0}^n2^k\binom{2n-k}n=4^n\]
+		\end{enumerate}
+	\end{enumerate}
+\end{document}
