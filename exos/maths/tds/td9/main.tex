@@ -1,0 +1,189 @@
+% Preamble
+\documentclass[7pt, twocolumn]{extarticle}
+
+% Math related packages.
+\usepackage{amsfonts, amsthm, amsmath, amssymb, amstext}
+\usepackage{mathtools}
+\usepackage{physics}
+\usepackage{cancel, textcomp}
+\usepackage[mathscr]{euscript}
+\usepackage[nointegrals]{wasysym}
+\usepackage[left=2mm, right=2mm, top=1.5cm, bottom=1.5cm]{geometry}
+
+\usepackage{esvect}
+\usepackage{IEEEtrantools}
+
+% Font related packages.
+\usepackage[french]{babel}
+\usepackage[unicode]{hyperref}
+\usepackage[fontsize = 10pt]{scrextend}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[finemath]{kotex}
+\usepackage{dhucs-nanumfont}
+\usepackage{mathpazo}
+\usepackage{FiraMono}
+\usepackage{mathrsfs}
+
+% Other
+\usepackage{enumerate}
+\usepackage[shortlabels]{enumitem}
+\usepackage{tabularx}
+\usepackage[object=vectorian]{pgfornament}
+\usepackage{pgf}
+\usepackage{pgfpages}
+
+% Columns
+\usepackage{multicolrule}
+\setlength\columnsep{1cm}
+
+\SetMCRule{width=0.4pt, line-style=solid-circles,
+  width=1pt, extend-fill, extend-top=1ex}
+
+% A more colorful world.
+\usepackage{xcolor}
+
+% Display Source Code
+\usepackage{listings}
+\lstset{
+    language=C,
+    basicstyle=\small\ttfamily\mdseries,
+    numberstyle=\color{gray},
+    stringstyle=\color[HTML]{933797},
+    commentstyle=\color[HTML]{228B22},
+    emph={[2]from,with,import,as,pass,return,and,or,not},
+    emphstyle={[2]\color[HTML]{DD52F0}},
+    emph={[3]range,format,enumerate,print},
+    emphstyle={[3]\color[HTML]{D17032}},
+    emph={[4]if,elif,else,for,while,in,def,lambda,int,float,all,len},
+    emphstyle={[4]\color{blue}},
+    emph={[5]abs},
+    emphstyle={[5]\color{black}},
+    showstringspaces=false,
+    breaklines=true,
+    prebreak=\mbox{{\color{gray}\tiny$\searrow$}},
+    numbers=left,
+    xleftmargin=15pt
+}
+
+% OPTIONS
+\everymath\expandafter{\the\everymath\displaystyle}
+
+% COMMANDS
+\newcommand{\f}[1]{\texttt{#1}}
+\newcommand{\sct}[1]{
+  \begin{center}
+    \Large\textbf{#1}
+  \end{center}
+}
+\newcommand{\subsct}[1]{
+  \begin{center}
+    \large\textbf{#1}
+  \end{center}
+}
+\newcommand{\q}[1]{\textbf{#1.}\quad}
+\newcommand{\urlsymbol}{\kern1pt\vbox to .5ex{}\raise.10ex\hbox{\pdfliteral{%
+    q .8 0 0 .8 0 0 cm
+    2.5 5 m 1 j 1 J .8 w
+    1 5 l 0 5 0 4 y 0 1 l 0 0 1 0 y 4 0 l 5 0 5 1 y 5 2.5 l S
+    3 3 m 6 6 l S 4 6 m 6 6 l 6 4 l S
+Q}}\kern5pt}
+
+
+\def\N{\mathbb N}
+\def\Z{\mathbb Z}
+\def\Q{\mathbb Q}
+\def\R{\mathbb R}
+\def\Rpe{\mathbb R_+^*}
+\def\C{\mathbb C}
+\def\K{\mathbb K}
+
+\def\P{\mathscr{P}}
+
+\def\ssi{\Leftrightarrow}
+\def\Ssi{\Longleftrightarrow}
+\def\implique{\Longrightarrow}
+
+% CUSTOM TITLE
+\makeatletter
+\def\@maketitle{%
+  \newpage
+  %  \null% DELETED
+  %  \vskip 2em% DELETED
+  \begin{center}%
+    \let \footnote \thanks
+    {\LARGE \@title \par}%
+    \vskip 1em%
+    {\large
+      \lineskip .5em%
+      \begin{tabular}[t]{c}%
+        \@author
+      \end{tabular}\par}%
+    \vskip 1em%
+    {\large \@date}%
+  \end{center}%
+  \par
+  \vskip -1em}
+\makeatother
+
+\title{\textbf{Calcul intégral}}
+\date{}
+
+
+\begin{document}
+  \subsection*{Exercice 9.4}
+  \begin{enumerate}
+    \item Soit $a\in \R_+$. On a, en posant le changement de variable $t=-x$ \[\int_{-a}^af(x)\dd x=\int_a^{-a}f(-t)-\dd t=\int_a^{-a}f(t)\dd t=-\int_{-a}^a\dd t\]
+    D'où \[\int_{-a}^af(x)\dd x = 0\]
+    \item On pose $f:x\mapsto \ln\left(\frac{1+e^{\arctan(x)}}{1+e^{-\arctan(x)}}\right)$. On a 
+    \begin{align*}
+      \mathcal{D}_f &= \lbrace x\in\R | f(x) \text{ est défini} \rbrace\\
+                    &= \left\lbrace x\in\R | \frac{1+e^{\arctan(x)}}{1+e^{-\arctan(x)}} > 0 \right\rbrace\\
+                    &= \R
+    \end{align*}
+    On montre que $f$ est impaire. Soit $x\in\R$, on a
+    \begin{align*}
+      f(-x) &= \ln\left(\frac{1+e^{\arctan(x)}}{1+e^{-\arctan(x)}}\right) \\
+            &= \ln\left(\frac{1+e^{\arctan(-x)}}{1+e^{-\arctan(-x)}}\right) \\ 
+            &= \ln\left(\frac{1+e^{-\arctan(x)}}{1+e^{\arctan(x)}}\right) \\
+            &= -\ln\left(\frac{1+e^{\arctan(x)}}{1+e^{-\arctan(x)}}\right) \\
+            &= -f(x)
+    \end{align*}
+    $f$ étant continue, $\int_{-666}^{666}f(x)\dd x$ est définie et, d'après la question 1, on a $a=666$ donc $\int_{-a}^af(x)\dd x = 0$
+  \end{enumerate}
+  \subsection*{Exercice 9.7}
+  \begin{enumerate}
+    \item $\alpha = \ln(1+\sqrt{2})$.
+    \item On pose le changement de variable $x=\sinh(t)$, d'où $\dd x=\cosh(t)\dd t$. On a alors 
+    \begin{align*}
+      J=\int_0^1\frac1{\sqrt{1+x^2}}\dd x &=\int_0^\alpha \frac1{\sqrt{1+\sinh^2(t)}}\cosh(t)\dd t\\
+                                          &=\int_0^\alpha \frac1{\cosh(t)}\cosh(t)\dd t\\
+                                          &=\int_0^\alpha \dd t\\
+                                          &=\alpha
+    \end{align*}
+    \item On a 
+    \begin{align*}
+      I=\int_0^1\sqrt{1+x^2}\dd x &= [x\sqrt{1+x^2}]^1_0-\int_0^1x\frac{2x}{2\sqrt{1+x^2}}\\
+                                  &= [x\sqrt{1+x^2}]^1_0-\int_0^1\frac{x^2}{\sqrt{1+x^2}}\\
+                                  &= [x\sqrt{1+x^2}]^1_0-\int_0^1\frac{x^2+1-1}{\sqrt{1+x^2}}\\
+                                  &= [x\sqrt{1+x^2}]^1_0-\int_0^1\frac{x^2+1-1}{\sqrt{1+x^2}}\\
+                                  &= \sqrt2-(I-J)\\
+                                  &= \sqrt2-I+J
+    \end{align*}
+    D'où $I=\frac{\sqrt2+J}2$.
+    \item $I=\frac{\sqrt2+\alpha}2$.
+  \end{enumerate}
+  \subsection*{Exercice 9.8}
+  En posant $t=x^3$, d'où $\dd t = 3x^2\dd x$
+  \subsection*{Exercice 9.9}
+  En posant $x=\frac\pi4 - u$, d'où $\dd x=-\dd u$. 
+  \begin{align*}
+    I &= \int_0^{\frac\pi4}\ln(1+\tan(x))\dd x\\
+      &= \int_{\frac\pi4}^0-\ln(1+\tan(\frac\pi4-u))\dd u\\
+      &= \int_0^{\frac\pi4}\ln(1+\frac{1-\tan(u)}{1+\tan(u)})\dd u\\
+      &= \int_0^{\frac\pi4}\ln(\frac2{1+\tan(u)}) \dd u\\
+      &= \int_0^{\frac\pi4} \ln2\dd u-I\\
+      &= \ln2\frac\pi4 - I
+  \end{align*}
+  D'où $2I=\ln2\frac\pi4\Ssi I=\ln2\frac\pi8$.
+\end{document}

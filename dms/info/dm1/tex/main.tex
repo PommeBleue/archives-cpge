@@ -1,0 +1,292 @@
+% Preamble
+\documentclass[10pt]{article}
+
+% Math related packages.
+\usepackage{amsfonts, amsthm, amsmath, amssymb, amstext}
+\usepackage{mathtools}
+\usepackage{physics}
+\usepackage{cancel, textcomp}
+\usepackage[mathscr]{euscript}
+\usepackage[nointegrals]{wasysym}
+\usepackage[left=3cm, right=3cm, top=1.5cm, bottom=1.5cm]{geometry}
+
+\usepackage{esvect}
+\usepackage{IEEEtrantools}
+
+% Font related packages.
+\usepackage[french]{babel}
+\usepackage[unicode]{hyperref}
+\usepackage[fontsize = 10pt]{scrextend}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[finemath]{kotex}
+\usepackage{dhucs-nanumfont}
+\usepackage{mathpazo}
+\usepackage{FiraMono}
+\usepackage{mathrsfs}
+
+% Other
+\usepackage{enumerate}
+\usepackage[shortlabels]{enumitem}
+\usepackage{tabularx}
+\usepackage[object=vectorian]{pgfornament}
+\usepackage{pgf}
+\usepackage{pgfpages}
+\usepackage[european,straightvoltages]{circuitikz}
+
+
+% A more colorful world.
+\usepackage{xcolor}
+
+% Display Source Code
+\usepackage{listings}
+\lstset{
+    language=C,
+    basicstyle=\small\ttfamily\mdseries,
+    numberstyle=\color{gray},
+    stringstyle=\color[HTML]{933797},
+    commentstyle=\color[HTML]{228B22},
+    emph={[2]from,with,import,as,pass,return,and,or,not},
+    emphstyle={[2]\color[HTML]{DD52F0}},
+    emph={[3]range,format,enumerate,print},
+    emphstyle={[3]\color[HTML]{D17032}},
+    emph={[4]if,elif,else,for,while,in,def,lambda,int,float,all,len},
+    emphstyle={[4]\color{blue}},
+    emph={[5]abs},
+    emphstyle={[5]\color{black}},
+    showstringspaces=false,
+    breaklines=true,
+    prebreak=\mbox{{\color{gray}\tiny$\searrow$}},
+    numbers=left,
+    xleftmargin=15pt
+}
+
+% OPTIONS
+\everymath\expandafter{\the\everymath\displaystyle}
+
+% COMMANDS
+\newcommand{\f}[1]{\texttt{#1}}
+\newcommand{\sct}[1]{
+	\begin{center}
+		\Large\textbf{#1}
+	\end{center}
+}
+\newcommand{\subsct}[1]{
+	\begin{center}
+		\large\textbf{#1}
+	\end{center}
+}
+\newcommand{\inl}[2]{[\![#1, #2]\!]}
+\newcommand{\q}[1]{\textbf{#1.}\quad}
+\newcommand{\urlsymbol}{\kern1pt\vbox to .5ex{}\raise.10ex\hbox{\pdfliteral{%
+    q .8 0 0 .8 0 0 cm
+    2.5 5 m 1 j 1 J .8 w
+    1 5 l 0 5 0 4 y 0 1 l 0 0 1 0 y 4 0 l 5 0 5 1 y 5 2.5 l S
+    3 3 m 6 6 l S 4 6 m 6 6 l 6 4 l S
+Q}}\kern5pt}
+
+
+\def\N{\mathbb N}
+\def\Z{\mathbb Z}
+\def\Q{\mathbb Q}
+\def\R{\mathbb R}
+\def\Rpe{\mathbb R_+^*}
+\def\C{\mathbb C}
+\def\K{\mathbb K}
+\def\L{\mathbb L}
+
+\def\P{\mathscr{P}}
+
+\def\ssi{\Leftrightarrow}
+\def\Ssi{\Longleftrightarrow}
+\def\implique{\Longrightarrow}
+
+
+% CUSTOM TITLE
+\makeatletter
+\def\@maketitle{%
+	\newpage
+	%  \null% DELETED
+	%  \vskip 2em% DELETED
+	\begin{center}%
+		\let \footnote \thanks
+		{\LARGE \@title \par}%
+		\vskip 1em%
+		{\large
+			\lineskip .5em%
+			\begin{tabular}[t]{c}%
+				\@author
+			\end{tabular}\par}%
+		\vskip 1em%
+		{\large \@date}%
+	\end{center}%
+	\par
+	\vskip -1em}
+\makeatother
+
+
+\title{DM 1 – Nuage de points}
+\author{Amar AHMANE\\ MP2I.}
+\date{}
+
+\begin{document}
+	\maketitle
+	\subsection*{1 – Approche exhaustive naïve}
+	\begin{enumerate}[start=1,label={\bfseries Question \arabic*}]
+		\item Définition de la fonction \f{distance}.
+		\begin{lstlisting}
+		/*
+		Input: 
+			p1: parameter of type struct point containing the coordinates of a point in an eucledian sapce
+			p2: parameter of type struct point containing the coordinates of a point in an eucledian sapce
+		Output: eucledian distance between these two points.
+		*/
+		double distance(struct point p1, struct point p2){
+			return sqrt((p2.x-p1.x)*(p2.x-p1.x)+(p2.y-p1.y)*(p2.y-p1.y));
+		}
+		\end{lstlisting}
+		\item Définition de la fonction \f{plus\_proches}.
+		\begin{lstlisting}
+		/*
+			Input:
+			Output: Void. Changes the values of p and q setting them to the indexes of the two closest points in the cloud.
+		*/
+		void plus_proches(struct nuage* n, int* p, int* q){
+			if(n == NULL || p == NULL || q == NULL){
+				return;
+			}
+			assert(n->taille > 1);
+			double ref = distance(n->P[0], n->P[1]);
+			*p = 0, *q = 0;
+			for(int i = 0; i < n->taille; i++){
+				for(int j = 0; j < n->taille; j++){
+					if(distance(n->P[i], n->P[j]) < ref){
+						*p = i, *q = j;
+					}
+				}
+			}
+		}
+		\end{lstlisting}
+		\item En supposant que les opérations s'effectuant dans la deuxième boucle sont faites en un temps $\Theta(1)$, alors la complexité est en $\sum_{i=1}^n\sum_{j=1}^n\Theta(1)=\Theta(n^2)$.
+	\end{enumerate}
+	\subsection*{2 – Méthode sophistiquée}
+	\begin{enumerate}[start=4,label={\bfseries Question \arabic*}]
+		\item Cette fonction trie le tableau \f{tab}. En effet, si l'on choisit la phrase suivante comme invariant, pour une itération $i$ donnée : \[\text{« le tableau \f{tab[:i]} est trié »}\]
+		On utilise ici la notation python pour le saucissonnage de \f{tab}.
+		\begin{enumerate}[i)]
+			\item Il est clair que lorsque $i=0$, \f{tab[:0]} est trié puisqu'il est vide.
+			\item On suppose que pour un $i$ donné (une itération donnée), \f{tab[:i]} est trié. Ainsi, à l'itération suivante, le $i$ème élément sera placé dans \f{tab[:i+1]} de sorte que tous les élements à droite soient plus grands et que tous les éléments à gauche soient plus petits : en effet, ceci est contrôlé par la condition \f{tab[pos]<tab[pos - 1]}. Le tableau \f{tab[:i]} étant déjà trié par hypothèse de récurrence, le tableau \f{tab[:i + 1]} l'est aussi.
+			\item par le principe de récurrence, la phrase déclarée plus haut est bien un invariant de boucle. Ceci prouve la correction de l'algorithme.
+		\end{enumerate} 
+		\item En supposant que les opérations faites à l'intérieur de la boucle \f{while} soient effectuées en temps constant, on a alors une complexité en $\sum_{i=0}^{n - 1}\sum_{j=1}^i\Theta(1)=\sum_{i=1}^{n-1}\Theta(j)=\Theta\left(\frac{n(n-1)}2\right)=\Theta(n^2)$.
+		\item On programme la fonction \f{tri\_cluster} qui comporte les modifications voulues.
+		\begin{lstlisting}
+			void tri_cluster(struct nuage* n){
+				int pos;
+				for(int i = 0; i < n->taille; i++){
+					pos = i;
+					while(pos > 0 && n->P[pos].x < n->P[pos - 1].x){
+						struct point tmp = n->P[pos];
+						n->P[pos] = n->P[pos - 1];
+						n->P[pos - 1] = tmp;
+						pos = pos - 1;
+					}
+				}
+			}
+		\end{lstlisting}
+		\item L'algorithme de tri par tas est un algorithme de tri de complexité $\mathcal O(n\log n)$ au pire des cas.
+		\item On programme la fonction \f{sous\_cluster}.
+		\begin{lstlisting}
+			/*
+				Input:	
+					c: parametre de type pointeur sur struct cluster; cluster dont on veut former un sous-cluster
+					min: parametre de type double; abscisse minimale
+					max: parametre de type double; abscisse maximale
+				Output: Sous-cluster du cluster c dont les abscisses sont comprises entre min et max.
+			**/
+			struct cluster* sous_cluster(struct cluster* c, double min, double max){
+				assert(!(c == NULL))
+				struct cluster* result;
+				struct nuage* N;
+				int a, b;
+				for(int i = 1; i < c->taille; i++){
+					if(c->N->P[c->abs[i]] >= min){
+						a = i;
+					}
+				}
+				for(int i = c->taille - 1; i >= 0; i--){
+					if(c->N->P[c->abs[i]] <= max){
+						b = i;
+					}
+				}
+				result = (struct cluster*) malloc((b - a + 1)*sizeof(struct cluster));
+				N = (struct nuage*) malloc((b - a + 1)*sizeof(struct nuage));
+				result->abs = (int*) malloc((b - a +1)*sizeof(int));
+				result->ord = (int*) malloc((b - a +1)*sizeof(int));
+				N->taille = b - a + 1;
+				result->taille = N->taille;
+				for(int i = 0; i + a <= b; i++){
+					result->abs[i] = c->abs[i + a];
+					result->ord[i] = c->abs[i + a];
+					N->P[i] = c->N->P[result->abs[i]];
+				}
+				result->N = N;
+				return result;
+			}
+		\end{lstlisting}
+		\item On programme la fonction \f{mediane}.
+		\begin{lstlisting}
+			/*
+				Input:	
+					c: parametre de type pointeur sur struct cluster; cluster dont on veut recuperer la mediane
+				Output: mediane du cluster fourni en parametre
+			**/
+			double mediane(struct cluster* c){
+				assert(!(c == NULL));
+				return c->N->P[c->abs[c->taille/2]].x;
+			}
+		\end{lstlisting}
+		\item On programme la fonction \f{gauche}.
+		\begin{lstlisting}
+			/*
+				Input:	
+					c: parametre de type pointeur sur struct cluster; cluster dont on veut recuperer la partie gauche
+				Output: Partie gauche du cluster fourni en parametre
+			**/
+			struct cluster* gauche(struct cluster *c){
+				return sous_cluster(c, c->N->P[c->abs[0]].x, mediane(c));
+			}
+		\end{lstlisting}
+		\item Si l'on choisit un premier point en dehors de l'intervalle $[x_0-\delta,x_0+\delta]$, la distance entre celui-ci et un point quelconque de l'autre moitié du cluster sera forcément strictement supérieure à $\delta$; on se rend alors compte que si on choisit deux points de deux clusters à une distance $\delta$ l'un de l'autre, on les trouvera forcément dans $[x_0-\delta,x_0+\delta]$.
+		\item On programme la fonction \f{bande\_centrale}.
+		\begin{lstlisting}
+			/*
+				Input:	
+					c: parametre de type pointeur sur struct cluster; cluster dont on veut recuperer un sous-clusters dont les points sont a une distance au plus d0 de la mediane.
+					d0: parametre de type double; distance maximale de la mediane.
+				Output: Bande centrale de largeur 2*d0.
+			**/
+			struct cluster* bande_centrale(struct cluster* c, double d0){
+				return sous_cluster(c, mediane(c) - d0, mediane(c) + d0);
+			}
+		\end{lstlisting}
+		\item Voir le fichier \f{part2.c}.
+		\item Voir le fichier \f{part2.c}.
+		\item Lors du premier appel de la fonction, on effectue plusieurs opérations : 
+		\begin{enumerate}[i)]
+			\item l'appel récursif de cette même fonction, deux fois pour un cluster de taille deux fois moindre (donc $n/2$).
+			\item un appel à la fonction fusion avec une entrée de taille $n$.
+		\end{enumerate}
+		En notant $C(n)$ le nombre d'opérations effectuées pour une entrée de taille $n$, on a bien $C(n)=2C(n/2)+\mathcal{O}(n)$ (\f{fusion} ayant une complexité linéaire).
+		\item On suppose qu'il existe $k\in\N$ tel que $n=2^k$, on pourra ainsi note $C_k=C(2^k)$. D'où \[C_k=2C_{k-1}+\mathcal{O}(n)\]
+		Par récurrence, on obtient que 
+		\begin{align*}
+			C_k &= 2^kC_0+\sum_{i=0}^{k-1}2^i\mathcal{O}(2^{k-i})\\
+				&= 2^kC_0+\sum_{i=0}^{k-1}\mathcal{O}(2^k)\\
+				&= 2^kC_0+\mathcal{O}(k2^k)\\
+		\end{align*}
+		Finalement \[C(n)=nC_0+\mathcal{O}(n\log_2(n)\]
+		Or, $C_0$ est une constante, donc $C(n)=\mathcal{O}(n\log n)$.
+	\end{enumerate}
+
+\end{document}
