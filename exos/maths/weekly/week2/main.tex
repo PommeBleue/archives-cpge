@@ -126,7 +126,20 @@ Q}}\kern5pt}
 \makeatother
 
 \begin{document}
+	\subsubsection*{\textsc{Louis Marchal}}
+	Soit $f:\R \to \R$ une fonction continue. On suppose que l'équation différentielle $(E)\ :\ y'=f(y)$ admet une solution $\phi$ définie sur $\R$ bornée sur $\R$. 
 	\begin{enumerate}
-		\item 
+		\item On suppose dans un premier temps que $f$ ne s'annule jamais. Justifier que $f$ garde un signe constant. On supposera dans la suite que $\forall t\in R,\ f(t)>0$.
+		\item En déduire que $\phi$ est strictement croissante et qu'elle converge en $+\infty$.
+		\item En admettant que \[\lim_{t\to +\infty}f(\phi(t))=f\left(\lim_{t\to +\infty}\phi(t)\right)\]
+		montrer que $\phi'$ converge vers une limite $\ell'$ que l'on exprimera en fonction de $\ell=\lim_{t\to +\infty}\phi(t)$.
+		\item On admet ce qui suit :\\
+		\begin{tabular}{|p{7cm}|}
+			\hline
+			Soit $f:I\to \R$, $a,\ell\in\R$, alors \[\lim_{t\to +\infty}f(t)=\ell \implique \lim_{t\to +\infty} \int_a^tf(x)\dd x=\lim_{t\to +\infty}\ell t\]
+			\\
+			\hline
+		\end{tabular}\\
+		En déduire que $f$ s'annule.
 	\end{enumerate}
 \end{document}

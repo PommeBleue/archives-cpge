@@ -20,14 +20,14 @@ def charge_primaire(V, t):
 	"""Fonction demandée à la question 8.
 	"""
 	x, y = V
-	return [y, (_OMEGA_0**2)*(_Q0 - x)]
+	return [y, -y*(_OMEGA_0/_Q) + (_OMEGA_0**2)*(_Q0 - x)]
 
 
 if __name__ == "__main__":	
-	t = np.linspace(0, 0.1, _N)
-	result = odeint(charge_primaire, [0, 0], t)
+	t = np.linspace(0, 0.05, _N)
+	result = odeint(charge_primaire, [0, _E/_R], t)
 	plt.plot(t, result[:,0], "-r", label="num")
-	plt.plot(t, (-_Q0*np.cos(_OMEGA*t)-(_MU*_Q0/_OMEGA)*np.sin(_OMEGA*t))*np.exp(-_MU*t) + _Q0, "-b", label="anal")
+	plt.plot(t, (-_Q0*np.cos(_OMEGA*t)+((_E/_R-_MU*_Q0)/_OMEGA)*np.sin(_OMEGA*t))*np.exp(-_MU*t) + _Q0, "-b", label="anal")
 	plt.legend()
 	plt.show()
 
