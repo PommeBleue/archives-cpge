@@ -1,0 +1,203 @@
+% Preamble
+\documentclass[10pt]{article}
+
+% Math related packages.
+\usepackage{amsfonts, amsthm, amsmath, amssymb, amstext}
+\usepackage{mathtools}
+\usepackage{physics}
+\usepackage{cancel, textcomp}
+\usepackage[mathscr]{euscript}
+\usepackage[nointegrals]{wasysym}
+\usepackage[left=3cm, right=3cm, top=1.5cm, bottom=1.5cm]{geometry}
+
+\usepackage{esvect}
+\usepackage{IEEEtrantools}
+
+% Font related packages.
+\usepackage[french]{babel}
+\usepackage[unicode]{hyperref}
+\usepackage[fontsize = 10pt]{scrextend}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[finemath]{kotex}
+\usepackage{dhucs-nanumfont}
+\usepackage{mathpazo}
+\usepackage{FiraMono}
+\usepackage{mathrsfs}
+
+% Other
+\usepackage{enumerate}
+\usepackage[shortlabels]{enumitem}
+\usepackage{tabularx}
+\usepackage[object=vectorian]{pgfornament}
+\usepackage{pgf}
+\usepackage{pgfpages}
+\usepackage[european,straightvoltages]{circuitikz}
+\usepackage{scalerel}
+\usepackage{stackengine}
+
+
+% A more colorful world.
+\usepackage{xcolor}
+
+% Display Source Code
+\usepackage{listings}
+\lstset{
+    language=C,
+    basicstyle=\small\ttfamily\mdseries,
+    numberstyle=\color{gray},
+    stringstyle=\color[HTML]{933797},
+    commentstyle=\color[HTML]{228B22},
+    emph={[2]from,with,import,as,pass,return,and,or,not},
+    emphstyle={[2]\color[HTML]{DD52F0}},
+    emph={[3]range,format,enumerate,print},
+    emphstyle={[3]\color[HTML]{D17032}},
+    emph={[4]if,elif,else,for,while,in,def,lambda,int,float,all,len},
+    emphstyle={[4]\color{blue}},
+    emph={[5]abs},
+    emphstyle={[5]\color{black}},
+    showstringspaces=false,
+    breaklines=true,
+    prebreak=\mbox{{\color{gray}\tiny$\searrow$}},
+    numbers=left,
+    xleftmargin=15pt
+}
+
+% OPTIONS
+\everymath\expandafter{\the\everymath\displaystyle}
+
+% COMMANDS
+\newcommand{\f}[1]{\texttt{#1}}
+\newcommand{\sct}[1]{
+	\begin{center}
+		\Large\textbf{#1}
+	\end{center}
+}
+\newcommand{\subsct}[1]{
+	\begin{center}
+		\large\textbf{#1}
+	\end{center}
+}
+\newcommand{\inl}[2]{[\![#1, #2]\!]}
+\newcommand{\q}[1]{\textbf{#1.}\quad}
+\newcommand{\urlsymbol}{\kern1pt\vbox to .5ex{}\raise.10ex\hbox{\pdfliteral{%
+    q .8 0 0 .8 0 0 cm
+    2.5 5 m 1 j 1 J .8 w
+    1 5 l 0 5 0 4 y 0 1 l 0 0 1 0 y 4 0 l 5 0 5 1 y 5 2.5 l S
+    3 3 m 6 6 l S 4 6 m 6 6 l 6 4 l S
+Q}}\kern5pt}
+
+\newcounter{iloop}
+\newcommand\openbigstar[1][0.7]{%
+  \scalerel*{%
+    \stackinset{c}{-.125pt}{c}{}{\scalebox{#1}{\color{white}{$\bigstar$}}}{%
+      $\bigstar$}%
+  }{\bigstar}
+}
+\newcommand{\Stars}[1]{\ensuremath{%
+\pgfmathtruncatemacro{\imax}{ifthenelse(int(#1)==#1,#1-1,#1)}%
+\pgfmathsetmacro{\xrest}{0.9*(1-#1+\imax)}%
+\setcounter{iloop}{0}%
+\loop\stepcounter{iloop}\ifnum\value{iloop}<\the\numexpr\imax+1
+\bigstar\repeat
+\openbigstar[\xrest]%
+\setcounter{iloop}{0}%
+\loop\stepcounter{iloop}\ifnum\value{iloop}<\the\numexpr5-\imax\relax
+\openbigstar[.9]\repeat}}
+
+
+\def\N{\mathbb N}
+\def\Z{\mathbb Z}
+\def\Q{\mathbb Q}
+\def\R{\mathbb R}
+\def\Rpe{\mathbb R_+^*}
+\def\C{\mathbb C}
+\def\K{\mathbb K}
+\def\L{\mathbb L}
+
+\def\prts{\mathcal{P}}
+\def\P{\mathscr{P}}
+
+\def\vide{\emptyset}
+
+\def\ssi{\Leftrightarrow}
+\def\Ssi{\Longleftrightarrow}
+\def\implique{\Longrightarrow}
+
+\def\sep{\noindent\makebox[\linewidth]{\rule{\paperwidth}{0.4pt}}}
+
+% CUSTOM TITLE
+\makeatletter
+\def\@maketitle{%
+	\newpage
+	%  \null% DELETED
+	%  \vskip 2em% DELETED
+	\begin{center}%
+		\let \footnote \thanks
+		{\LARGE \@title \par}%
+		\vskip 1em%
+		{\large
+			\lineskip .5em%
+			\begin{tabular}[t]{c}%
+				\@author
+			\end{tabular}\par}%
+		\vskip 1em%
+		{\large \@date}%
+	\end{center}%
+	\par
+	\vskip -1em}
+\makeatother
+
+\title{Semaine 2}
+
+\begin{document}
+	\maketitle
+	\subsubsection*{\textsc{Pierre-Gabriel Berlureau} \Stars{4}}
+	\begin{enumerate}
+		\item Le premier exemple est simple, on se concentre sur le cas $\mathcal{P}(X)$. D'abord, il est évident que $\vide\in\prts(X)$ et $X\in\prts(X)$. L'union d'une familles de parties de $X$ est évidemment aussi une partie de $X$, de même pour l'intéresection, ainsi $\prts(X)$ est une topologie sur $X$.
+		\item Itérativement.
+		\item
+		\begin{itemize}
+			\item $\emptyset$ est évidemment un ouvert de $\R$, puisque la phrase $\forall x\in\vide\dots$ est toujours vraie.
+			\item $\R$ est un ouvert de $\R$, on pourra prendre $\epsilon=1$ pour le montrer.
+			\item $[a,b]$ n'est pas un ouvert de $\R$. En effet, $a\in[a,b]$, or, pour tout $\epsilon\in\R_+^*$, $a-\epsilon<a$, d'où $a-\epsilon<a-\frac\epsilon2<a$, d'où l'existence d'un élément $x\in]a-\epsilon,a+\epsilon[$ tel que $x\notin[a,b]$.
+			\item $]a,b[$, oui. Soit $x\in]a,b[$, on pose $\epsilon_1=x-a$ et $\epsilon_2=b-x$ et $\epsilon=\frac{\min(\epsilon_1,\epsilon_2)}2$, ainsi $x-\epsilon>a$ et $x+\epsilon<b$ donc $]x-\epsilon,x+\epsilon[\subset]a,b[$.
+		\end{itemize}
+		\item On pose $\mathcal{O}=\lbrace U\in\prts(\R)|\forall x\in U,\ \exists\epsilon\in\Rpe,\ ]x-\epsilon,x+\epsilon[\subset U\rbrace$. Ainsi, on a que $\mathcal{O}$ est un sous-ensemble de $\prts(\R)$, et $\vide,\R\in\mathcal{O}$. Soit $I$ un ensemble, $(U_i)_{i\in I}$ une famille d'éléments de $\mathcal{O}$. Soit $x\in\bigcup_{i\in I}U_i$, alors $\exists i\in I,\ x\in U_i$, il existe donc $\epsilon\in\Rpe$ tel que $]x-\epsilon,x+\epsilon[\subset U_i$ donc $]x-\epsilon,x+\epsilon[\subset \bigcup_{i\in I}U_i$, ainsi $\bigcup_{i\in I}U_i$ est un ouvert de $\R$. La preuve pour l'interesction est de même nature, il faudra juste prendre le minimum des deux $\epsilon$ que l'on a durant la preuve. Ainsi, on a montré que $\mathcal{O}$ est une topologie sur $\R$. 
+		\item Vérifications faciles. L'union ne donne pas toujours des topologies sur $X$, considérer $\mathcal{O}$ et $\lbrace \vide,[a,b],\R$.
+		\item Considérer l'intersection des topologies contenant $\mathcal{A}$.
+	\end{enumerate}
+	\subsubsection*{\textsc{Matteo Delfour} \Stars{2}}
+		\paragraph{Analyse} Soit $f\in\R^\R$ telle que \[\forall x,y\in\R,\quad f(x-f(y))=2-x-y\]
+		Soit $x\in\R$, alors on a $f(-f(x))=2-x$, donc ce résultat est vrai pour tout $x\in\R$. Soit $x\in\R$, on a alors $f(x-f(2))=-x$ donc $-f(x-f(2))=x$ donc $f(-f(x-f(2)))=f(x)$ donc $2-(x-f(2))=f(x)$ donc $f(x)=2-x+f(2)$. On en déduit que \[\exists\lambda\in\R,\ \forall x\in\R,\ f(x)=2-x+\lambda\]
+		Le reste du raisonnement est simple.
+		\paragraph{Synthèse} Facile.
+	\subsubsection*{\textsc{Yanis Grigy} \Stars{3}}
+		Supposons que $\mathbb{P}$ est fini, on note $p_1,\dots,p_n$ les $n\in\N^*$ nombres premiers et on pose $N=p_1\dots p_n +1$. Ainsi, $N$ admet un diviseur premier, que l'on note $p_k$ qui divise donc $N-p_1\dots p_n$, donc $p_k$ divise $1$, ce qui est absurde.
+	\subsubsection*{\textsc{Louis Marchal} \Stars{5}}
+		On le montre par l'absurde. 
+		Soit $n\in\N^*$, on suppose $\left(\frac{3+4i}{5}\right)^n=1$, donc $(3+4i)^n=5^n$, donc \[\sum_{k=0}^n\binom{n}{k}3^{n-k}(4i)^k=5^n\] donc \[\sum_{1\leq 2k+1\leq n}(-1)^k\binom{n}{2k+1}3^{n-(2k+1)}4^{2k+1}=0\] donc \[\sum_{3\leq 2k+1\leq n}(-1)^k\binom{n}{2k+1}3^{n-(2k+1)}4^{2k}+n=0\] donc $4$ divise $n$ (on vient juste d'éliminer tous les eniters non congrus à $0$ mod $4$, reste à chercher une absurdité avec ceux-là).\\
+
+		Soit à présent $m\in\N^*$, on a 
+		\begin{align*}
+			(3+4i)^{4m} &=\sum_{k=0}^4m\binom{4m}k3^{4m-k}(4i)^k\\
+						&=\sum_{k=0}^{2m}(-1)^k\binom{4m}{2k}3^{4m-2k}4^{2k}+i\sum_{k=0}^{2m-1}(-1)^k\binom{4m}{2k+1}3^{4m-(2k+1)}4^{2k+1}
+		\end{align*}
+		Mais aussi $z:=(3+4i)^{4m}=5^{4m}$.\\
+		 On a \[\Re(z)=\sum_{k=0}^{2m}(-1)^k\binom{4m}{2k}3^{4m-2k}4^{2k}\equiv \sum_{k=0}^{2m}(-1)^k\binom{4m}{2k}(-1)^{2m-k}\equiv\sum_{k=0}^{2m}\binom{4m}{2k}[5]\]
+		et 
+		\begin{align*}
+			\Im(z)=\sum_{k=0}^{2m-1}(-1)^k\binom{4m}{2k+1}3^{4m-(2k+1)}4^{2k+1}&=\sum_{k=0}^{2m-1}(-1)^k\binom{4m}{2k+1}3^{4m-(2k)}4^{2k}\\&\equiv\sum_{k=0}^{2m-1}(-1)^k\binom{4m}{2k+1}(-1)^{2m-k}\\&\equiv \sum_{k=0}^{2m-1}\binom{4m}{2k+1}[5]
+		\end{align*}
+		Donc $\Re(z)+\Im(z)\equiv\sum_{k=0}^{4m}\binom{4m}{k}[5]$, mais $\Re(z)+\Im(z)=5^{4m}$, donc $5^{4m}\equiv 2^{4m}[5]$, donc $2^{4m}\equiv0[5]$, ce qui est absurde.
+	\subsubsection*{\textsc{Shems} \Stars{3}}
+		Soit $m\in\N$,
+		\begin{align*}
+			\int_0^\pi \sin^{2m}x\cos(2mx)\dd x &=\Re\left(\int_0^\pi \sin^{2m}xe^{i2mx}\dd x\right)\\
+												&=\Re\left(\int_0^\pi \left(\sin(x)e^{ix}\right)^{2m}\dd x\right)\\
+												&=\frac{(-1)^m}{4^m}\Re\left(\int_0^\pi \left(2i\sin(x)e^{ix}\right)^{2m}\dd x\right)\\
+												&=\frac{(-1)^m\pi}{4^m}
+		\end{align*}
+		La relation de récurrence pour la seconde est, pour $m>2$ : \[I_m=\frac{m-1}{m-2}I_{m-2}\]
+
+\end{document}

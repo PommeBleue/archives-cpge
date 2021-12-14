@@ -1,0 +1,224 @@
+% Preamble
+\documentclass[10pt]{article}
+
+% Math related packages.
+\usepackage{amsfonts, amsthm, amsmath, amssymb, amstext}
+
+\usepackage{mathtools}
+\usepackage{physics}
+\usepackage{cancel, textcomp}
+\usepackage[mathscr]{euscript}
+\usepackage[nointegrals]{wasysym}
+\usepackage[left=3cm, right=3cm, top=1.5cm, bottom=1.5cm]{geometry}
+
+\usepackage{esvect}
+\usepackage{IEEEtrantools}
+
+% Font related packages.
+\usepackage[french]{babel}
+\usepackage[unicode]{hyperref}
+\usepackage[fontsize = 10pt]{scrextend}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[finemath]{kotex}
+\usepackage{dhucs-nanumfont}
+\usepackage{mathpazo}
+\usepackage{FiraMono}
+\usepackage{mathrsfs}
+
+% Other
+\usepackage{enumerate}
+\usepackage[shortlabels]{enumitem}
+\usepackage{tabularx}
+\usepackage[object=vectorian]{pgfornament}
+\usepackage{pgf}
+\usepackage{pgfpages}
+\usepackage[european,straightvoltages]{circuitikz}
+\usepackage{scalerel}
+\usepackage{stackengine}
+
+
+% A more colorful world.
+\usepackage{xcolor}
+
+% Display Source Code
+\usepackage{listings}
+\lstset{
+    language=C,
+    basicstyle=\small\ttfamily\mdseries,
+    numberstyle=\color{gray},
+    stringstyle=\color[HTML]{933797},
+    commentstyle=\color[HTML]{228B22},
+    emph={[2]from,with,import,as,pass,return,and,or,not},
+    emphstyle={[2]\color[HTML]{DD52F0}},
+    emph={[3]range,format,enumerate,print},
+    emphstyle={[3]\color[HTML]{D17032}},
+    emph={[4]if,elif,else,for,while,in,def,lambda,int,float,all,len},
+    emphstyle={[4]\color{blue}},
+    emph={[5]abs},
+    emphstyle={[5]\color{black}},
+    showstringspaces=false,
+    breaklines=true,
+    prebreak=\mbox{{\color{gray}\tiny$\searrow$}},
+    numbers=left,
+    xleftmargin=15pt
+}
+
+% OPTIONS
+\everymath\expandafter{\the\everymath\displaystyle}
+
+% COMMANDS
+\newcommand{\f}[1]{\texttt{#1}}
+\newcommand{\sct}[1]{
+	\begin{center}
+		\Large\textbf{#1}
+	\end{center}
+}
+\newcommand{\subsct}[1]{
+	\begin{center}
+		\large\textbf{#1}
+	\end{center}
+}
+\newcommand{\inl}[2]{[\![#1, #2]\!]}
+\newcommand{\q}[1]{\textbf{#1.}\quad}
+\newcommand{\urlsymbol}{\kern1pt\vbox to .5ex{}\raise.10ex\hbox{\pdfliteral{%
+    q .8 0 0 .8 0 0 cm
+    2.5 5 m 1 j 1 J .8 w
+    1 5 l 0 5 0 4 y 0 1 l 0 0 1 0 y 4 0 l 5 0 5 1 y 5 2.5 l S
+    3 3 m 6 6 l S 4 6 m 6 6 l 6 4 l S
+Q}}\kern5pt}
+
+\newcounter{iloop}
+\newcommand\openbigstar[1][0.7]{%
+  \scalerel*{%
+    \stackinset{c}{-.125pt}{c}{}{\scalebox{#1}{\color{white}{$\bigstar$}}}{%
+      $\bigstar$}%
+  }{\bigstar}
+}
+\newcommand{\Stars}[1]{\ensuremath{%
+\pgfmathtruncatemacro{\imax}{ifthenelse(int(#1)==#1,#1-1,#1)}%
+\pgfmathsetmacro{\xrest}{0.9*(1-#1+\imax)}%
+\setcounter{iloop}{0}%
+\loop\stepcounter{iloop}\ifnum\value{iloop}<\the\numexpr\imax+1
+\bigstar\repeat
+\openbigstar[\xrest]%
+\setcounter{iloop}{0}%
+\loop\stepcounter{iloop}\ifnum\value{iloop}<\the\numexpr5-\imax\relax
+\openbigstar[.9]\repeat}}
+
+
+\def\N{\mathbb N}
+\def\Z{\mathbb Z}
+\def\Q{\mathbb Q}
+\def\R{\mathbb R}
+\def\Rpe{\mathbb R_+^*}
+\def\C{\mathbb C}
+\def\K{\mathbb K}
+\def\L{\mathbb L}
+
+\def\P{\mathscr{P}}
+
+\def\ssi{\Leftrightarrow}
+\def\Ssi{\Longleftrightarrow}
+\def\implique{\Longrightarrow}
+
+\def\sep{\noindent\makebox[\linewidth]{\rule{\paperwidth}{0.4pt}}}
+
+% CUSTOM TITLE
+\makeatletter
+\def\@maketitle{%
+	\newpage
+	%  \null% DELETED
+	%  \vskip 2em% DELETED
+	\begin{center}%
+		\let \footnote \thanks
+		{\LARGE \@title \par}%
+		\vskip 1em%
+		{\large
+			\lineskip .5em%
+			\begin{tabular}[t]{c}%
+				\@author
+			\end{tabular}\par}%
+		\vskip 1em%
+		{\large \@date}%
+	\end{center}%
+	\par
+	\vskip -1em}
+\makeatother
+
+\title{Semaine 1}
+
+\begin{document}
+	\maketitle
+	\subsubsection*{\textsc{Louis Marchal} \Stars{4}}
+	\begin{enumerate}
+		\item On exprime la solution générale comme somme d'une solution de l'équation homogène et d'une solution particulière. L'une tend vers $0$ en $+\infty$ puisque $A\geq 0$, il suffit de justifier que la solution particulière tend vers $0$ en $+\infty$. Pour rappel : on obtient une solution particulière grâce à la méthode de la variation de la constante, c'est une primitive de $x\mapsto e^{A(x)}b(x)$, que l'on obtient grâce au $TFA$.
+		\item Même type d'argument, s'assurer de la convergence de la solution générale.
+	\end{enumerate}
+	\subsubsection*{\textsc{Pierre-Gabriel Berlureau} \Stars{3}}
+	Premièrement, on a
+	\begin{align*}
+		\int_0^\frac\pi4 \ln(1+\tan x)\dd x &= \int_0^\frac\pi4 \ln(\cos(x)+\sin(x))-\int_0^\frac\pi4\cos(x)\dd x\\
+											&= \int_0^\frac\pi4 \ln(\sqrt{2}\cos(x-\frac\pi4))\dd x-\int_0^\frac\pi4\cos(x)\dd x\\
+											&=\ln(\sqrt{2})\frac\pi4+\int_0^\frac\pi4\cos(x-\frac\pi4)-\int_0^\frac\pi4\cos(x)\dd x
+	\end{align*}
+	Or, en posant le changement de variable $t=\frac\pi4 - x$, on a $\int_0^\frac\pi4\cos(x-\frac\pi4)=\int_\frac\pi4^0-\cos t\dd t=\int_0^\frac\pi4\cos t\dd t$.\\
+	Finalement, $\boxed{I=\ln(\sqrt{2})\frac\pi4}$.
+	\subsubsection*{\textsc{Yanis Grigy}\Stars{3}}
+	Ton exercice consistait en un calcul d'intégrales. La petite difficulté était ici introduite par le paramètre entier naturel $n$. Mais rassure ta mère (je ne sais pas pourquoi j'ai dit ça, j'allais écrire rassure-toi et j'ai pensé à la vidéo de Cyprien), ce n'est pas si difficile que ça si on fait bien les choses !
+	\begin{enumerate}[a)]
+		\item On commence ici par chercher une relation de récurrence, i.e on veut exprimer $I_n$ en fonction des termes précédents. Pour cela, le plus évident est de recourir aux intégrations par parties, on a
+		\begin{align*}
+			I_n = \int_0^\frac\pi4 \tan^n (x) \dd x &=\int_0^\frac\pi4 \tan^2(x)(\tan^{n-2}(x))\dd x\\
+													&= \int_0^\frac\pi4 (1+\tan^2(x)-1)(\tan^{n-2}(x))\dd x\\
+													&=\left[\tan(x)\tan^{n-2}(x)\right]_0^\frac\pi4-\int_0^\frac\pi4\tan(x)(1+\tan^2(x))(n-2)\tan(x)^{n-3}\dd x -I_{n-2}\\
+													&=1-(n-2)[I_{n-2}+I_n]-I_{n-2}\\
+													&=1-(n-1)I_{n-2}-(n-2)I_n
+		\end{align*}
+		Finalement, on a $\boxed{I_n=\frac1{n-1}-I_{n-2}}$.\\
+		Ainsi, si $n$ est impair, on a \[I_n=\sum_{1\leq 2k+1\leq n-2}\frac{(-1)^k}{n-(2k+1)}+(-1)^{\lfloor\frac n2\rfloor}\ln\sqrt2\]
+		Et, sinon \[I_n=\sum_{1\leq 2k+1\leq n-1}\frac{(-1)^k}{n-(2k+1)}+(-1)^{\frac n2}\frac\pi4\]
+		\item L'idée est exactement la même, notre relation de récurrence ici est : $\boxed{I_n=\frac{(\sqrt{2})^{n-2}}{n-1}+\frac{n-2}{n-1}I_{n-2}}$.\\
+		Ainsi, si $n$ est impair, on a \[I_n=\sum_{k=0}^{\frac{n-1}2-1}\frac{(\sqrt{2})^{n-2(k+1)}\prod_{i=0}^{k-1}(n-2(i+1))}{\prod_{i=0}^k(n-(2k+1))}+\frac{\prod_{i=1}^{\frac{n-1}2}(n-2i)}{\prod_{i=0}^{\frac{n-1}2-1}(n-(2i+1))}\ln\left(\tan\left(\frac{3\pi}8\right)\right)\]
+		Et, sinon \[I_n=\sum_{k=0}^{\frac{n-1}2-1}\frac{(\sqrt{2})^{n-2(k+1)}\prod_{i=0}^{k-1}(n-2(i+1))}{\prod_{i=0}^k(n-(2k+1))}\]
+		\item Ici, notre relation de récurrence est $I_n=\left[x\ln^nx\right]_1^e-n\int_1^e\ln^{n-1}(x)\dd x=e-nI_{n-1}$.\\
+		Finalement, \[I_n=\sum_{k=0}^{n-1}(-1)^kn^ke+(-1)^n n^n(e-1)\]
+
+	\end{enumerate}
+	\subsubsection*{\textsc{Shems} \Stars{4}}
+	\begin{enumerate}
+		\item Soient $n\in\N$ et $x\in\R$. On a alors \[\cos((n+1)x)+\cos((n-1)x)=2\cos\frac{2n}2x\cos\frac{2x}2=2\cos(nx)\cos x\]
+		Donc $\boxed{\cos(n+1)x=2\cos(nx)\cos x-\cos(n-1)x}$.
+		\item On le montre par récurrence double. Pour tout $n\in\N$, on note \[\mathcal P_n:"\exists T_n\in\Z[X],\ \forall \theta\in\R,\  2\cos(n\theta)=T_n(2\cos\theta)"\]
+		\begin{itemize}
+			\item On pose $T_0=2$, $T_1=X$, d'où $\forall \theta\in\R,\ \widetilde{T_0}(2\cos(0\times \theta))=2=2\cos(0\times \theta)$ et $\forall \theta\in\R,\ \widetilde{T_1}(2\cos(x))=2\cos(x)$. Donc $\mathcal P_0$ et $\mathcal P_1$.
+			\item Soit $n\in\N$ tel que $\mathcal P_n$ et $\mathcal P_{n+1}$. Montrons $\mathcal P_{n+2}$.\\
+			On a montré que \[\forall\theta\in\R, \cos((n+2)\theta)=2\cos((n+1)\theta)\cos\theta-\cos(n\theta)\]
+			D'où \[\forall\theta\in\R,\ 2\cos((n+2)\theta)=2\cos((n+1)\theta)2\cos\theta-2\cos(n\theta)\]
+			Ainsi, on a que \[\forall\theta\in\R,\ 2\cos((n+2)\theta)=2\cos\theta\widetilde{T_{n+1}}(2\cos\theta)-\widetilde{T_n}(2\cos\theta)\]
+			On construit alors $T_{n+2}$ grâce à $T_{n+1}$ et $T_n$ : \[T_{n+1}=XT_{n+1}-T_n\]
+			$\mathcal P_{n+2}$.
+		\item OK.
+		\end{itemize}
+		\item Soit $a$ une racine rationnelle de $P$, il existe alors $(p,q)\in\Z\times\N^*$ tel que $a=\frac pq$. Ainsi, on a \[\widetilde{P}(a)=0\]
+		\def\a{\left(\frac pq\right)}
+		Donc \[\a^k+a_{k-1}\a^{k-1}+\dots+a_1\a+a_0=0\]
+		D'où \[\a^k=-a_{k-1}\a^{k-1}-\dots-a_1\a-a_0\]
+		Donc, en multipliant par $q^k$, \[p^k=-q\left(a_{k-1}\a^{k-1}q^{k-1}+\dots+a_1\a q^{k-1}+a_0q^{k-1}\right)\]
+		Ainsi, $q$ divise $p^k$, d'où $q$ divise $p$, donc $a\in\Z$.
+		\item Il existe $(p_1,q_1)\in\Z\times\N^*$ tel que $\theta=\frac{p_1\pi}{q_1}$. On a \[2\cos(q_1\theta)=\widetilde{T_{q_1}}(2\cos\theta)\]
+		Or, $2\cos(q_1\theta)=2\cos(p_1\pi)\in\Z$. Donc $2\cos\theta$ est un rationnel racine d'un polynôme de degré $q_1$ à coefficients entiers, donc $2\cos\theta\in\Z$. Or, comme $\theta\in\left[0,\frac\pi2\right]$, on a $2\cos\theta\in\lbrace0,1,2\rbrace$, d'où $\cos\theta\in\left\lbrace0,\frac12,1\right\rbrace$.
+	\end{enumerate}
+	\subsubsection*{\textsc{Matteo Delfour} \Stars{2}}
+	En posant le changement de variable $u=\sqrt[6]{1+t}$, d'où $6u^5\dd u=\dd t$, on a 
+	\begin{align*}
+		\int^x\frac{\dd t}{\sqrt{1+t}-\sqrt[3]{1+t}}&=\int^{\sqrt[6]{1+x}}\frac{6u^5\dd u}{u^3-u^2}\\
+													&=\int^{\sqrt[6]{1+x}}\frac{6u^3\dd u}{u-1}\\
+													&=\int^{\sqrt[6]{1+x}}\frac{6u^2(u-1+1)\dd u}{u-1}\\
+													&=\int^{\sqrt[6]{1+x}}\left(6u^2+\frac{6u(u-1+1)}{u-1}\right)\dd u\\
+													&=\int^{\sqrt[6]{1+x}}\left(6u^2+6u+\frac{6(u-1+1)}{u-1}\right)\dd u\\
+													&=\int^{\sqrt[6]{1+x}}\left(6u^2+6u+6+6\frac1{u-1}\right)\dd u\\
+													&=2\sqrt{1+x}+3\sqrt[3]{1+x}+6\sqrt[6]{1+x}+\ln|\sqrt[6]{1+x}-1|+C,\ \ C\in\R
+	\end{align*}
+
+\end{document}

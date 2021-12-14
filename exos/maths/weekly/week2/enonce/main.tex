@@ -33,6 +33,8 @@
 \usepackage{pgf}
 \usepackage{pgfpages}
 \usepackage[european,straightvoltages]{circuitikz}
+\usepackage{scalerel}
+\usepackage{stackengine}
 
 
 % A more colorful world.
@@ -85,6 +87,24 @@
     3 3 m 6 6 l S 4 6 m 6 6 l 6 4 l S
 Q}}\kern5pt}
 
+\newcounter{iloop}
+\newcommand\openbigstar[1][0.7]{%
+  \scalerel*{%
+    \stackinset{c}{-.125pt}{c}{}{\scalebox{#1}{\color{white}{$\bigstar$}}}{%
+      $\bigstar$}%
+  }{\bigstar}
+}
+\newcommand{\Stars}[1]{\ensuremath{%
+\pgfmathtruncatemacro{\imax}{ifthenelse(int(#1)==#1,#1-1,#1)}%
+\pgfmathsetmacro{\xrest}{0.9*(1-#1+\imax)}%
+\setcounter{iloop}{0}%
+\loop\stepcounter{iloop}\ifnum\value{iloop}<\the\numexpr\imax+1
+\bigstar\repeat
+\openbigstar[\xrest]%
+\setcounter{iloop}{0}%
+\loop\stepcounter{iloop}\ifnum\value{iloop}<\the\numexpr5-\imax\relax
+\openbigstar[.9]\repeat}}
+
 
 \def\N{\mathbb N}
 \def\Z{\mathbb Z}
@@ -125,21 +145,35 @@ Q}}\kern5pt}
 	\vskip -1em}
 \makeatother
 
+\title{Semaine 1}
+
 \begin{document}
-	\subsubsection*{\textsc{Louis Marchal}}
-	Soit $f:\R \to \R$ une fonction continue. On suppose que l'équation différentielle $(E)\ :\ y'=f(y)$ admet une solution $\phi$ définie sur $\R$ bornée sur $\R$. 
+	\maketitle
+	\subsubsection*{\textsc{Louis Marchal} \Stars{4}}
+	Soient $a$ et $b$ deux fonctions continues telles que $a\geq 1$ sur $\R$.
 	\begin{enumerate}
-		\item On suppose dans un premier temps que $f$ ne s'annule jamais. Justifier que $f$ garde un signe constant. On supposera dans la suite que $\forall t\in R,\ f(t)>0$.
-		\item En déduire que $\phi$ est strictement croissante et qu'elle converge en $+\infty$.
-		\item En admettant que \[\lim_{t\to +\infty}f(\phi(t))=f\left(\lim_{t\to +\infty}\phi(t)\right)\]
-		montrer que $\phi'$ converge vers une limite $\ell'$ que l'on exprimera en fonction de $\ell=\lim_{t\to +\infty}\phi(t)$.
-		\item On admet ce qui suit :\\
-		\begin{tabular}{|p{7cm}|}
-			\hline
-			Soit $f:I\to \R$, $a,\ell\in\R$, alors \[\lim_{t\to +\infty}f(t)=\ell \implique \lim_{t\to +\infty} \int_a^tf(x)\dd x=\lim_{t\to +\infty}\ell t\]
-			\\
-			\hline
-		\end{tabular}\\
-		En déduire que $f$ s'annule.
+		\item Montrer que si $\lim_{x\to +\infty}b(x)=0$, alors toute solution de l'équation différentielle $y'+a(x)y=b(x)$ vérifie $\lim_{x\to +\infty}y(x)=0$.
+		\item Montrer que si $b\geq 0$ et $\lim_{x\to -\infty}b(x)=0$, alors il existe une et une seule solution de l'équation $y'+a(x)y=b(x)$ telle que $\lim_{x\to -\infty}y(x)=0$. Que peut-on dire des limites des autres solutions ?
 	\end{enumerate}
+	\subsubsection*{\textsc{Pierre-Gabriel Berlureau} \Stars{3}}
+	En remplaçant $\tan x$ par $\frac{\sin x}{\cos x}$, calculer l'intégrale suivante \[I=\int_0^{\frac\pi4}\ln(1+\tan x)\dd x\]
+	\subsubsection*{\textsc{Yanis Grigy}\Stars{3}}
+	Calculer
+	\begin{tabular}{c c c}
+		\textbf{a)} $I_n=\int_0^{\frac\pi4} \tan^n x\dd x$ & \textbf{b)} $I_n=\int_0^{\frac\pi4} \frac{\dd x}{\cos^n(x)}$ & \textbf{c)} $I_n=\int_1^e \log^n x\dd x$
+	\end{tabular}.
+	\subsubsection*{\textsc{Shems} \Stars{4}}
+	\begin{enumerate}
+		\item Montrer que \[\forall x\in\R,\ \forall n\in\N,\quad \cos((n+1)x)=2\cos(nx)\cos(x)-\cos((n-1)x).\]
+		\item En déduire que pour tout $n\in\N$, il existe un polynôme, que l'on note $T_n$, tel que \[\forall \theta\in\R,\quad 2\cos(n\theta)=T_n(2\cos(\theta)).\]
+		\item Soit la fonction polynômiale $P:x\in\R\mapsto\sum_{i=0}^ka_ix^i\in\R$, où $k\in\N^*$ et $a_0,\dots,a_{k-1}\in\Z$ et $a_k=1$.\\
+
+		Soit $a$ une racine rationnelle de $P$. En écrivant a sous la forme $a=\frac pq$ avec $(p,q)\in\Z\times\N^*$, $p$ et $q$ premiers entre eux, montrer que $a\in\Z$.
+		\item (En bonus) En déduire le théorème de Niven :\\
+
+		Soit $\theta\in[0,\frac\pi2]$ tel que $\frac\theta\pi\in\Q$. Montrer que si $\cos\theta\in\Q$, alors $\cos\theta\in\left\lbrace0,\frac12,1\right\rbrace$.
+	\end{enumerate}
+	\subsubsection*{\textsc{Matteo Delfour} \Stars{2}}
+	À l'aide d'un changement de variable judicieux, calculer \[\int^x\frac{dt}{\sqrt{1+t}-\sqrt[3]{1+t}}\]
+
 \end{document}

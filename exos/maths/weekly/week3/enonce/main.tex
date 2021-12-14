@@ -1,0 +1,185 @@
+% Preamble
+\documentclass[10pt]{article}
+
+% Math related packages.
+\usepackage{amsfonts, amsthm, amsmath, amssymb, amstext}
+\usepackage{mathtools}
+\usepackage{physics}
+\usepackage{cancel, textcomp}
+\usepackage[mathscr]{euscript}
+\usepackage[nointegrals]{wasysym}
+\usepackage[left=3cm, right=3cm, top=1.5cm, bottom=1.5cm]{geometry}
+
+\usepackage{esvect}
+\usepackage{IEEEtrantools}
+
+% Font related packages.
+\usepackage[french]{babel}
+\usepackage[unicode]{hyperref}
+\usepackage[fontsize = 10pt]{scrextend}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[finemath]{kotex}
+\usepackage{dhucs-nanumfont}
+\usepackage{mathpazo}
+\usepackage{FiraMono}
+\usepackage{mathrsfs}
+
+% Other
+\usepackage{enumerate}
+\usepackage[shortlabels]{enumitem}
+\usepackage{tabularx}
+\usepackage[object=vectorian]{pgfornament}
+\usepackage{pgf}
+\usepackage{pgfpages}
+\usepackage[european,straightvoltages]{circuitikz}
+\usepackage{scalerel}
+\usepackage{stackengine}
+
+
+% A more colorful world.
+\usepackage{xcolor}
+
+% Display Source Code
+\usepackage{listings}
+\lstset{
+    language=C,
+    basicstyle=\small\ttfamily\mdseries,
+    numberstyle=\color{gray},
+    stringstyle=\color[HTML]{933797},
+    commentstyle=\color[HTML]{228B22},
+    emph={[2]from,with,import,as,pass,return,and,or,not},
+    emphstyle={[2]\color[HTML]{DD52F0}},
+    emph={[3]range,format,enumerate,print},
+    emphstyle={[3]\color[HTML]{D17032}},
+    emph={[4]if,elif,else,for,while,in,def,lambda,int,float,all,len},
+    emphstyle={[4]\color{blue}},
+    emph={[5]abs},
+    emphstyle={[5]\color{black}},
+    showstringspaces=false,
+    breaklines=true,
+    prebreak=\mbox{{\color{gray}\tiny$\searrow$}},
+    numbers=left,
+    xleftmargin=15pt
+}
+
+% OPTIONS
+\everymath\expandafter{\the\everymath\displaystyle}
+
+% COMMANDS
+\newcommand{\f}[1]{\texttt{#1}}
+\newcommand{\sct}[1]{
+	\begin{center}
+		\Large\textbf{#1}
+	\end{center}
+}
+\newcommand{\subsct}[1]{
+	\begin{center}
+		\large\textbf{#1}
+	\end{center}
+}
+\newcommand{\inl}[2]{[\![#1, #2]\!]}
+\newcommand{\q}[1]{\textbf{#1.}\quad}
+\newcommand{\urlsymbol}{\kern1pt\vbox to .5ex{}\raise.10ex\hbox{\pdfliteral{%
+    q .8 0 0 .8 0 0 cm
+    2.5 5 m 1 j 1 J .8 w
+    1 5 l 0 5 0 4 y 0 1 l 0 0 1 0 y 4 0 l 5 0 5 1 y 5 2.5 l S
+    3 3 m 6 6 l S 4 6 m 6 6 l 6 4 l S
+Q}}\kern5pt}
+
+\newcounter{iloop}
+\newcommand\openbigstar[1][0.7]{%
+  \scalerel*{%
+    \stackinset{c}{-.125pt}{c}{}{\scalebox{#1}{\color{white}{$\bigstar$}}}{%
+      $\bigstar$}%
+  }{\bigstar}
+}
+\newcommand{\Stars}[1]{\ensuremath{%
+\pgfmathtruncatemacro{\imax}{ifthenelse(int(#1)==#1,#1-1,#1)}%
+\pgfmathsetmacro{\xrest}{0.9*(1-#1+\imax)}%
+\setcounter{iloop}{0}%
+\loop\stepcounter{iloop}\ifnum\value{iloop}<\the\numexpr\imax+1
+\bigstar\repeat
+\openbigstar[\xrest]%
+\setcounter{iloop}{0}%
+\loop\stepcounter{iloop}\ifnum\value{iloop}<\the\numexpr5-\imax\relax
+\openbigstar[.9]\repeat}}
+
+
+\def\N{\mathbb N}
+\def\Z{\mathbb Z}
+\def\Q{\mathbb Q}
+\def\R{\mathbb R}
+\def\Rpe{\mathbb R_+^*}
+\def\C{\mathbb C}
+\def\K{\mathbb K}
+\def\L{\mathbb L}
+
+\def\P{\mathscr{P}}
+
+\def\ssi{\Leftrightarrow}
+\def\Ssi{\Longleftrightarrow}
+\def\implique{\Longrightarrow}
+
+\def\sep{\noindent\makebox[\linewidth]{\rule{\paperwidth}{0.4pt}}}
+
+% CUSTOM TITLE
+\makeatletter
+\def\@maketitle{%
+	\newpage
+	%  \null% DELETED
+	%  \vskip 2em% DELETED
+	\begin{center}%
+		\let \footnote \thanks
+		{\LARGE \@title \par}%
+		\vskip 1em%
+		{\large
+			\lineskip .5em%
+			\begin{tabular}[t]{c}%
+				\@author
+			\end{tabular}\par}%
+		\vskip 1em%
+		{\large \@date}%
+	\end{center}%
+	\par
+	\vskip -1em}
+\makeatother
+
+\title{Semaine 2}
+
+\begin{document}
+	\maketitle
+	\subsubsection*{\textsc{Pierre-Gabriel Berlureau} \Stars{4}}
+	Lorsque $X$ est un ensemble, si $\mathcal T$ est un sous-ensemble de $\mathcal P(X)$, on dit que $\mathcal T$ est une topologie sur $X$ si et seulement si 
+	\begin{itemize}
+		\item $\emptyset\in\mathcal T$ et $X\in\mathcal T$;
+		\item Pour tout ensemble $I$, pour toute famille $(U_i)_{i\in I}$ d'éléments de $\mathcal T$, $\bigcup_{i\in I}U_i\in\mathcal T$;
+		\item Pour tout $U,V\in\mathcal T$, $U\cap V\in\mathcal T$.
+	\end{itemize}
+	\begin{enumerate}
+		\item Soit $X$ un ensemble. Montrer que $\lbrace\emptyset,X\rbrace$ et $\mathcal P(X)$ sont des topologies sur X.
+		\item On suppose que $\mathcal T$ est une topologie sur $X$.\\
+		Soit $n\in\N^*$ et $U_1,\dots,U_n$ $n$ éléments de $\mathcal T$. Montrer que $U_1\cap\dots\cap U_n\in\mathcal T$.
+		\item Si $U$ est une partie de $\R$, on dit que $U$ est un ouvert de $R$ si et seulement si \[\forall x\in u,\ \exists \varepsilon\in\R_+^*,\ ]x-\varepsilon,x+\varepsilon[\subset U\]
+		\item Les ensembles suivants sont-ils des ouverts de $\R$ ?
+		\begin{itemize}
+			\item $\emptyset$
+			\item $\R$
+			\item $[a,b]$, où $a,b\in\R$ avec $a<b$
+			\item $]a,b[$, où $a,b\in\R$ avec $a<b$
+		\end{itemize}
+		\item Montrer que l'ensemble des ouverts de $\R$ est une topologie sur $\R$.
+		\item Soit $X$ et $I$ deux ensembles avec $I\neq \emptyset$. Soit $(\mathcal T_i)_{i\in  I}$ une famille de topolgies sur $X$. Montrer que $\bigcap_{i\in I}\mathcal T_i$ est une topologie sur $X$. Qu'en est-il de $\bigcup_{i\in I}\mathcal T_i$ ?
+		\item Soit $X$ un ensemble avec $\mathcal A$ un sous-ensemble de $\mathcal P(X)$.\\
+		Montrer que l'on peut définir la plus petite topologie sur $X$ contenant $\mathcal A$.
+	\end{enumerate}
+	\subsubsection*{\textsc{Matteo Delfour} \Stars{2}}
+		Déterminer toutes les fonctions de $R$ dans $R$ telles que \[\forall x,y\in\R,\quad f(x-f(y))=2-x-y\]
+	\subsubsection*{\textsc{Yanis Grigy} \Stars{3}}
+		Montrer que l'ensemble des nombres premier est infini.
+	\subsubsection*{\textsc{Louis Marchal} \Stars{5}}
+		Montrer que pour tout $n\in\N^*$, le nombre $\frac{3+4i}{5}$ n'est pas une racine $n^{\text{ème}}$ de $1$.
+	\subsubsection*{\textsc{Shems} \Stars{3}}
+		Calculer, pour tout $m\in\N$, \(\int_0^\frac\pi4\sin^{2m}t\cos(2mt)\dd t\) et $\int_0^\frac\pi4\cos^m(t)\dd t$.
+
+\end{document}
