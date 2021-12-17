@@ -1,0 +1,315 @@
+% Preamble
+\documentclass[17pt]{article}
+
+% Math related packages.
+\usepackage{amsfonts, amsthm, amsmath, amssymb, amstext}
+\usepackage{mathtools}
+\usepackage{physics}
+\usepackage{cancel, textcomp}
+\usepackage[mathscr]{euscript}
+\usepackage[nointegrals]{wasysym}
+\usepackage[left=3cm, right=3cm, top=1.5cm, bottom=1.5cm]{geometry}
+
+\usepackage{esvect}
+\usepackage{IEEEtrantools}
+
+% Font related packages.
+\usepackage[french]{babel}
+\usepackage[unicode]{hyperref}
+\usepackage[fontsize = 10pt]{scrextend}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[finemath]{kotex}
+\usepackage{dhucs-nanumfont}
+\usepackage{mathpazo}
+\usepackage{FiraMono}
+\usepackage{mathrsfs}
+
+% Other
+\usepackage{enumerate}
+\usepackage[shortlabels]{enumitem}
+\usepackage{tabularx}
+\usepackage[object=vectorian]{pgfornament}
+\usepackage{pgf}
+\usepackage{pgfpages}
+\usepackage[european,straightvoltages]{circuitikz}
+\usepackage{scalerel}
+\usepackage{stackengine}
+
+
+% A more colorful world.
+\usepackage{xcolor}
+
+% Display Source Code
+\usepackage{listings}
+\lstset{
+    language=C,
+    basicstyle=\small\ttfamily\mdseries,
+    numberstyle=\color{gray},
+    stringstyle=\color[HTML]{933797},
+    commentstyle=\color[HTML]{228B22},
+    emph={[2]from,with,import,as,pass,return,and,or,not},
+    emphstyle={[2]\color[HTML]{DD52F0}},
+    emph={[3]range,format,enumerate,print},
+    emphstyle={[3]\color[HTML]{D17032}},
+    emph={[4]if,elif,else,for,while,in,def,lambda,int,float,all,len},
+    emphstyle={[4]\color{blue}},
+    emph={[5]abs},
+    emphstyle={[5]\color{black}},
+    showstringspaces=false,
+    breaklines=true,
+    prebreak=\mbox{{\color{gray}\tiny$\searrow$}},
+    numbers=left
+}
+
+% OPTIONS
+\everymath\expandafter{\the\everymath\displaystyle}
+
+% Tikz libraries
+\usetikzlibrary{angles, quotes}
+
+% COMMANDS
+\newcommand{\f}[1]{\texttt{#1}}
+\newcommand{\sct}[1]{
+	\begin{center}
+		\Large\textbf{#1}
+	\end{center}
+}
+\newcommand{\subsct}[1]{
+	\begin{center}
+		\large\textbf{#1}
+	\end{center}
+}
+\newcommand{\inl}[2]{[\![#1, #2]\!]}
+\newcommand{\q}[1]{\textbf{#1.}\quad}
+\newcommand{\urlsymbol}{\kern1pt\vbox to .5ex{}\raise.10ex\hbox{\pdfliteral{%
+    q .8 0 0 .8 0 0 cm
+    2.5 5 m 1 j 1 J .8 w
+    1 5 l 0 5 0 4 y 0 1 l 0 0 1 0 y 4 0 l 5 0 5 1 y 5 2.5 l S
+    3 3 m 6 6 l S 4 6 m 6 6 l 6 4 l S
+Q}}\kern5pt}
+
+\newcounter{iloop}
+\newcommand\openbigstar[1][0.7]{%
+  \scalerel*{%
+    \stackinset{c}{-.125pt}{c}{}{\scalebox{#1}{\color{white}{$\bigstar$}}}{%
+      $\bigstar$}%
+  }{\bigstar}
+}
+\newcommand{\Stars}[1]{\ensuremath{%
+\pgfmathtruncatemacro{\imax}{ifthenelse(int(#1)==#1,#1-1,#1)}%
+\pgfmathsetmacro{\xrest}{0.9*(1-#1+\imax)}%
+\setcounter{iloop}{0}%
+\loop\stepcounter{iloop}\ifnum\value{iloop}<\the\numexpr\imax+1
+\bigstar\repeat
+\openbigstar[\xrest]%
+\setcounter{iloop}{0}%
+\loop\stepcounter{iloop}\ifnum\value{iloop}<\the\numexpr5-\imax\relax
+\openbigstar[.9]\repeat}}
+
+\def\N{\mathbb N}
+\def\Z{\mathbb Z}
+\def\Q{\mathbb Q}
+\def\R{\mathbb R}
+\def\Rpe{\mathbb R_+^*}
+\def\C{\mathbb C}
+\def\K{\mathbb K}
+\def\L{\mathbb L}
+
+\def\P{\mathscr{P}}
+
+\def\ssi{\Leftrightarrow}
+\def\Ssi{\Longleftrightarrow}
+\def\implique{\Longrightarrow}
+
+\def\sep{\noindent\makebox[\linewidth]{\rule{\paperwidth}{0.4pt}}}
+
+% CUSTOM TITLE
+\makeatletter
+\def\@maketitle{%
+	\newpage
+	%  \null% DELETED
+	%  \vskip 2em% DELETED
+	\begin{center}%
+		\let \footnote \thanks
+		{\LARGE \@title \par}%
+		\vskip 1em%
+		{\large
+			\lineskip .5em%
+			\begin{tabular}[t]{c}%
+				\@author
+			\end{tabular}\par}%
+		\vskip 1em%
+		{\large \@date}%
+		\vskip 1cm%
+	\end{center}%
+	\par
+	\vskip -1em}
+\makeatother
+
+\title{DM11 – Convergence et continuité au sens de Cesàro}
+\author{Amar AHMANE\\ MP2I}
+
+\begin{document}
+	\maketitle
+	
+	\subsection*{Partie A}
+	\begin{enumerate}
+		\item Preuve du Lemme.
+		\begin{enumerate}
+			\item Soit $n\in\N^*$
+			\begin{align*}
+				|c_n-\ell|  &= \left|\frac1n\sum_{k=1}^nu_k-\ell\right|\\
+							&= \left|\frac1n\left(\sum_{k=1}^nu_k-n\ell\right)\right|\\
+							&= \frac1n\left|\sum_{k=1}^n(u_k-\ell)\right|\\
+							&\leq \frac1n\sum_{k=1}^n|u_k-\ell|
+			\end{align*}
+			\item $\frac\epsilon2>0$, ainsi, comme $u$ converge vers $\ell$, par définition, il existe $n_0\in\N^*$ tel que \[\forall k\in\N^*,\quad \left(k\geq n_0\implique |u_k-\ell|\leq \frac\epsilon2\right)\]
+			\item Soit $n\in\N^*$. Supposons que $n\geq n_0$. On a alors 
+			\begin{align*}
+				|c_n-\ell|  &\leq \frac1n\sum_{k=1}^n|u_k-\ell|\\
+							&\leq \frac1n\left(\sum_{k=1}^{n_0-1}|u_k-\ell|+\sum_{k=n_0}^n|u_k-\ell|\right)\\
+							&\leq \frac1n\sum_{k=1}^{n_0-1}|u_k-\ell|+\frac{n-n0+1}n\frac\epsilon2
+			\end{align*}
+			\item D'abord, $c:=\sum_{k=1}^{n_0-1}|u_k-\ell|\in\R_+$ est une constante ne dépendant pas de $n$, donc comme $\frac cn\xrightarrow[n\rightarrow +\infty ]{}0$, il exite $n_1\in\N^*$ tel que \[\forall n\in\N^*,\quad \left(n\geq n_1\implique \left|\frac cn\right|\leq \frac\epsilon4\right)\]
+			De même, $\frac{(1-n_0)\epsilon}{2n}\xrightarrow[n\rightarrow +\infty ]{}0$, donc il exite $n_2\in\N^*$ tel que \[\forall n\in\N^*,\quad \left(n\geq n_2\implique \left|\frac{(1-n_0)\epsilon}{2n}\right|\leq \frac\epsilon4\right)\]
+			En posant $N=\max(n_0,n_1,n_2)$, on a, étant donné $n\geq N$, que 
+			\begin{align*}
+				|c_n-\ell|  &\leq \frac1n\sum_{k=1}^{n_0-1}|u_k-\ell|+\frac{n-n0+1}n\frac\epsilon2\\
+							&\leq \frac cn + \frac{(1-n_0)\epsilon}{2n} + \frac\epsilon2\\
+							&\leq \frac\epsilon4+\frac\epsilon4+\frac\epsilon2\\
+							&\leq \epsilon
+			\end{align*}
+		\end{enumerate}
+		\item Applications.
+		\begin{enumerate}
+			\item Soit $n\in\N^*$, on a \[\frac n{n+1}=\frac n{n\left(1+\frac 1n\right)}=\frac 1{1+\frac 1n}\xrightarrow[n\rightarrow +\infty ]{}1\]
+			Donc finalement, d'après le Lemme de Cesàro, $\boxed{\frac n{n+1}\xrightarrow[n\rightarrow +\infty ]{c}0}$.
+			\item Soit $n\in\N^*$, on a \[v_n=\frac1n\sum_{k=1}^n\frac1k\]
+			Or, on a $\frac1n\xrightarrow[n\rightarrow +\infty ]{}0$. D'après le Lemme de Cesàro, $\frac1n \xrightarrow[n\rightarrow +\infty ]{c}0$, donc $\boxed{v_n\xrightarrow[n\rightarrow +\infty ]{}0}$.
+			\item Soit $n\in\N^*$. On a 
+			\begin{align*}
+				w_n &= \prod_{k=1}^n\left(1+\frac 1k\right)^{\frac kn}\\
+					&= \prod_{k=1}^n\exp\left(\frac kn\ln\left(1+\frac 1k\right)\right)\\
+					&= \exp\left(\sum_{k=1}^n\frac kn\ln\left(1+\frac 1k\right)\right)\\
+					&= \exp\left(\frac 1n\sum_{k=1}^nk\ln\left(1+\frac 1k\right)\right)\\
+			\end{align*}
+			Or, $n\ln\left(1+\frac1n\right)\xrightarrow[n\rightarrow +\infty ]{}1$; en effet, le taux d'accroissement de $x\mapsto\ln(1+x)$ en $0$ nous informe, par dérivabilité de cette fonction en $0$, que $\frac{\ln(1+x)}x\xrightarrow[x\rightarrow 0]{}1$. Or, $\frac1n \xrightarrow[n\rightarrow +\infty ]{}0$, ainsi, pour un $n\in\N^*$ donné, on a $n\ln\left(1+\frac1n\right)=\frac{\ln\left(1+\frac1n\right)}{\frac1n}\xrightarrow[n\rightarrow +\infty ]{}1$. Ainsi, $n\ln\left(1+\frac1n\right)\xrightarrow[n\rightarrow +\infty ]{c}1$, donc $\boxed{w_n\xrightarrow[n\rightarrow +\infty ]{}\exp(1)=e}$ par continuité de $\exp$ en $1$.
+		\end{enumerate}
+		\item Soit $u\in(\R^*)^\N$ telle que $u_n\xrightarrow[n\rightarrow +\infty ]{}+\infty$. On note $v$ la moyenne de Cesàro de cette suite.\\
+		Soit $M>0$. Par hypothèse, il existe $n_0\in\N^*$ tel que \[\forall n\in\N^*,\quad (n\geq n_0\implique u_n\geq M+1\]
+		Soit $n\in\N^*$, $n\geq n_0$, alors
+		\begin{align*}
+			v_n &= \frac1n \sum_{k=1}^nu_k\\
+				&= \frac1n \left(\sum_{k=1}^{n_0-1}u_k+\sum_{k=n_0}^{n}u_k\right)\\
+				&\geq \underbrace{\frac1n\sum_{k=1}^{n_0-1}u_k + \frac{n-n_0+1}n (M+1)}_{\xrightarrow[n\rightarrow +\infty ]{}M+1}
+		\end{align*}
+		$1\in\Rpe$, donc par définition, il existe $n_1\in\N^*$ tel que \[\forall n\in\N^*,\quad \left(n\geq n_1\implique \left|\left(\frac1n\sum_{k=1}^{n_0-1}u_k + \frac{n-n_0+1}n (M+1)\right)-(M+1)\right|\leq 1\right)\]
+		On pose $N=\max(n_0,n_1)$, ainsi, étant donné $n\in\N^*$, $n\geq N$, on a  
+		\begin{align*}
+			v_n &\geq \frac1n\sum_{k=1}^{n_0-1}u_k + \frac{n-n_0+1}n (M+1)\\
+				&\geq M+1 - 1\\
+				&\geq M
+		\end{align*}
+	\end{enumerate}
+	\subsection*{Partie B}
+	\begin{enumerate}[start=4]
+		\item Soit $n\in\N^*$, alors 
+		\begin{align*}
+			\left|\frac1n\sum_{k=1}^n(-1)^k\right|  &= \frac1n\left|\sum_{k=1}^n(-1)^k\right|
+													&\leq \frac1n\xrightarrow[n\rightarrow +\infty ]{}0
+		\end{align*}
+		Donc $\boxed{(-1)^n\xrightarrow[n\rightarrow +\infty ]{c}0}$.
+		\item 
+		\begin{enumerate}
+			\item Soit $n\in\N^*$,
+			\begin{align*}
+				c'_{n+T} &= (n+T)c_{n+T}-(n+T)\mu\\
+						 &= \sum_{k=1}^{n+T}u_k-(n+T)\mu\\
+						 &= \sum_{k=1}^Tu_k+\sum{k=T+1}^{n+T}u_k-(n+T)\mu\\
+						 &= T\mu+\sum{k=1}^nu_{k+T}-(n+T)\mu\\
+						 &= \sum{k=1}^nu_k-n\mu\\
+						 &= nc_n-n\mu
+			\end{align*}
+			\item On pose $\Lambda = \lbrace c'_k;\quad k\in[\![1,T]\!]$. Soit $n\in\N^*$, $n>T$, la division euclidienne de $n$ par $T$ nous donne $q\in\N$ et $0\leq r<T$ tels que $n=qT+r$. Si $r=0$, alors $q>1$ puisque $n>T$, donc, $u_n=u_{qT}=u_T\in\Lambda$; sinon, si $r>0$, alors $u_{n}=u_{qT+r}=u_{r}\in\Lambda$ pusique $1\leq r<T$. Or, $\Lambda$ est une partie finie, non vide de $\R$, donc elle est majorée, ce qui conclut.
+			\item D'après la question précédente, il existe $M\in\Rpe$ tel que \[\forall n\in\N^*,\quad |c'_n|\leq M \]
+			Soit $n\in \N^*$, alors $|c'_n|\leq M$; or $|c'_n|=|nc_n-n\mu|=n|c_n-\mu|$. Donc $|c_n-\mu|\leq \frac Mn\xrightarrow[n\rightarrow +\infty ]{}0$, ce qui conclut.
+		\end{enumerate}
+		\item 
+		\begin{enumerate}
+			\item \textit{Limite en $+\infty$} :\\
+			Soit $n\in\N^*$, alors $\boxed{|u_n|=|(-1)^n\ln(n)|=\ln(n)\xrightarrow[n\rightarrow +\infty ]{}+\infty}$.
+			\item \textit{Limite en $+\infty$ au sens de Cesàro} :\\
+			On montre d'abord que $(u_{2n})$ converge vers $0$ au sens de Cesàro. Soit $n\in\N^*$, on a 
+			\begin{align*}
+				\frac1{2n}\sum_{k=1}^{2n}u_k &= \frac1{2n}\left(\sum_{k=1}^nu_{2k}+\sum_{k=0}^{n-1}u_{2k+1}\right)\\
+											 &= \frac1{2n}\left(\sum_{k=1}^n\ln(2k)-\sum_{k=0}^{n-1}\ln(2k+1)\right)\\
+											 &= \frac1{2n}\left(\ln(2n)+\sum_{k=1}^{n-1}\ln(2k)-\sum_{k=1}^{n-1}\ln(2k+1)\right)\\
+											 &=\frac1{2n}\left(\ln(2n)+\sum_{k=1}^{n-1}\underbrace{(\ln(2k)-\ln(2k+1))}_{\leq 0}\right)\\
+											 &\leq \frac{\ln(2n)}{2n}\xrightarrow[n\rightarrow +\infty ]{}0
+			\end{align*}
+			De même, on a que 
+			\begin{align*}
+				\frac1{2n}\sum_{k=1}^{2n}u_k 
+											 &= \frac1{2n}\left(\sum_{k=1}^{n}\ln(2k)-\sum_{k=1}^{n-1}\ln(2k+1)\right)\\
+											 &= \frac1{2n}\left(\ln(2)\sum_{k=2}^{n}\ln(2k)-\sum_{k=2}^{n}\ln(2k-1)\right)\\
+											 &=\frac1{2n}\left(\ln(2)+\sum_{k=2}^{n}\underbrace{(\ln(2k)-\ln(2k-1))}_{\geq 0}\right)\\
+											 &\geq \frac{\ln(2)}{2n}\xrightarrow[n\rightarrow +\infty ]{}0
+			\end{align*}
+			Par encadrement, $u_{2n}\xrightarrow[n\rightarrow +\infty ]{c}0$.\\
+			On montre à présent que $(u_{2n+1})$ converge vers 0 au sens de Cesàro. 
+			Soit $n\in\N^*$, on a 
+			\begin{align*}
+				\frac1{2n+1}\sum_{k=1}^{2n+1}u_k &= \frac1{2n+1}\left(\sum_{k=1}^nu_{2k}+\sum_{k=0}^{n}u_{2k+1}\right)\\
+											 &= \frac1{2n}\left(\sum_{k=1}^n\ln(2k)-\sum_{k=0}^{n}\ln(2k+1)\right)\\
+											 &= \frac1{2n+1}\left(\sum_{k=1}^{n}\ln(2k)-\sum_{k=1}^{n}\ln(2k+1)\right)\\
+											 &=\frac1{2n+1}\left(\sum_{k=1}^{n}\underbrace{(\ln(2k)-\ln(2k+1))}_{\leq 0}\right)\\
+											 &\leq 0
+			\end{align*}
+			De même, on a que 
+			\begin{align*}
+				\frac1{2n+1}\sum_{k=1}^{2n+1}u_k 
+											 &= \frac1{2n+1}\left(\sum_{k=1}^{n}\ln(2k)-\sum_{k=1}^{n}\ln(2k+1)\right)\\
+											 &= \frac1{2n+1}\left(ln(2)+\sum_{k=2}^{n}\ln(2k)-\sum_{k=2}^{n}\ln(2k-1)-\ln(2n+1)\right)\\
+											 &=\frac1{2n+1}\left(ln(2)+\sum_{k=2}^{n}\underbrace{(\ln(2k)-\ln(2k-1))}_{\geq 0}-\ln(2n+1)\right)\\
+											 &\geq \frac{ln(2)-\ln(2n+1)}{2n+1}\xrightarrow[n\rightarrow +\infty ]{}0
+			\end{align*}
+			Par encadrement, $u_{2n+1}\xrightarrow[n\rightarrow +\infty ]{c}0$.\\
+			À fortiori, $\boxed{u_{n}\xrightarrow[n\rightarrow +\infty ]{c}0}$.
+		\end{enumerate}
+	\end{enumerate}
+	\subsection*{Partie C}
+	\begin{enumerate}[start=7]
+		\item Soit $u\in\R^{\N^*}$, $\ell\in\R$, supposons que $u_n\xrightarrow[n\rightarrow +\infty ]{c}\ell$.\\
+		Montrons que $\text{Id}_\R(u_n)\xrightarrow[n\rightarrow +\infty ]{c}\text{Id}_\R(\ell)$. Ce résultat est direct puisque $\forall n\in\N^*,\quad \text{Id}_\R(u_n)=u_n$ et $\text{Id}_\R(\ell)=\ell$.\\
+		La fonction constante égale à $1$ est continue au sens de Cesàro puisque $1\xrightarrow[n\rightarrow +\infty ]{c}1$.
+		\item Soient $f,g$ deux fonctions continues au sens de Cesàro, $\lambda,\mu\in\R$. Soit $n\in\N^*$, alors $(\lambda f+\mu g)(u_n)=\lambda f(u_n)+\mu g(u_n)\xrightarrow[n\rightarrow +\infty ]{c}\lambda f(\ell)+\mu g(\ell)=(\lambda f+\mu g)(\ell)$ par produit et somme de limites.
+		\item affines.
+		\item
+		\begin{enumerate}
+			\item Pour tout $\ell\in\R$, $g(\ell)=f(\ell)-f(0)$. Ainsi, pour toute suite convergeant vers $\ell$ au sens de Cesàro, on a la convergence de $g(u_n)$ vers $g(\ell)$ au sens de Cesàro par somme de limite.
+			\item comme $u$ est 2-périodique, on a que $\xrightarrow[n\rightarrow +\infty ]{c}\frac{u_1+u_2}2=\frac{x+y}2$. $g$ étant continue au sens de Cesàro, on a que $g(u_n)\xrightarrow[n\rightarrow +\infty ]{c}g\left(\frac{x+y}2\right)$. Or, $(g(u_n))$ est elle-même 2-périodique, donc $g(u_n)\xrightarrow[n\rightarrow +\infty ]{c}\frac{g(u_1)+g(u_2)}2=\frac{g(x)+g(y)}2$. Par unicité de la limite, $\boxed{g\left(\frac{x+y}2\right)=\frac{g(x)+g(y)}2}$.
+			\item Soient $x, y\in\R$. D'abord, on a $g(x)=g\left(\frac{0+2x}2\right)=\frac{g(0)+g(2x)}2=\frac{g(2x)}2$, donc $g(2x)=2g(x)$, de même pour $y$. On a donc \[g(x+y)=g\left(\frac{2x+2y}{2}\right)=\frac{g(2x)+g(2y)}{2}\]
+			Finalement, $\boxed{g(x+y)=g(x)+g(y)}$.
+			\item D'abord, on a que $g(-1)=g(1-2)=g(1)+g(-2)=g(1)+2g(-1)$ donc $g(-1)=-g(1)$.\\
+			Soit $x\in\R$. Pour $n\in\N^*$, on pose la propriété $\mathcal{P}_n$ : « $g(nx)=ng(x)$ ». On la montré par récurrence.
+			\begin{itemize}
+				\item Pour $n=1$, on a $g(1)=g(1)$ donc $\mathcal{P}_1$.
+				\item Soit $n\in\N^*$. Supposons $\mathcal{P}_n$. Ainsi \[g((n+1)x)=g(nx+x)=g(nx)+g(x)=(n+1)g(x)\]
+				C'est exactement $\mathcal{P}_{n+1}$.
+				\item Par principe de récurrence, on a que $\forall n\in\N^*,\quad \mathcal{P_n}$.
+			\end{itemize}
+			Ceci reste vrai pour les entiers négatifs non-nuls puisque $g(-1)=-g(1)$.\\
+			On montre à présent que \[\forall q\in\N^*,\quad g\left(\frac1q\right)=\frac1qg(1)\]
+			Soit $q\in\N^*$. Soit $(x_1,\dots,x_q)\in\R^q$. On pose $u$ la suite $q$-périodique telle que \[u_1=x_1,\ u_2=x_2,\ \dots\ , u_q=x_q\]
+			On a ainsi que $u_n\xrightarrow[n\rightarrow +\infty ]{c}\frac{\sum_{i=1}^qx_i}q$, donc comme $g$ est continue au sens de Cesàro et comme $(g(u_n))$ est aussi $q$-périodique, on a \[g\left(\frac{\sum_{i=1}^qx_i}q\right)=\frac{\sum_{i=1}^qg(x_i)}q\]
+			On a ainsi montré que \[\forall q\in\N^*,\ \forall(x_1,\dots,x_q)\in\R^q,\quad g\left(\frac{\sum_{i=1}^qx_i}q\right)=\frac{\sum_{i=1}^qg(x_i)}q\]
+			En particulier, $g(\frac1q)=\frac1qg(1)$.\\
+			Soit $r\in\Q$. Il existe alors $(p,q)\in\Z\times\N^*$ tel que $r=\frac pq$. Donc \[g(r)=g\left(\frac pq\right)=pg\left(\frac1q\right)=\frac pq g(1)=rg(1)\]
+			Ce qui conclut.
+			\item Soit $x\in\R$. On pose $\Lambda=\lbrace r\in\Q| r<x\brace$. $\Lambda$ est non vidée et majorée, donc elle admet une borne supérieure, qui est $x$. Il existe alors, d'après la caractérisation de la borne supérieure, il existe une suite $u\in\Lambda^\N$ telle que $u_n\xrightarrow[n\rightarrow +\infty ]{}x$, donc $u_n\xrightarrow[n\rightarrow +\infty ]{c}x$ donc $g(u_n)\xrightarrow[n\rightarrow +\infty ]{c}g(x)$. Or, pour tout $n\in\N$, $g(u_n)=u_ng(1)$ puisque $u_n\in\Lambda\subset\Q$ et $u_ng(1)\xrightarrow[n\rightarrow +\infty ]{c}xg(1)$. Par unicité de la limite, $g(x)=xg(1)$. En posant $a=g(1)$, on a que \[\forall x\in\R,\quad g(x)=ax\]
+		\end{enumerate}
+		\item La question 11 nous dit que toute fonction continue au sens de Cesàro est affine, la question 9 nous dit que les fonctions affines sont continues au sens de Cesàro. Ainsi, les fonctions continues au sens de Cesàro sont exactement les fonctions affines.
+	\end{enumerate}
+\end{document}
+
