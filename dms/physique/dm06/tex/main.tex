@@ -1,0 +1,409 @@
+% Preamble
+\documentclass[17pt]{article}
+
+% Math related packages.
+\usepackage{amsfonts, amsthm, amsmath, amssymb, amstext}
+\usepackage{mathtools}
+\usepackage{physics}
+\usepackage{cancel, textcomp}
+\usepackage[mathscr]{euscript}
+\usepackage[nointegrals]{wasysym}
+\usepackage[left=3cm, right=3cm, top=1.5cm, bottom=1.5cm]{geometry}
+
+\usepackage{esvect}
+\usepackage{IEEEtrantools}
+
+% Font related packages.
+\usepackage[french]{babel}
+\usepackage[unicode]{hyperref}
+\usepackage[fontsize = 10pt]{scrextend}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[finemath]{kotex}
+\usepackage{dhucs-nanumfont}
+\usepackage{mathpazo}
+\usepackage{FiraMono}
+\usepackage{mathrsfs}
+
+% Other
+\usepackage{enumerate}
+\usepackage[shortlabels]{enumitem}
+\usepackage{tabularx}
+\usepackage[object=vectorian]{pgfornament}
+\usepackage{pgf}
+\usepackage{pgfpages}
+\usepackage[european,straightvoltages]{circuitikz}
+\usepackage{scalerel}
+\usepackage{stackengine}
+
+
+% A more colorful world.
+\usepackage{xcolor}
+
+% Display Source Code
+\usepackage{listings}
+\lstset{
+    language=C,
+    basicstyle=\small\ttfamily\mdseries,
+    numberstyle=\color{gray},
+    stringstyle=\color[HTML]{933797},
+    commentstyle=\color[HTML]{228B22},
+    emph={[2]from,with,import,as,pass,return,and,or,not},
+    emphstyle={[2]\color[HTML]{DD52F0}},
+    emph={[3]range,format,enumerate,print},
+    emphstyle={[3]\color[HTML]{D17032}},
+    emph={[4]if,elif,else,for,while,in,def,lambda,int,float,all,len},
+    emphstyle={[4]\color{blue}},
+    emph={[5]abs},
+    emphstyle={[5]\color{black}},
+    showstringspaces=false,
+    breaklines=true,
+    prebreak=\mbox{{\color{gray}\tiny$\searrow$}},
+    numbers=left
+}
+
+% OPTIONS
+\everymath\expandafter{\the\everymath\displaystyle}
+
+% Tikz libraries
+\usetikzlibrary{angles, quotes, shapes.misc}
+
+% Tikz plus
+\def\roof#1#2{
+	\draw[very thick] (#1-0.5, #2) -- (#1+0.5, #2);
+
+	\foreach \i in {-0.45, -0.35, ..., 0.45}
+		\draw (#1 + \i, #2) -- +(120:0.5em);
+}
+
+\tikzset{cross/.style={cross out, draw=black, minimum size=2*(#1-\pgflinewidth), inner sep=0pt, outer sep=0pt},
+%default radius will be 1pt. 
+cross/.default={0.88mm}}
+
+% COMMANDS
+\newcommand{\dW}[1]{\delta W(\vv{#1})}
+\newcommand{\f}[1]{\texttt{#1}}
+\newcommand{\sct}[1]{
+	\begin{center}
+		\Large\textbf{#1}
+	\end{center}
+}
+\newcommand{\subsct}[1]{
+	\begin{center}
+		\large\textbf{#1}
+	\end{center}
+}
+\newcommand{\inl}[2]{[\![#1, #2]\!]}
+\newcommand{\q}[1]{\textbf{#1.}\quad}
+\newcommand{\urlsymbol}{\kern1pt\vbox to .5ex{}\raise.10ex\hbox{\pdfliteral{%
+    q .8 0 0 .8 0 0 cm
+    2.5 5 m 1 j 1 J .8 w
+    1 5 l 0 5 0 4 y 0 1 l 0 0 1 0 y 4 0 l 5 0 5 1 y 5 2.5 l S
+    3 3 m 6 6 l S 4 6 m 6 6 l 6 4 l S
+Q}}\kern5pt}
+
+\newcounter{iloop}
+\newcommand\openbigstar[1][0.7]{%
+  \scalerel*{%
+    \stackinset{c}{-.125pt}{c}{}{\scalebox{#1}{\color{white}{$\bigstar$}}}{%
+      $\bigstar$}%
+  }{\bigstar}
+}
+\newcommand{\Stars}[1]{\ensuremath{%
+\pgfmathtruncatemacro{\imax}{ifthenelse(int(#1)==#1,#1-1,#1)}%
+\pgfmathsetmacro{\xrest}{0.9*(1-#1+\imax)}%
+\setcounter{iloop}{0}%
+\loop\stepcounter{iloop}\ifnum\value{iloop}<\the\numexpr\imax+1
+\bigstar\repeat
+\openbigstar[\xrest]%
+\setcounter{iloop}{0}%
+\loop\stepcounter{iloop}\ifnum\value{iloop}<\the\numexpr5-\imax\relax
+\openbigstar[.9]\repeat}}
+
+\def\N{\mathbb N}
+\def\Z{\mathbb Z}
+\def\Q{\mathbb Q}
+\def\R{\mathbb R}
+\def\Rpe{\mathbb R_+^*}
+\def\C{\mathbb C}
+\def\K{\mathbb K}
+\def\L{\mathbb L}
+
+\def\P{\mathscr{P}}
+
+\def\Em{\mathcal{E}_m}
+\def\Ec{\mathcal{E}_c}
+\def\Ep{\mathcal{E}_p}
+
+\def\ssi{\Leftrightarrow}
+\def\Ssi{\Longleftrightarrow}
+\def\implique{\Longrightarrow}
+
+\def\sep{\noindent\makebox[\linewidth]{\rule{\paperwidth}{0.4pt}}}
+
+% CUSTOM TITLE
+\makeatletter
+\def\@maketitle{%
+	\newpage
+	%  \null% DELETED
+	%  \vskip 2em% DELETED
+	\begin{center}%
+		\let \footnote \thanks
+		{\LARGE \@title \par}%
+		\vskip 1em%
+		{\large
+			\lineskip .5em%
+			\begin{tabular}[t]{c}%
+				\@author
+			\end{tabular}\par}%
+		\vskip 1em%
+		{\large \@date}%
+		\vskip 1cm%
+	\end{center}%
+	\par
+	\vskip -1em}
+\makeatother
+
+\title{DM6 – Énergie mécanique}
+\author{Amar AHMANE\\ MP2I}
+
+\begin{document}
+	\maketitle
+	\subsection*{Exercice 1 – Un clou dans les oscillations d'un pendule}
+	\subsubsection*{Première partie du mouvement : $\theta > 0$}
+	\begin{center}
+		\begin{tikzpicture}
+			\coordinate (origin) at (0, -0.2);
+			\node (O) at (origin) [below left] {$A$};
+			\coordinate (masscord) at (1.4, -2.8);
+			\coordinate (masscorda) at (1.2626, -2.8);
+			\coordinate (gorigin) at (-1, -0.5);
+			\node (mass) at (masscord) [below left=0.4em] {$M$}; 
+			\coordinate (up) at (0,0);
+			\node (clou) at (0, -1.6) [] {$\bullet$};
+			\node (cloulabel) at (clou) [left] {$B$};
+			\coordinate (down) at (0, -3.5);
+		
+			\roof{0}{-0.2}
+			\draw[dashed] (origin) -- (down) node [near start, left] {$d$};
+			\draw (origin) -- (masscord) node [below, right=0.5em, midway] {$\ell$};
+			\draw pic [draw, ->, angle radius=12mm, angle eccentricity=0.45mm, "$\theta$"] {angle = down--up--masscorda};
+			%\draw[dashed, color=gray!50] let \p1 = ($(masscord) - (origin)$), \n1 = {veclen(\x1,\y1)} in (origin) +(-45:\n1) arc [start angle = -45, delta angle = -90, radius = \n1];
+			\draw[very thick, color=blue!60, -latex] (masscord) -- ++(0, -1.5) node [below] {$\overrightarrow{P}$};
+			\draw[very thick, color=green!60!black!40, -latex] let \p1 = (origin), 
+														 \p2 = ($(masscord) - (origin)$),
+														 \n1 = {-acos(\y2/veclen(\x2, \y2))}
+												in (masscord) -- +(\n1+90:-1.5) node [left=0.3em, below=0.25em] {$\overrightarrow{T}$};
+			\draw[very thick, color=black!40, -latex] let \p1 = (origin), 
+														 \p2 = ($(masscord) - (origin)$),
+														 \n1 = {-acos(\y2/veclen(\x2, \y2))}
+												in (masscord) -- +(\n1:-1) node [above=0.4em, left=0.4em] {$\overrightarrow{e_\theta}$};
+			\draw[very thick, color=black!40, -latex] let \p1 = (origin), 
+														 \p2 = ($(masscord) - (origin)$),
+														 \n1 = {-acos(\y2/veclen(\x2, \y2))}
+												in (masscord) -- +(\n1+90:1) node [right=0.3em, above=0.4em] {$\overrightarrow{e_r}$};
+			\draw let \p1 = ($(masscord) - (0, 1.5)$), \p2 = (origin), \p3 = ($(masscord) - (origin)$), \n1 = {-acos(\y3/veclen(\x3, \y3))}, \p4 = ($(masscord) + (\n1+90:1)$) in node (a) at (\x1, \y1) [] {} node (b) at (\x4, \y4) [] {} pic [draw, ->, angle radius=6mm, angle eccentricity=0.55mm, "$\theta$"] {angle = a--masscord--b};
+			\draw[very thick, color=red!60, -latex] (gorigin) -- ++(0, -1.1) node [left, midway] {$\overrightarrow{g}$};									
+			\shade[ball color=gray] (masscord) circle (1mm);
+		\end{tikzpicture}	
+		\\
+		\textsc{Figure 1 – } \textit{État du système lorsque $\theta > 0$.}
+	\end{center}
+	\begin{enumerate}
+		\item On sait que $\Em=\Ec+\Ep$. On commence par donner une expression de $\Ec$. On sait que \[\Ec = \frac12mv^2\]
+		Ici, on a que $\vv{v}=\ell\dot{\theta}\vv{e_\theta}$, donc $v=\ell\dot{\theta}$. Finalement \[\boxed{\Ec=\frac12m(\ell\dot{\theta})^2}\]
+		On sait d'autre part que $\dd\Ep=-\delta W(\vv{F_c})$ où $\vv{F_c}$ est la résultante des forces conservatives. Les seules forces en action ici sont la tension du fil et le poids, étant donné que l'on néglige tout frottement. Comme le travail de la tension du fil est nul, on a que
+		\begin{align*}
+			\dW{F_c} &= \dW{P}\\
+					 &= \vv{P}\cdot \dd \vv{OM}\\
+					 &= (mg\cos\theta\vv{e_r}-mg\sin\theta\vv{e_\theta})\cdot(\ell\dd\theta\vv{e_\theta})\\
+					 &= -mg\ell\sin\theta\dd\theta
+		\end{align*}
+		D'où que $\dd\Ep=mg\ell\sin\theta\dd\theta$; ainsi, en s'arrangeant pour que l'énergie potentielle soit nulle en $\theta=0$, on a \[\boxed{\Ep=mg\ell(1-\cos\theta)}\] 
+		Finalement, $\boxed{\Em=\frac12m(\ell\dot{\theta})^2+mg\ell(1-\cos\theta)}$.
+		\item Le pendule est lâche depuis la position $\theta=\frac\pi2$ sans vitesse initiale. On a \[\Ec\left(\theta=\frac\pi2\right)=0\]
+		connaissant l'expression de $\Ep$, on a \[\Ep\left(\theta=\frac\pi2\right)=mg\ell\]
+		comme l'énergie mécanique est conservée vu l'absence de forces non-conservatives, on a que \[\Em\left(\theta=\frac\pi2\right)=\Em(\theta=0)\]
+		d'où 
+		\begin{align*}
+			\Ec(\theta=0) 			 &= \Ep\left(\theta=\frac\pi2\right)\\
+			\frac12m(\ell\omega_0)^2 &= mg\ell\\
+		\end{align*}
+		D'où il suit que $\boxed{\omega_0=\sqrt{\frac{2g}\ell}}$ et $\boxed{v_0=\sqrt{2g\ell}}$.
+	\end{enumerate}
+	\subsubsection*{Deuxième partie du mouvement : $\theta < 0$}
+	\begin{center}
+		\begin{tikzpicture}
+			\coordinate (origin) at (0, -0.2);
+			\node (O) at (origin) [below left] {$A$};
+			\coordinate (masscord) at (-100:3);
+			\coordinate (gorigin) at (-1, -0.5);
+			\node (mass) at (masscord) [below left=0.4em] {$M$}; 
+			\coordinate (up) at (0,0);
+			\coordinate (cloucord) at (0, -1.6);
+			\node (clou) at (cloucord) [] {$\bullet$};
+			\node (cloulabel) at (clou) [right] {$B$};
+			\coordinate (down) at (0, -3.5);
+		
+			\roof{0}{-0.2}
+			\draw (origin) -- (cloucord) node [midway, left] {$d$};
+			\draw[dashed] (cloucord) -- (down);
+			\draw (cloucord) -- (masscord) node [above, midway, rotate=70] {$\ell - d$};
+			\draw pic [draw, <-, angle radius=12mm, angle eccentricity=0.45mm, "$\theta$"] {angle = masscord--clou--down};
+			%\draw[dashed, color=gray!50] let \p1 = ($(masscord) - (origin)$), \n1 = {veclen(\x1,\y1)} in (origin) +(-45:\n1) arc [start angle = -45, delta angle = -90, radius = \n1];
+			\draw[very thick, color=blue!60, -latex] (masscord) -- ++(0, -1.5) node [below] {$\vv{P}$};
+			\draw[very thick, color=green!60!black!40, -latex] let \p1 = (cloucord), 
+														 \p2 = ($(masscord) - (cloucord)$),
+														 \n1 = {-acos((\x2)/veclen(\x2, \y2)}
+												in (masscord) -- +(\n1:-1) node [midway, right] {$\vv{T}$};
+			\draw[very thick, color=black!40, -latex] let \p1 = ($(masscord) - (cloucord)$),
+														  \n1 = {-acos(\x1/veclen(\x1, \y1))}
+												in (masscord) -- +(\n1+90:-1) node [near end, above right] {$\vv{e_\theta}$};
+			\draw[very thick, color=black!40, -latex] let \p1 = ($(masscord) - (cloucord)$),
+														  \n1 = {-acos(\x1/veclen(\x1, \y1))}
+												in (masscord) -- +(\n1:1) node [near end, below left] {$\overrightarrow{e_r}$};
+			%\draw let \p1 = ($(masscord) - (0, 1.5)$), \p2 = (origin), \p3 = ($(masscord) - (origin)$), \n1 = {-acos(\y3/veclen(\x3, \y3))}, \p4 = ($(masscord) + (\n1+90:1)$) in node (a) at (\x1, \y1) [] {} node (b) at (\x4, \y4) [] {} pic [draw, ->, angle radius=6mm, angle eccentricity=0.55mm, "$\theta$"] {angle = a--masscord--b};
+			\draw[very thick, color=red!60, -latex] (gorigin) -- ++(0, -1.1) node [left, midway] {$\overrightarrow{g}$};									
+			\shade[ball color=gray] (masscord) circle (1mm);
+		\end{tikzpicture}	
+		\\
+		\textsc{Figure 2 – } \textit{État du système lorsque $\theta < 0$.}
+	\end{center}
+	\begin{enumerate}[start=3]
+		\item L'expression de l'énergie cinétique est donnée par $\Ec=\frac12mv^2$, d'où $\Ec=\boxed{\frac12m((\ell-d)\dot{\theta})^2}$. De la même manière qu'à la question 1, en remarque que $\dd \Ep=-\delta W(\vv{P})$, on a, en remarquant également que $\vv{v}=(\ell-d)\dot{\theta}\dd\theta$, que $\boxed{\Ep=mg(\ell-d)(1-\cos\theta)}$, en choisissant la constante d'intégration telle que $\Ep(\theta=0)=0$. Finalement \[\boxed{\Em=\frac12m((\ell-d)\dot{\theta})^2+mg(\ell-d)(1-\cos\theta)}\]
+		\item Par continuité de l'énergie au point $\theta=0$, on a que $\Em(\theta=0^+)=mgl$, et par conservation de l'énergie $\Em=mg\ell$.
+		\item On a directement \[\boxed{\dot{\theta}^2=\frac{2g(\ell-(\ell-d)(1-\cos\theta))}{(\ell-d)^2}}\]
+		\item Étude
+		\begin{itemize}
+			\item[\textbf{Système}] Masse assimilée au point M.
+			\item[\textbf{Référentiel}] Terrestre considéré galiléen.
+			\item[\textbf{Schéma}] C.f \textsc{Figure 2}.
+			\item[\textbf{Bilan des forces}] $\vv{T}=-T\vv{e_r}$; $\vv{P}=mg\cos\theta\vv{e_r}-mg\sin\theta\vv{e_\theta}$.
+			\item[\textbf{Étude cinématique}] $\vv{BM}=(\ell-d)\vv{e_r}$; $\vv{a}=(\ell-d)\ddot{\theta}\vv{e_\theta}-(\ell-d)\dot{\theta}^2$
+			\item[\textbf{P.F.D.}] ($m=$cste) On écrit seulement la projection qui nous intéresse (i.e selon $\vv{e_r}$) 
+			\[-m(\ell-d)\dot{\theta}^2=mg\cos\theta-T\]
+		\end{itemize}
+		\newpage
+		D'où 
+		\begin{align*}
+			T &= m\frac{2g(\ell-(\ell-d)(1-\cos\theta))}{\ell-d}+mg\cos\theta\\
+			  &= mg\left(\frac{2\ell}{\ell-d}-2(1-\cos\theta)+\cos\theta\right)
+		\end{align*}
+		Finalement \[\boxed{T=mg\left(\frac{2\ell}{\ell-d}+3\cos\theta-2\right)}\]
+		\item 
+	\end{enumerate}
+	\subsection*{Exercice 2 – Étude d'un oscillateur}
+	\begin{enumerate}
+		\item Une seule : $\theta$.
+		\item Le poids $\vv{P}$, la force de rappel du ressort $\vv{F}$, la réaction normale $\vv{R}$, les deux premières étant conservatives.
+		\item Il semble ici que le théorème de l'énergie mécanique soit approprié.
+	\end{enumerate}
+	\subsubsection*{Mise en équation}
+	\begin{enumerate}[start=4]
+		\item On a $\boxed{AM=2a\cos\left(\frac\theta2\right)}$.
+		\item On sait d'autre part que $\vv{P}$ dérive d'une énergie potentielle. On a que
+		\begin{align*}
+			\dW{P} &= \vv{P}\cdot \dd \vv{OM}\\
+					 &= \left(mg\cos\theta\vv{e_r}-mg\sin\theta\vv{e_\theta}\right)\cdot(a\dd\theta\vv{e_\theta})\\
+					 &= -amg\sin\theta\dd \theta
+		\end{align*}
+		D'où que l'énergie potentielle liée au poids s'écrit $\Ep(\vv{P})=-amg\cos\theta$. De même, on a que l'énergie potentielle liée à la force de rappel du ressort s'écrit 
+		\begin{align*}
+			\Ep(\vv{F}) &= \frac12k(AM-\ell_0)^2\\
+						&= \frac12k\left(2a\cos\left(\frac\theta2\right)-\ell_0\right)^2\\
+						&=2ka^2\left(\cos\left(\frac\theta2\right)-\frac{\ell_0}{2a}\right)^2
+		\end{align*}
+		De sorte que 
+		\begin{align*}
+			\Ep &= -amg\cos\theta+2ka^2\left(\cos\left(\frac\theta2\right)-\frac{\ell_0}{2a}\right)^2\\
+				&= ka^2\left[-\frac{mg}{ka}\cos\theta+\left(\cos\left(\frac\theta2\right)-\frac{\ell_0}{2a}\right)^2\right]
+		\end{align*}
+		En posant $\mathcal{E}_0=ka^2$, on a finalement : \[\boxed{\frac{\Ep(\theta)}{\mathcal{E}_0}=-\frac{mg}{ka}\cos\theta+\left(\cos\left(\frac\theta2\right)-\frac{\ell_0}{2a}\right)^2}\]
+		\item On sait que l'énergie potentielle présente une tangente horizontale aux points d'équilibre. On cherche ainsi les valeurs de $\theta_{\text{eq}}\in]-\pi,\pi]$ telles que $\frac{\dd\Ep}{\dd\theta}(\theta_{\text{eq}})=0$. On a $\frac{\dd\Ep}{\dd\theta}=0\ssi\frac{\dd\xi}{\dd\theta}=0$, ainsi, étant donné $\theta\in]-\pi,\pi]$ et en supposant $\eta<1-\frac{\ell_0}{2a}$ on a 
+		\begin{align*}
+			\frac{\dd\xi}{\dd\theta}=0 &\ssi \eta\sin\theta-2\sin\frac\theta2\left(\cos\frac\theta2-\frac{\ell_0}{2a}\right)=0\\
+										&\ssi \eta\sin\theta -\sin\theta+\frac{\ell_0}{a}\sin\frac\theta2=0\\
+										&\ssi (\eta-1)\sin\theta+\frac{\ell_0}{a}\sin\frac\theta2=0\\
+										&\ssi \sin\theta=\frac{\ell_0}{a(1-\eta)}\sin\frac\theta2\\
+										&\ssi 2\sin\frac\theta2\cos\frac\theta2=\frac{\ell_0}{a(1-\eta)}\sin\frac\theta2\\
+										&\ssi\boxed{\left(\sin\frac\theta2=0\right)\ \vee \ \left(\cos\frac\theta2=\frac{\ell_0}{2a(1-\eta)}\right)}
+		\end{align*}
+		Dans $]-\pi,\pi]$, il n'y a qu'une solution pour l'équation avec le sinus, qui est $\theta=0$. Pour l'équation avec le cosinus, comme $0\leq\frac{\ell_0}{2a(1-\eta)}<1$, on trouve deux solutions (d'abord avec $\arccos$ sur $[0,\pi[$, ensuite par parité de $\cos$.)
+		\item Lorsque $\eta=1$, on a $\frac{\dd\xi}{\dd\theta}=0 \ssi\sin\frac\theta2=0$, d'où une unique solution et donc une unique position d'équilibre sur $]-\pi,\pi]$, qui est $\theta=0$. $\eta=1$ correspond à la courbe en pointillés.
+		\item Les positions d'équilibre qui sont les solutions de l'équation en cosinus sont les positions stables, $\theta=0$ est la position d'équilibre instable.
+	\end{enumerate}
+
+	\subsubsection*{Petites oscillations au voisinage de $\theta=0$}
+	\begin{enumerate}[start=9]
+		\item On a \[\Ec=\frac12mv^2=\frac12m(a\dot{\theta})^2\]
+		Donc \[\Em=\frac12m(a\dot{\theta})^2+\mathcal{E}_0\xi(\theta)\]
+		Le mouvement étant conservatif, l'énergie mécanique est conservée, d'où
+		\begin{align*}
+			\frac{\dd\Em}{\dd t}=0 &\implique a^2m\ddot{\theta}\dot{\theta}+\mathcal{E}_0\left(\dot{\theta}\sin\theta-2\dot{\theta}\sin\frac\theta2\left(\cos\frac\theta2-\frac{\ell_0}{2a}\right)\right)=0\\
+								   &\implique \boxed{\ddot{\theta}+\mathcal{E}_0\frac{\ell_0}{a^3m}\sin\left(\frac\theta2\right)=0}
+		\end{align*}
+		\item On a $\sin\theta=\theta+o(\theta)$, d'où l'équation linéariée \[\ddot{\theta}+\frac{k\ell_0}{2ma}\theta=0\tag{E}\]
+		Donc $\boxed{\omega_0=\sqrt{\frac{k\ell_0}{2ma}}}$.
+	\end{enumerate}
+	\subsection*{Exercice 3 – Produit vectoriel}
+	\begin{enumerate}
+		\item On représente le résultat du produit vectoriel dans chaque cas : 
+		\begin{center}
+			\begin{tikzpicture}
+				% coordinates
+
+				% case 1
+				\coordinate (a11) at (0, 0);
+				\coordinate (a12) at (1, 0);
+				\coordinate (b11) at (0, 0);
+				\coordinate (b12) at (0, 1);
+
+				% case 2
+				\coordinate (a21) at (2.5, 0);
+				\coordinate (a22) at (3.3, 0.4);
+				\coordinate (b21) at (2.5, 0);
+				\coordinate (b22) at (3.5, 0);
+
+				% case 3
+				\coordinate (a31) at (5, 0.6);
+				\coordinate (a32) at (6, 0);
+				\coordinate (b31) at (5, 0.6);
+				\coordinate (b32) at (5, 0.6);
+
+				% case 4 
+				\coordinate (a41) at (7, 0.6);
+				\coordinate (a42) at (8, 0);
+				\coordinate (b41) at (7, 1);
+				\coordinate (b42) at (7.5, 0.3);
+
+				\draw[thick, -latex, color=red!70] (a11) -- (a12) node [right] {$\vv{a}$};
+				\draw[thick, -latex, color=red!70] (a21) -- (a22) node [near end, above] {$\vv{a}$};
+				\draw[thick, -latex, color=red!70] (a31) -- +(-20:1) node [near end, above right] {$\vv{a}$};
+				\draw[thick, color=red!69] (b42) circle (1mm) node [left] {$\vv{a}$};
+				\draw[thick] (b42) node [cross, rotate=0, color=red!69] {};
+
+				\draw[thick, -latex, color=blue!70] (b11) -- (b12) node [above] {$\vv{b}$};
+				\draw[thick, -latex, color=blue!70] (b21) -- (b22) node [right] {$\vv{b}$};
+				\draw[thick, -latex, color=blue!70] (b42) -- +(105:1) node [near end, above right] {$\vv{b}$};
+				\draw[thick, color=blue!70] (b31) circle (1mm) node [left] {$\vv{b}$};
+				\fill[color=blue!70] (b31) circle (0.5mm);
+				
+				% answers
+				\draw[thick, color=green!69!gray!30] (a11) circle (1mm) node [left] {$\vv{c}$};
+				\fill[color=green!69!gray!30] (a11) circle (0.5mm);
+				\draw[thick, color=green!69!gray!30] (a21) circle (1mm) node [left] {$\vv{c}$};
+				\draw[thick] (a21) node [cross, rotate=0, color=green!47!gray!30] {};
+				\draw[thick, color=green!69!gray!30, -latex] (a31) -- +(-110:0.6) node [left] {$\vv{c}$};
+				\draw[thick, color=green!69!gray!30, -latex] (b42) -- +(15:0.6) node [near end, above] {$\vv{c}$};
+			\end{tikzpicture}
+		\end{center}
+		\item Calcul des expressions demandées : 
+		\begin{itemize}
+			\item $\vv{e_x}-\vv{e_y}$.
+			\item $6\vv{e_z}+2\vv{e_y}-4\vv{e_x}$.
+			\item $\vv{e_x}-3\vv{e_y}$.
+			\item $0$.
+		\end{itemize}
+	\end{enumerate}
+\end{document}
+
