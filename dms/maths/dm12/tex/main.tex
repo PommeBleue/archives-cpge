@@ -1,0 +1,326 @@
+% Preamble
+\documentclass[17pt]{article}
+
+% Math related packages.
+\usepackage{amsfonts, amsthm, amsmath, amssymb, amstext}
+\usepackage{mathtools}
+\usepackage{physics}
+\usepackage{cancel, textcomp}
+\usepackage[mathscr]{euscript}
+\usepackage[nointegrals]{wasysym}
+\usepackage[left=2.5cm, right=2.5cm, top=1.5cm, bottom=1.5cm]{geometry}
+
+\usepackage{esvect}
+\usepackage{IEEEtrantools}
+
+% Font related packages.
+\usepackage[french]{babel}
+\usepackage[unicode]{hyperref}
+\usepackage[fontsize = 10pt]{scrextend}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[finemath]{kotex}
+\usepackage{dhucs-nanumfont}
+\usepackage{mathpazo}
+\usepackage{FiraMono}
+\usepackage{mathrsfs}
+
+% Other
+\usepackage{enumerate}
+\usepackage[shortlabels]{enumitem}
+\usepackage{tabularx}
+\usepackage[object=vectorian]{pgfornament}
+\usepackage{pgf}
+\usepackage{pgfpages}
+\usepackage[european,straightvoltages]{circuitikz}
+\usepackage{scalerel}
+\usepackage{stackengine}
+
+
+% A more colorful world.
+\usepackage{xcolor}
+
+% Display Source Code
+\usepackage{listings}
+\lstset{
+    language=C,
+    basicstyle=\small\ttfamily\mdseries,
+    numberstyle=\color{gray},
+    stringstyle=\color[HTML]{933797},
+    commentstyle=\color[HTML]{228B22},
+    emph={[2]from,with,import,as,pass,return,and,or,not},
+    emphstyle={[2]\color[HTML]{DD52F0}},
+    emph={[3]range,format,enumerate,print},
+    emphstyle={[3]\color[HTML]{D17032}},
+    emph={[4]if,elif,else,for,while,in,def,lambda,int,float,all,len},
+    emphstyle={[4]\color{blue}},
+    emph={[5]abs},
+    emphstyle={[5]\color{black}},
+    showstringspaces=false,
+    breaklines=true,
+    prebreak=\mbox{{\color{gray}\tiny$\searrow$}},
+    numbers=left
+}
+
+% OPTIONS
+\everymath\expandafter{\the\everymath\displaystyle}
+
+% Tikz libraries
+\usetikzlibrary{angles, quotes}
+
+% COMMANDS
+\newcommand{\f}[1]{\texttt{#1}}
+\newcommand{\sct}[1]{
+	\begin{center}
+		\Large\textbf{#1}
+	\end{center}
+}
+\newcommand{\subsct}[1]{
+	\begin{center}
+		\large\textbf{#1}
+	\end{center}
+}
+\newcommand{\inl}[2]{[\![#1, #2]\!]}
+\newcommand{\q}[1]{\textbf{#1.}\quad}
+\newcommand{\urlsymbol}{\kern1pt\vbox to .5ex{}\raise.10ex\hbox{\pdfliteral{%
+    q .8 0 0 .8 0 0 cm
+    2.5 5 m 1 j 1 J .8 w
+    1 5 l 0 5 0 4 y 0 1 l 0 0 1 0 y 4 0 l 5 0 5 1 y 5 2.5 l S
+    3 3 m 6 6 l S 4 6 m 6 6 l 6 4 l S
+Q}}\kern5pt}
+
+\newcounter{iloop}
+\newcommand\openbigstar[1][0.7]{%
+  \scalerel*{%
+    \stackinset{c}{-.125pt}{c}{}{\scalebox{#1}{\color{white}{$\bigstar$}}}{%
+      $\bigstar$}%
+  }{\bigstar}
+}
+\newcommand{\Stars}[1]{\ensuremath{%
+\pgfmathtruncatemacro{\imax}{ifthenelse(int(#1)==#1,#1-1,#1)}%
+\pgfmathsetmacro{\xrest}{0.9*(1-#1+\imax)}%
+\setcounter{iloop}{0}%
+\loop\stepcounter{iloop}\ifnum\value{iloop}<\the\numexpr\imax+1
+\bigstar\repeat
+\openbigstar[\xrest]%
+\setcounter{iloop}{0}%
+\loop\stepcounter{iloop}\ifnum\value{iloop}<\the\numexpr5-\imax\relax
+\openbigstar[.9]\repeat}}
+
+\def\N{\mathbb N}
+\def\Z{\mathbb Z}
+\def\Q{\mathbb Q}
+\def\R{\mathbb R}
+\def\Rpe{\mathbb R_+^*}
+\def\C{\mathbb C}
+\def\K{\mathbb K}
+\def\L{\mathbb L}
+
+\def\Cinf{\mathcal{C}^{\infty}}
+\def\P{\mathscr{P}}
+
+\def\ssi{\Leftrightarrow}
+\def\Ssi{\Longleftrightarrow}
+\def\implique{\Longrightarrow}
+
+\def\sh{\text{sh}}
+\def\ch{\text{ch}}
+\def\Id#1{\text{Id}_{#1}}
+
+\def\sep{\noindent\makebox[\linewidth]{\rule{\paperwidth}{0.4pt}}}
+
+% CUSTOM TITLE
+\makeatletter
+\def\@maketitle{%
+	\newpage
+	%  \null% DELETED
+	%  \vskip 2em% DELETED
+	\begin{center}%
+		\let \footnote \thanks
+		{\LARGE \@title \par}%
+		\vskip 1em%
+		{\large
+			\lineskip .5em%
+			\begin{tabular}[t]{c}%
+				\@author
+			\end{tabular}\par}%
+		\vskip 1em%
+		{\large \@date}%
+		\vskip 1cm%
+	\end{center}%
+	\par
+	\vskip -1em}
+\makeatother
+
+\title{DM12}
+\author{Amar AHMANE\\ MP2I}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Problème}
+	\subsection*{Partie A}
+	\begin{enumerate}
+		\item \underline{Exemples.}
+		\begin{enumerate}[a)]
+			\item $\exp$ est de classe $\Cinf$. Soit $n\in\N$, on a $\exp^{(n)}=\exp$, ainsi $\forall x\in[0,+\infty[$, $\exp^{(n)}(x)>0$, ce qui conclut.
+			\item $\ch$ et $\sh$ sont de classe $\Cinf$ par composée et somme de telles fonctions. On a d'une part que \[\forall n\in\N,\quad \left(\left(\sh^{(n)}=\ch\right)\ \vee\ \left(\sh^{(n)}=\sh\right)\right)\wedge\left(\left(\ch^{(n)}=\ch\right)\ \vee\ \left(\ch^{(n)}=\sh\right)\right)\footnotemark[1]\]
+			D'autre part, $\ch$ et $\sh$ sont positives sur $[0,+\infty[$, ce qui conclut.
+			\item $f$ est de classe $\Cinf$, puisque fonction usuelle. Soit $n\in\N$. Si $n\in[\![0,p]\!]$, alors \[\forall x\in[0,+\infty[,\quad f^{(n)}(x)=\frac{p!}{(p-n)!}x^{p-n}\]
+			Pour tout $x$ réel positif, on a $\frac{p!}{(p-n)!}x^{p-n}\geq 0$.\\
+			Si $n>p$, alors $f^{(n)}=0\geq 0$. $f$ est donc AM.
+			\item Une fonction $f$ AM est de classe $\Cinf$, elle est donc dérivable. De plus, toutes ses dérivées sont positives, en particulier $f'$ est positive, donc, par caractérisation des fonctions croissantes parmi les fonctions dérivables, $f$ est croissante donc monotone sur $[0,\alpha[$.\\
+			$\arctan$ est de classe $\Cinf$, cependant, on remarque que \[\forall x\in[0,+\infty[,\quad \arctan^{(2)}(x)=\frac{-2x}{(1+x^2)^2}\leq 0\]
+			Donc elle n'est pas AM. Or, $\arctan$ est croissante sur $\R$, donc sur $[0,+\infty[$ donc monotone sur $[0,+\infty[$. La réciproque est fausse.
+		\end{enumerate}
+		\item \underline{Opérations.}
+		\begin{enumerate}[a)]
+			\item Par stabilité de $\Cinf$ par somme, $(f+g)\in\Cinf([0,\alpha[,\R)$. Soient $n\in\N$, $x\in[0,\alpha[$, alors \[(f+g)^{(n)}(x)=f^{(n)}(x)+g^{(n)}(x)\geq 0\]
+			Ce qui conclut.
+			\item Par stabilité de $\Cinf$ par produit, $fg\in\Cinf([0,\alpha[,\R)$. Soient $n\in\N$, $x\in[0,\alpha[$, alors \[(fg)^{(n)}(x)=f^{(n)}(x)\times g^{(n)}(x)\geq 0\]
+			Ce qui conclut.
+		\end{enumerate}
+		\item \underline{Dérivation et absolue monotonie.}
+		\begin{enumerate}[a)]
+			\item On suppose que $f$ est AM sur $[0,\alpha[$. Alors $f$ est de classe $\Cinf$, donc $f'$ aussi. De plus, étant donné $n\in\N$, on a $n+1\in\N$ et \[\forall x\in[0,\alpha[,\quad f^{(n+1)}(x)=\left(f^\prime\right)^{(n)}(x)\geq 0\]
+			Ce qui conclut.
+
+			\footnotetext[1]{Soit $n\in\N$; si $n$ est pair, il existe $m\in\N,\ n=2m$ et donc $\ch^{(n)}=\ch^{(2m)}=\left(\ch^{(2)}\right)^{(2(m-1))}=\ch^{(2(m-1))}=\dots=\ch^{(2)}=\ch$. Si $n$ est impair, il existe $m\in\N,\ n=2m+1$ et donc $\ch^{(n)}=\ch^{(2m+1)}=\left(\ch^{(2m)}\right)^\prime=\ch^\prime=\sh$.}
+			\newpage
+
+			\item On suppose que $f^\prime$ est AM sur $[0,\alpha[$. On sait alors que $f^\prime$ est de classe $\Cinf$ et que pour tout $n\in\N$, $\left(f^\prime\right)^{(n)}$ est positive. En particulier, $\left(f^\prime\right)^{(0)}=f^\prime$ est positive, donc $f$ est croissante, donc $\forall x\in[0,\alpha[,\ f(x)\geq f(0)$ donc $\forall x\in[0,\alpha[,\ (f-f(0))(x)\geq 0$. Ainsi, $f-f(0)$ est de classe $\Cinf$, est positive, toutes ses dérivées successives le sont aussi, donc elle est AM.
+		\end{enumerate}
+		\item \underline{L'exemple de tan.}
+		\begin{enumerate}[a)]
+			\item $\tan^\prime=1+\tan^2$.
+			\item Soit $n\in\N^*$, alors 
+			\begin{align*}
+				\tan^{(n+1)}&=(1+\tan^2)^{(n)}\\
+							&=(\tan^2)^{(n)}\\
+							&=\sum_{k=0}^n\binom nk\tan^{(k)}\tan^{(n-k)}
+			\end{align*}
+			\item Pour $n\in\N$, on note $\mathcal{P}_n:\text{« }\tan^{(n)}\geq0\text{ sur }\left[0,\frac\pi2\right[\text{ »}$. On montre par récurrence forte que $\forall n\in\N,\quad \mathcal{P}_n$.
+			\begin{itemize}
+				\item $\mathcal P_0$ est vraie, puisque $\tan$ est positive sur $\left[0,\frac\pi2\right[$.
+				\item Soit $n\in\N$, supposons que $\forall k\in[\![0,n]\!]$, $\mathcal P_n$ est vraie. Montrons $\mathcal P_{n+1}$. On a d'après 4.b que \[\tan^{(n+1)}=\sum_{k=0}^n\binom nk\tan^{(k)}\tan^{(n-k)}\]
+				Or, par hypothèse de récurrence, étant donné $k\in[\![0,n]\!]$, $\tan^{(k)}\geq 0$; or $(n-k)\in[\![0,n]\!]$, donc $\tan^{(n-k)}\geq 0$ donc $\binom nk\tan^{(k)}\tan^{(n-k)}\geq 0$. Ceci étant vrai pour tout $k\in[\![0,n]\!]$, on a $\tan^{(n+1)}\geq 0$.\\
+				C'est exactement $\mathcal P_{n+1}$.
+				\item Youpi!
+			\end{itemize}
+			$\tan$ est de classe $\Cinf$ sur $\left[0,\frac\pi2\right[$ et toutes ses dérivées successives sont positives, donc elle est AM.
+		\end{enumerate}
+		\item \underline{L'exemple de arcsin.}
+		\begin{enumerate}[a)]
+			\item On a \[\forall x\in]-1,1[,\quad f^\prime(x)=\frac1{\sqrt{1-x^2}}\]
+			et \[\forall x\in]-1,1[,\quad f^{\prime\prime}(x)=\frac{x}{(1-x^2)\sqrt{1-x^2}}=\frac x{1-x^2}f^\prime(x)\]
+			Il en découle directement que \[\forall x\in]-1,1[,\quad (1-x^2)f^{\prime\prime}(x)=xf^\prime(x)\]
+			\item Soit $n\in\N$. On pose $\varphi:x\in]-1,1[\mapsto xf^\prime(x)$, $g:x\in]-1,1[\mapsto (1-x^2)$ et $\psi:x\in]-1,1[\mapsto g(x)f^{\prime\prime}(x)$. On a 
+			\begin{align*}
+				\varphi^{(n)} &= \sum_{k=0}^n\binom nk\Id{]-1,1[}^{(k)}(f^\prime)^{(n-k)}\\
+							  &= \sum_{k=0}^1\binom nk\Id{]-1,1[}^{(k)}(f^\prime)^{(n-k)}\\
+							  &= \Id{]-1,1[}f^{(n+1)}+nf^{(n)}
+			\end{align*}
+			Et
+			\begin{align*}
+				\psi^{(n)} 	&= \sum_{k=0}^n\binom nkg^{(k)}(f^{\prime\prime})^{(n-k)}\\
+							&= \sum_{k=0}^2\binom nkg^{(k)}(f^{\prime\prime})^{(n-k)}\\
+							&= gf^{(n+2)}+ng^\prime f^{(n+1)}+\frac{n(n-1)}2g^{\prime\prime}f^{(n)}
+			\end{align*}
+			Soit $x\in]-1,1[$, on a
+			\begin{align*}
+				\varphi^{(n)}(x) &= \psi^{(n)}(x)\\
+				xf^{(n+1)}(x)+nf^{(n)}(x)&= (1-x^2)f^{(n+2)}(x)-2nxf^{(n+1)}(x)-n(n-1)f^{(n)}(x)\\
+				(1-x^2)f^{(n+2)}(x) &= n^2f^{(n)}(x)+(2n+1)xf^{(n+1)}(x)
+			\end{align*}
+			\item Pour $n\in\N$, on note $\mathcal{P}_n:\text{« }f^{(n)}\geq0\text{ sur }[0,1[\text{ »}$. On montre par récurrence double que $\forall n\in\N,\quad \mathcal{P}_n$.
+			\begin{itemize}
+				\item $P_0$ est vraie, puisque $f=\arcsin$ est positive sur $[0,1[$.
+				\item Soit $n\in\N$, supposons que $\mathcal{P}_n$ et $\mathcal{P}_{n+1}$ sont vraies. Montrons $P_{n+2}$. Soit $x\in[0,1[$, on a d'après 5.b que \[(1-x)^2f^{(n+2)}(x)=n^2f^{(n)}(x)+(2n+1)xf^{(n+1)}(x)\]
+				Par hypothèse de récurrence, $f^{(n+1)}(x)\geq 0$ et $f^{(n)}(x)\geq 0$ donc $n^2f^{(n)}(x)+(2n+1)xf^{(n+1)}(x)\geq 0$ puisque $x\geq 0$; or, $(1-x^2)\geq 0$ puisque $0\leq x< 1$ donc $x^2<1$; ainsi, on a nécessaireent $f^{(n+2)}(x)\geq 0$.\\
+				Ceci étant vrai pour tout $x\in[0,1[$, c'est exactement $\mathcal P_{n+2}$. 
+				\item Youpi!
+			\end{itemize}
+			$f$ est de classe $\Cinf$ sur $[0,1[$ et toutes ses dérivées successives sont positives, donc elle est AM.
+		\end{enumerate}
+	\end{enumerate}
+	\subsection*{Partie B}
+	\begin{enumerate}
+		\item 
+		\begin{enumerate}[a)]
+			\item On pose $\phi x\in[a,b]\mapsto (f(b)-f(a))g(x)-(g(b)-g(a))f(x)$. $\phi$ est continue sur $[a,b]$ comme somme et produit de telles fonctions, dérivable sur $]a,b[$ comme somme et produit de telles fonctions. De plus
+			\begin{align*}
+				\phi(a) &=(f(b)-f(a))g(a)-(g(b)-g(a))f(a)\\
+						&=f(b)g(a)-f(a)g(a)-g(b)f(a)+g(a)f(a)\\
+						&=f(b)g(a)+f(b)g(b)-g(b)f(a)-g(b)f(b)\\
+						&=(f(b)-f(a))g(b)-(g(b)-g(a))f(b)\\
+						&=\phi(b) 
+			\end{align*}
+			D'après Rolle, il existe $c\in]a,b[$ tel que $\phi'(c)=(f(b)-f(a))g'(c)-(g(b)-g(a))f'(c)=0$, i.e $(f(b)-f(a))g'(c)=(g(b)-g(a))f'(c)$.
+			\item On suppose que $g'$ ne s'annule pas. On montre par l'absurde que $g(a)\neq g(b)$ : si $g(a)=g(b)$, $g'$ s'annule par Rolle, ce qui est absurde. D'après B.1.a, il existe $c\in]a,b[$ tel que $(f(b)-f(a))g'(c)=(g(b)-g(a))f'(c)$, i.e \[\frac{f(b)-f(a)}{g(b)-g(a)}=\frac{f'(c)}{g'(c)}\]
+		\end{enumerate}
+		\item On suppose que \[\frac{f'(x)}{g'(x)}\xrightarrow[x\rightarrow 0]{} \ell\]
+
+		\newpage
+
+		Soit $u\in]0,\alpha[^\N$ telle que $u_n\xrightarrow[n\to+ +\infty]{}0$. Soit $n\in\N$. $u_n\in\Rpe$, en s'intéressant à la restriction de $f$ et $g$ à $\overline{B}\left(0, u_n\right)$, comme $f$ et $g$ sont continues sur $\overline{B}\left(0, u_n\right)$ et dérivables sur $\text{Int}\left(\overline{B}\left(0, u_n\right)\right)\footnotemark[2]$, on montre grâce à B.1.b l'existece de $c_n\in\text{Int}\left(\overline{B}\left(0, u_n\right)\right)$ tel que \[\frac{f^\prime(c_n)}{g^\prime(c_n)}=\frac{f\left(u_n\right)-f(0)}{g\left(u_n\right)-g(0)}=\frac{f\left(u_n\right)}{g\left(u_n\right)}\]		
+
+		D'où finalement l'existence de $c\in(]0,\alpha[)^{\N}$ telle que \[\forall n\in\N,\quad \frac{f^\prime(c_n)}{g^\prime(c_n)}=\frac{f\left(u_n\right)}{g\left(u_n\right)}\]
+		Et telle que $c_n\xrightarrow[n\rightarrow +\infty ]{} 0$.\footnotemark[3]\\
+		Ainsi, d'après la caractérisation séquentielle de la limite, \[\frac{f^\prime(c_n)}{g^\prime(c_n)}\xrightarrow[n\rightarrow +\infty ]{} \ell\]
+		Donc $\frac{f\left(u_n\right)}{g\left(u_n\right)}$ admet une limite, qui est $\ell$. Ceci étant vrai pour toute suite $u\in]0,\alpha[^\N$ et $0$ étant une borne de $I$, on a d'après la caractérisation séquentielle de la limite que \[\frac{f(x)}{g(x)}\xrightarrow[x\to 0]{} \ell\]
+	\end{enumerate}
+
+	\subsection*{Partie C}
+	\begin{enumerate}
+		\item $\tau$ d'accroissement en $0$. $f$ est dérivable en $0$, donc son taux d'accroissement en $0$ tend vers $f'(0)$ en $0$, donc $\lim_{x\to 0}\tau(x)=\tau(0)$, d'où continuité en $0$.
+		\item 
+		\begin{enumerate}[a)]
+			\item Soit $x\in]0,\alpha[$, on a \[\tau^\prime(x) = \frac{xf^\prime(x)-(f(x)-f(0))}{x^2}\]
+			D'où que $\tau^\prime=\frac{N_1}{D_1}$ où on a $N_1:x\in[0,\alpha[\mapsto xf^\prime(x)-(f(x)-f(0))$ et $D_1:x\in[0,\alpha[\mapsto x^2$.
+			\item Soit $x\in]0,\alpha[$, on a 
+			\begin{align*}
+				\frac{N_1^\prime(x)}{D_1^\prime(x)} &= \frac{f^\prime(x)+xf^{\prime\prime}(x)-f^\prime(x)}{2x}\\
+													&= \frac{f^{\prime\prime}(x)}2
+			\end{align*}
+			$f$ est de classe $\Cinf$, donc $f^{\prime\prime}$ est continue, d'où que $f^{\prime\prime}(x)\xrightarrow[x\to 0]{} f^{\prime\prime}(0)$. D'où, d'après la règle de l'Hôpital \[\tau^\prime(x)\xrightarrow[x\to 0]{} \frac{f^{\prime\prime}(0)}2\]
+			De plus, comme $\tau$ est continue en $0$, on a $\tau^\prime(0)=\frac{f^{\prime\prime}(0)}2$.
+
+			\footnotetext[2]{Int pour intérieur.}
+			\footnotetext[3]{$\forall n\in\N,\ c_n\in\text{Int}\left(\overline{B}\left(0, u_n\right)\right)$ donc $\forall n\in\N,\ |c_n|<u_n$, ce qui conclut.}
+			\newpage
+
+		\end{enumerate}
+		\item 
+		\begin{enumerate}[a)]
+			\item On pose $\phi:x\in]0,\alpha[\mapsto \frac1x$ et $\psi:x\in]0,\alpha[\mapsto f(x)-f(0)$. Soit $x\in]0,\alpha[$ 
+			\begin{align*}
+				\tau^{(n)}(x) &=\sum_{k=0}^n\binom nk\phi^{(n-k)}(x)\psi^{(k)}(x)\\
+							  &=\sum_{k=0}^n\binom nk\frac{(-1)^{n-k}(n-k)!}{x^{n-k+1}}(f^{(k)}(x)-\delta_{0k}f(0))\\
+							  &=\frac{(-1)^nn!}{x^{n+1}}(f(x)-f(0))+\sum_{k=1}^n\binom nk\frac{(-1)^{n-k}(n-k)!}{x^{n-k+1}}f^{(k)}(x)\\
+							  &=\frac{(-1)^nn!}{x^{n+1}}(f(x)-f(0))+\sum_{k=1}^n\frac{(-1)^{n+k}n!x^kf^{(k)}(x)}{k!x^{n+1}}\\
+							  &=\frac{(-1)^nn!}{x^{n+1}}\left(\sum_{k=1}^n\frac{(-1)^kx^kf^{(k)}(x)}{k!}+f(x)-f(0)\right)
+			\end{align*}
+			\item Soit $x\in]0,\alpha[$, on a 
+			\begin{align*}
+				N_n^\prime(x) &= \sum_{k=1}^n\frac{(-1)^k(kx^{k-1}f^{(k)}(x)+x^kf^{(k+1)}(x))}{k!}+f^\prime(x)\\
+							  &= \sum_{k=1}^n\left(\frac{(-1)^kx^{k-1}f^{(k)}(x)}{(k-1)!}-\frac{(-1)^{k+1}x^kf^{(k+1)}(x)}{k!}\right)+f^\prime(x)\\
+							  &= \frac{(-1)^nx^nf^{(n+1)}(x)}{n!}
+			\end{align*}
+			\item Soit $x\in]0,\alpha[$, on a 
+			\begin{align*}
+				\frac{(-1)^nn!N_n^\prime(x)}{(n+1)x^n} &= \frac{f^{(n+1)}(x)}{n+1}\xrightarrow[x\to 0]{} \frac{f^{(n+1)}(0)}{n+1}
+			\end{align*}
+			$f$ est de classe $\Cinf$, donc sa dérivée $n+1$ème est, en particulier, continue, d'où la limite ci-dessus. D'après la règle de l'hôpital, $\tau^{(n)}(x)\xrightarrow[x\to 0]{} \frac{f^{(n+1)}(0)}{n+1}$.
+			\item Pour $n\in\N^*$, on note $\mathcal{P}_n:\text{« }\tau\text{ est de classe }\mathcal C^n\text{ sur }[0,\alpha[\text{ »}$. On montre par récurrence que $\forall n\in\N,\ \mathcal{P}_n$.
+			\begin{itemize}
+				\item $\mathcal P_1$ est vraie, puisque $\tau$ est dérivable sur $[0,\alpha[$ (selon C.2.d), et sa dérivée est continue : en effet, cela est vrai sur $]0,\alpha[$ puisque $f$ est $\Cinf$ et vrai en $0$ puisqu'on s'en est assuré à la question C.2 : $\tau^\prime$ est définie en $0$ et y admet une limite. 
+				\item Soit $n\in\N$, supposons que $\mathcal P_n$ est vraie. Montrons $\mathcal P_{n+1}$. Comme $\tau$ est $\mathcal C^n$ sur $[0,\alpha[$, on a que $\tau^{(n)}$ est continue en $0$. D'autre part, d'après C.3.c, on a $\tau^{(n+1)}(x)\xrightarrow[\begin{smallmatrix}{c}x\to 0\\x\neq 0\end{smallmatrix}]{} \frac{f^{(n+2)}(0)}{n+2}$. $\tau^{(n)}$ est donc dérivable en $0$ d'après le théorème de la limite de la dérivée, et $\tau^{(n+1)}(0)=\frac{f^{(n+2)}(0)}{n+2}$. Comme $\tau^{(n)}$ est dérivable sur $]0,\alpha[$, $\tau^{(n)}$ est dérivable sur $[0,\alpha[$. De plus, $\tau^{(n+1)}$ est continue en $0$, ceci découle de l'application du théorème de limite de la dérivée, mais aussi sur $]0,\alpha[$ puisque $f$ est $\Cinf$.\\
+				C'est exactement $\mathcal P_{n+1}$.
+				\item Youpi!
+			\end{itemize}
+			\item $\tau$ est de classe $\Cinf$. On peut remarquer que, étant donné $n\in\N^*$, $N_n(0)=0$, or, on connaît déjà $N_n^\prime$, donc on peut en déduire que, étant donné $x\in]0,\alpha[$ \[(-1)^nN_n^\prime(x)=\frac{x^nf^{(n+1)}(x)}{n!}\geq 0\]
+			d'où que $(-1)^nN_n(x)\geq 0$, donc, $\tau^{(n)}$ est positive sur $]0,\alpha[$. Ceci reste vrai en $0$, par absolue monotonie de $f$. Par ailleurs, $\tau$ est aussi positive, puisque $f$ est coirssante, donc $f(x)\geq f(0)$ pour un $x\in]0,\alpha[$ quelconque et $f^\prime(0)\geq 0$. Ce qui conclut.
+		\end{enumerate}
+	\end{enumerate}
+\end{document}
+
