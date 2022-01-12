@@ -1,0 +1,284 @@
+% Preamble
+\documentclass[17pt]{article}
+
+% Math related packages.
+\usepackage{amsfonts, amsthm, amsmath, amssymb, amstext}
+\usepackage{mathtools}
+\usepackage{physics}
+\usepackage{cancel, textcomp}
+\usepackage[mathscr]{euscript}
+\usepackage[nointegrals]{wasysym}
+\usepackage[left=3cm, right=3cm, top=1.5cm, bottom=1.5cm]{geometry}
+
+\usepackage{esvect}
+\usepackage{IEEEtrantools}
+
+% Font related packages.
+\usepackage[french]{babel}
+\usepackage[unicode]{hyperref}
+\usepackage[fontsize = 10pt]{scrextend}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[finemath]{kotex}
+\usepackage{dhucs-nanumfont}
+\usepackage{mathpazo}
+\usepackage{FiraMono}
+\usepackage{mathrsfs}
+
+% Other
+\usepackage{enumerate}
+\usepackage[shortlabels]{enumitem}
+\usepackage{tabularx}
+\usepackage[object=vectorian]{pgfornament}
+\usepackage{pgf}
+\usepackage{pgfpages}
+\usepackage[european,straightvoltages]{circuitikz}
+\usepackage{scalerel}
+\usepackage{stackengine}
+
+
+% A more colorful world.
+\usepackage{xcolor}
+
+% Display Source Code
+\usepackage{listings}
+\lstset{
+    language=C,
+    basicstyle=\small\ttfamily\mdseries,
+    numberstyle=\color{gray},
+    stringstyle=\color[HTML]{933797},
+    commentstyle=\color[HTML]{228B22},
+    emph={[2]from,with,import,as,pass,return,and,or,not},
+    emphstyle={[2]\color[HTML]{DD52F0}},
+    emph={[3]range,format,enumerate,print},
+    emphstyle={[3]\color[HTML]{D17032}},
+    emph={[4]if,elif,else,for,while,in,def,lambda,int,float,all,len},
+    emphstyle={[4]\color{blue}},
+    emph={[5]abs},
+    emphstyle={[5]\color{black}},
+    showstringspaces=false,
+    breaklines=true,
+    prebreak=\mbox{{\color{gray}\tiny$\searrow$}},
+    numbers=left
+}
+
+% OPTIONS
+\everymath\expandafter{\the\everymath\displaystyle}
+
+% Tikz libraries
+\usetikzlibrary{angles, quotes, shapes.misc}
+
+% Tikz plus
+\def\roof#1#2{
+	\draw[very thick] (#1-0.5, #2) -- (#1+0.5, #2);
+
+	\foreach \i in {-0.45, -0.35, ..., 0.45}
+		\draw (#1 + \i, #2) -- +(120:0.5em);
+}
+
+\tikzset{cross/.style={cross out, draw=black, minimum size=2*(#1-\pgflinewidth), inner sep=0pt, outer sep=0pt},
+%default radius will be 1pt. 
+cross/.default={0.88mm}}
+
+% COMMANDS
+\newcommand{\dW}[1]{\delta W(\vv{#1})}
+\newcommand{\f}[1]{\texttt{#1}}
+\newcommand{\sct}[1]{
+	\begin{center}
+		\Large\textbf{#1}
+	\end{center}
+}
+\newcommand{\subsct}[1]{
+	\begin{center}
+		\large\textbf{#1}
+	\end{center}
+}
+\newcommand{\inl}[2]{[\![#1, #2]\!]}
+\newcommand{\q}[1]{\textbf{#1.}\quad}
+\newcommand{\urlsymbol}{\kern1pt\vbox to .5ex{}\raise.10ex\hbox{\pdfliteral{%
+    q .8 0 0 .8 0 0 cm
+    2.5 5 m 1 j 1 J .8 w
+    1 5 l 0 5 0 4 y 0 1 l 0 0 1 0 y 4 0 l 5 0 5 1 y 5 2.5 l S
+    3 3 m 6 6 l S 4 6 m 6 6 l 6 4 l S
+Q}}\kern5pt}
+
+\newcounter{iloop}
+\newcommand\openbigstar[1][0.7]{%
+  \scalerel*{%
+    \stackinset{c}{-.125pt}{c}{}{\scalebox{#1}{\color{white}{$\bigstar$}}}{%
+      $\bigstar$}%
+  }{\bigstar}
+}
+\newcommand{\Stars}[1]{\ensuremath{%
+\pgfmathtruncatemacro{\imax}{ifthenelse(int(#1)==#1,#1-1,#1)}%
+\pgfmathsetmacro{\xrest}{0.9*(1-#1+\imax)}%
+\setcounter{iloop}{0}%
+\loop\stepcounter{iloop}\ifnum\value{iloop}<\the\numexpr\imax+1
+\bigstar\repeat
+\openbigstar[\xrest]%
+\setcounter{iloop}{0}%
+\loop\stepcounter{iloop}\ifnum\value{iloop}<\the\numexpr5-\imax\relax
+\openbigstar[.9]\repeat}}
+
+\def\N{\mathbb N}
+\def\Z{\mathbb Z}
+\def\Q{\mathbb Q}
+\def\R{\mathbb R}
+\def\Rpe{\mathbb R_+^*}
+\def\C{\mathbb C}
+\def\K{\mathbb K}
+\def\L{\mathbb L}
+
+\def\P{\mathscr{P}}
+
+\def\Em{\mathcal{E}_m}
+\def\Ec{\mathcal{E}_c}
+\def\Ep{\mathcal{E}_p}
+
+\def\ssi{\Leftrightarrow}
+\def\Ssi{\Longleftrightarrow}
+\def\implique{\Longrightarrow}
+
+\def\sep{\noindent\makebox[\linewidth]{\rule{\paperwidth}{0.4pt}}}
+
+% CUSTOM TITLE
+\makeatletter
+\def\@maketitle{%
+	\newpage
+	%  \null% DELETED
+	%  \vskip 2em% DELETED
+	\begin{center}%
+		\let \footnote \thanks
+		{\LARGE \@title \par}%
+		\vskip 1em%
+		{\large
+			\lineskip .5em%
+			\begin{tabular}[t]{c}%
+				\@author
+			\end{tabular}\par}%
+		\vskip 1em%
+		{\large \@date}%
+		\vskip 1cm%
+	\end{center}%
+	\par
+	\vskip -1em}
+\makeatother
+
+\title{DM7 – Spectromètre de masse}
+\author{Amar AHMANE\\ MP2I}
+
+\begin{document}
+	\maketitle
+	\subsection*{Exercice 1 – Spectromètre de masse}
+	\subsubsection*{Accélération des ions}
+	On décidé de travailler dans un repère aux coordonnées cartésiennes, $\vv{E_0}$ étant orienté selon $\vv{e_x}$.
+	\begin{enumerate}
+		\item Vraisemblablement, on veut que les ions soient accélérés de $P_1$ vers $P_2$, d'où qu'on veuille que le vecteur accélération soit dirigé de $P_1$ vers $P_2$. Le poids étant négligeable, la seule force en action ici est la composante électrique de la force de Lorentz, soit $\vv{F_E}=q\vv{E}$, que l'on veut dirigée de $P_1$ vers $P_2$; comme $q>0$, on a nécessairement un potentiel plus élevé en $P_1$. On représente cela dans un schéma :
+		\begin{center}
+			\begin{tikzpicture}
+				\coordinate (lup) at (0, 0);
+				\node (lupp) at (lup) [left] {plaque $P_1$};
+				\coordinate (rup) at (3, 0);
+				\coordinate (rdown) at (3, -2);
+				\coordinate (ldown) at (0, -2);
+				\node (ldownn) at (ldown) [left] {plaque $P_2$};
+				\coordinate (mid1b) at (1.5, 0);
+				\coordinate (mid1e) at (1.7, 0);
+				\node (f1) at (mid1e) [above right] {$F_1$};
+				\coordinate (mid2b) at (1.5, -2);
+				\coordinate (mid2e) at (1.7, -2);
+				\node (f2) at (mid2e) [above right] {$F_2$};
+				\coordinate (bE) at (1, -0.5);
+				\coordinate (eE) at (1, -1.5);
+
+				\draw (mid1b) -- (lup) -- (ldown) -- (mid2b);
+				\draw (mid1e) -- (rup) -- (rdown) -- (mid2e);
+				\draw[thick, color=red!70, -latex] (bE) -- (eE) node [midway, right] {$\vv{E_0}$};
+			\end{tikzpicture}
+
+
+			\textsc{Figure 1 – } \textit{Champ accélérateur $\vv{E_0}$}
+		\end{center}
+		On sait, d'autre part, que $\vv{E_0}=-\frac{\dd V}{\dd x}\vv{e_x}$. Or, $V$ est constant par uniformité du champ accélérateur, d'où que $V(x)=-\frac Udx$. Donc $\vv{E_0}=\frac Ud\vv{e_x}$ donc $E_0=\frac Ud$.\\
+		\textbf{AN:} $E_0\simeq 1.0\times10^4\ \text{V}\cdot\text{m}^{-1}$.
+		\item L'énergie potentielle liée à la force de Lorentz s'exprime : \[\Ep=qV(x)=-qE_0x\]
+		Les grandeurs utilisées ici étant celles du problème. Le TEM donne $\Delta\Em=0$; or 
+		\begin{align*}
+			\Delta\Ec+\Delta\Ep &= 0-\frac12mv_0^2+0-qV(d)\\
+								&= qU-\frac12mv_0^2
+		\end{align*}
+		Finalement, $\boxed{v_0=\sqrt{\frac{2qU}m}}$.
+		\item On a 
+		\[v_{01}=\sqrt{\frac{4eU}{m_1}}\text{ où }m_1=200\text{u}\]
+		Et 
+		\[v_{02}=\sqrt{\frac{4eU}{m_2}}\text{ où }m_2=202\text{u}\]
+		\textbf{AN:} $v_{01}\simeq 1,384\times10^5\ \text{m}\cdot\text{s}^{-1}$ \& $v_{02}\simeq  1,377\times10^5\ \text{m}\cdot\text{s}^{-1}$.
+	\end{enumerate}
+	\subsubsection*{Filtre de vitesse}
+	\begin{enumerate}[start=4]
+		\item Les ions arrivent avec une vitesse dirigée selon $\vv{e_x}$ de $P_2$ vers $P_3$. Comme le champ $\vv{B_1}$ est perpendiculaire au plan du schéma et dans le sens opposé à $\vv{e_z}$, la résultante du produit vectoriel sera dans le plan du shcéma, dans la direction et dans le sens opposé à $\vv{E_1}$, la composante magnétique sera alors de même sens et direction puisque $q>0$, et la composante électrique de même sens et de même direction que $\vv{E_1}$ pour la même raison. Ceci est résumé par le schéma suivant :
+		\begin{center}
+			\begin{tikzpicture}
+				\coordinate (lup) at (0, 0);
+				\node (lupp) at (lup) [left] {plaque $P_2$};
+				\coordinate (rup) at (3, 0);
+				\coordinate (rdown) at (3, -2);
+				\coordinate (ldown) at (0, -2);
+				\node (ldownn) at (ldown) [left] {plaque $P_3$};
+				\coordinate (mid1b) at (1.5, 0);
+				\coordinate (mid1e) at (1.7, 0);
+				\node (f1) at (mid1e) [above right] {$F_2$};
+				\coordinate (mid2b) at (1.5, -2);
+				\coordinate (mid2e) at (1.7, -2);
+				\node (f2) at (mid2e) [above right] {$F_3$};
+				\coordinate (bE) at (2, -0.7);
+				\coordinate (eE) at (2.7, -0.7);
+				\coordinate (B) at (1, -0.7);
+				\coordinate (bv) at (1.6, -1.3);
+				\coordinate (ev) at (1.6, -1.8);
+				\coordinate (bFE) at (bv);
+				\coordinate (eFE) at (2, -1.3);
+				\coordinate (bFB) at (bv);
+				\coordinate (eFB) at (1.1, -1.3);
+
+				\draw (mid1b) -- (lup) -- (ldown) -- (mid2b);
+				\draw (mid1e) -- (rup) -- (rdown) -- (mid2e);
+				\draw[thick, color=blue!50, -latex] (bE) -- (eE) node [midway, above] {$\vv{E_1}$};
+				\draw[color=green!50!gray!30] (B) circle (0.8mm) node [above left] {$\vv{B_1}$};
+				\fill[color=green!50!gray!30] (B) circle (0.35mm);
+				\draw[thick, color=red!50, -latex] (bv) -- (ev) node [near end, left] {$\vv{v_0}$};
+				\draw[thick, color=green!50!gray!30, -latex] (bFB) -- (eFB) node [midway, above] {$\vv{F_B}$};
+				\draw[thick, color=blue!50, -latex] (bFE) -- (eFE) node [midway, above] {$\vv{F_E}$};
+			\end{tikzpicture}
+
+
+			\textsc{Figure 1 – } \textit{Composantes de la force de Lorentz lorsque les ions sont entre $P_2$ et $P_3$.}
+		\end{center}
+		Ainsi, il faut qu'on ait $||\vv{F_E}||=||\vv{F_B}||$.
+		\item On cherche $v_0$ telle que la condition de la question \textbf{4} soit respectée. 
+			\begin{align*}
+				     &||\vv{F_E}||=||\vv{F_B}||\\
+				\ssi\quad &||q\vv{E_1}||=||q(\vv{v_0}\wedge\vv{B_1})\\
+				\ssi\quad &qE_1=qv_0B_1\\
+				\ssi\quad &v_0=\frac{E_1}{B_1}
+			\end{align*}
+		\item \textbf{AN:} $v_0\simeq 1,384\times10^5\ \text{m}\cdot\text{s}^{-1}$.\\
+		Ce sont les ions $\hbox{}^{200}_{80}\text{Hg}^{2+}$ qui atteignet $F_3$.
+	\end{enumerate}
+	\subsubsection*{Séparation des ions}
+	\begin{enumerate}[start=7]
+		\item La seule force en action en action ici étant la composante magnétique de la force de Lorentz, on a que $\Ep=0$. D'après le théorème de la puissance cinétique, on a que \[\frac{\dd\Ec}{\dd t}=0\]
+		Or \[\frac{\dd\Ec}{\dd t}=mav\]
+		Ainsi, on a que $a=0\ \vee \ v=0$, la vitesse est constante, le mouvement est uniforme.
+		\item On détermine ici $R(m,v)$, i.e le rayon $R$ pour une masse et une charge positive quelconque, puis on remplacera par les valeurs voulues. Comme la trajectoire est circulaire, on travaille dans un repère de coordonnées polaires. La seule force en action ici étant la composante magnétique de la force de Lorentz, le poids étant négligeable, l'application du P.F.D avec masse constante donne \[m\vv{a}=\vv{F_B}\tag{1}\]
+		Dans notre système de coordonnées, on a $\vv{a}=R\ddot\theta\vv{e_\theta}-R\dot\theta^2\vv{e_r}$. Or, le mouvement est uniforme, donc $\ddot\theta=0$, d'où $\vv{a}=-R\dot\theta^2\vv{e_r}$. La force de Lorentez est dirigée selon $\vv{e_r}$ vers le centre de la trajectoire, d'où que $\vv{F_L}=\vv{F_B}=-q|v|B_2e_r$, où $q|v|B_2$ est la norme de $\vv{F_B}$ puisque $\vv{v}$ et $\vv{B_2}$ sont orthogonaux. En prenant la norme dans (1), on obtient \[mR\dot\theta^2=q|v|B_2\]
+		Or, $R\dot\theta^2=\frac1R(R\dot\theta)^2=\frac1Rv^2$. D'où, finalement \[R(m,v)=\frac{m|v|}{qB_2}\]
+		Ainsi, on a $\boxed{R_1=R(m_1,v_{01})}$ et $\boxed{R_2=R(m_2,v_{02})}$.
+		\item On effectue les application numériques : \\
+		\textbf{AN:} $R_1\simeq 0.722\ \text m$ \& $R_2\simeq 0.726\ \text m$.\\
+		Ainsi, les ions $\hbox{}^{200}_{80}\text{Hg}^{2+}$ arriveront en $O_1$, tandis que les ions $\hbox{}^{202}_{80}\text{Hg}^{2+}$ arriveront en $O_2$. 
+		\item En une minute, on compte $n_1=\frac{Q_1}q$ ions $\hbox{}^{200}_{80}\text{Hg}^{2+}$ qui arrivent en $O_1$ et $n_2=\frac{Q_2}q$ ions $\hbox{}^{202}_{80}\text{Hg}^{2+}$ qui arrivent en $O_2$. On estime alors la masse atomique du mercure alors à $\frac{200n_1+202n_2}{n1+n2}u\simeq 200,45u$. \\
+
+		\end{enumerate}
+\end{document}
+
