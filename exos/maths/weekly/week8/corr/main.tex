@@ -1,0 +1,223 @@
+% Preamble
+\documentclass[17pt]{article}
+
+% Math related packages.
+\usepackage{amsfonts, amsthm, amsmath, amssymb, amstext}
+\usepackage{mathtools}
+\usepackage{physics}
+\usepackage{cancel, textcomp}
+\usepackage[mathscr]{euscript}
+\usepackage[nointegrals]{wasysym}
+\usepackage[left=3cm, right=3cm, top=1.5cm, bottom=1.5cm]{geometry}
+
+\usepackage{esvect}
+\usepackage{IEEEtrantools}
+
+% Font related packages.
+\usepackage[french]{babel}
+\usepackage[unicode]{hyperref}
+\usepackage[fontsize = 10pt]{scrextend}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[finemath]{kotex}
+\usepackage{dhucs-nanumfont}
+\usepackage{mathpazo}
+\usepackage{FiraMono}
+\usepackage{mathrsfs}
+
+% Other
+\usepackage{enumerate}
+\usepackage[shortlabels]{enumitem}
+\usepackage{tabularx}
+\usepackage[object=vectorian]{pgfornament}
+\usepackage{pgf}
+\usepackage{pgfpages}
+\usepackage[european,straightvoltages]{circuitikz}
+\usepackage{scalerel}
+\usepackage{stackengine}
+
+
+% A more colorful world.
+\usepackage{xcolor}
+
+% Display Source Code
+\usepackage{listings}
+\lstset{
+    language=C,
+    basicstyle=\small\ttfamily\mdseries,
+    numberstyle=\color{gray},
+    stringstyle=\color[HTML]{933797},
+    commentstyle=\color[HTML]{228B22},
+    emph={[2]from,with,import,as,pass,return,and,or,not},
+    emphstyle={[2]\color[HTML]{DD52F0}},
+    emph={[3]range,format,enumerate,print},
+    emphstyle={[3]\color[HTML]{D17032}},
+    emph={[4]if,elif,else,for,while,in,def,lambda,int,float,all,len},
+    emphstyle={[4]\color{blue}},
+    emph={[5]abs},
+    emphstyle={[5]\color{black}},
+    showstringspaces=false,
+    breaklines=true,
+    prebreak=\mbox{{\color{gray}\tiny$\searrow$}},
+    numbers=left,
+    xleftmargin=15pt
+}
+
+% OPTIONS
+\everymath\expandafter{\the\everymath\displaystyle}
+
+% COMMANDS
+\newcommand{\f}[1]{\texttt{#1}}
+\newcommand{\sct}[1]{
+	\begin{center}
+		\Large\textbf{#1}
+	\end{center}
+}
+\newcommand{\subsct}[1]{
+	\begin{center}
+		\large\textbf{#1}
+	\end{center}
+}
+\newcommand{\inl}[2]{[\![#1, #2]\!]}
+\newcommand{\q}[1]{\textbf{#1.}\quad}
+\newcommand{\urlsymbol}{\kern1pt\vbox to .5ex{}\raise.10ex\hbox{\pdfliteral{%
+    q .8 0 0 .8 0 0 cm
+    2.5 5 m 1 j 1 J .8 w
+    1 5 l 0 5 0 4 y 0 1 l 0 0 1 0 y 4 0 l 5 0 5 1 y 5 2.5 l S
+    3 3 m 6 6 l S 4 6 m 6 6 l 6 4 l S
+Q}}\kern5pt}
+
+\newcounter{iloop}
+\newcommand\openbigstar[1][0.7]{%
+  \scalerel*{%
+    \stackinset{c}{-.125pt}{c}{}{\scalebox{#1}{\color{white}{$\bigstar$}}}{%
+      $\bigstar$}%
+  }{\bigstar}
+}
+\newcommand{\Stars}[1]{\ensuremath{%
+\pgfmathtruncatemacro{\imax}{ifthenelse(int(#1)==#1,#1-1,#1)}%
+\pgfmathsetmacro{\xrest}{0.9*(1-#1+\imax)}%
+\setcounter{iloop}{0}%
+\loop\stepcounter{iloop}\ifnum\value{iloop}<\the\numexpr\imax+1
+\bigstar\repeat
+\openbigstar[\xrest]%
+\setcounter{iloop}{0}%
+\loop\stepcounter{iloop}\ifnum\value{iloop}<\the\numexpr5-\imax\relax
+\openbigstar[.9]\repeat}}
+
+
+\def\N{\mathbb N}
+\def\Z{\mathbb Z}
+\def\Q{\mathbb Q}
+\def\R{\mathbb R}
+\def\Rpe{\mathbb R_+^*}
+\def\C{\mathbb C}
+\def\K{\mathbb K}
+\def\L{\mathbb L}
+
+\def\P{\mathscr{P}}
+
+\def\ord{\text{ord}}
+\def\Ker{\text{Ker}}
+
+\def\ssi{\Leftrightarrow}
+\def\Ssi{\Longleftrightarrow}
+\def\implique{\Longrightarrow}
+
+\def\sep{\noindent\makebox[\linewidth]{\rule{\paperwidth}{0.4pt}}}
+
+% CUSTOM TITLE
+\makeatletter
+\def\@maketitle{%
+	\newpage
+	%  \null% DELETED
+	%  \vskip 2em% DELETED
+	\begin{center}%
+		\let \footnote \thanks
+		{\LARGE\bfseries \@title \par}%
+		\vskip 1em%
+		{\large
+			\lineskip .5em%
+			\begin{tabular}[t]{c}%
+				\@author
+			\end{tabular}\par}%
+		\vskip 1em%
+		{\large \@date}%
+	\end{center}%
+	\par
+	\vskip -1em}
+\makeatother
+
+\title{Semaine 6}
+\author{Pomme Bleue}
+
+\begin{document}
+	\maketitle
+	\begin{center}
+		\bfseries\Large\textsc{Pierre-Gabriel Berlureau}
+	\end{center}
+	\subsection*{Congruences modulo un sous-groupe et Théorème de Lagrange}
+	On a 
+	\begin{enumerate}[i)]
+		\item L'application $f:h\in H\mapsto xh$ est une bijection. En effet, il est clair que $\Ker f = \lbrace e\rbrace$, donc $f$ est injective; la surjectivité est claire, d'où que $f$ est bijective, donc $|H|=|xH|$.
+		\item On montre que la relation $\mathcal R$ définie par \[x\mathcal R y\ssi y\in xH\]
+		est une relation d'équivalence et que la classe d'équivalence de $x\in H$ est $xH$.
+	\end{enumerate}
+	$G/\mathcal R$ est une partition de $G$ de parts toutes égales, donc on a \[G=\bigcup_{H\in G/\mathcal R}H\]
+	d'où que, en passant au cardinal, $G=\sum_{H\in G/\mathcal R}|H|=|G/\mathcal R|\times|H|$.
+	
+	\begin{center}
+		\bfseries\Large\textsc{Matteo Delfour}
+	\end{center}
+	\subsection*{Morphismes de $\Q$ dans $\Z$}
+		\paragraph{Analyse} Soit $f\in\text{Hom}(\Q,\Z)$, alors $f(\Z)$ est un sous-groupe de $(\Z, +)$, ainsi il existe $n\in\N$ tel que $f(\Z)=n\Z$. Il en découle qu'il existe $x\in Q$ tel que $f(x)=n$, d'où que $2f(\frac x2)=n$ donc $f(\frac x2)=\frac n2$ donc $\frac n2\in n\Z$, ceci n'est possible que si $n=0$, donc $f$ est la fonction nulle.
+		\paragraph{Syntèse} Bla bla...
+	\begin{center}
+		\bfseries\Large\textsc{Yanis Grigy}
+	\end{center}
+	\subsection*{Petit Lemme}
+	\paragraph{Méthode 1 :} la récurrence bizarre.\\
+
+
+	On que tout élément de $G$ est égal à son inverse, donc, lorsque $x,y\in G$, $xy=(xy)^{-1}=y^{-1}x^{-1}=yx$.\\
+	On montre à présent par récurrence sur $|G|$ que $|G|$ est une puissance de $2$.\\
+	Lorsque $|G|=1$, il n'y a rien à vérifier.
+	Lorsque $|G|\geq 2$, on note $H$ le sous-groupe de $G$ maximal pour l'inclusion tel que $G\neq H$. Soit $a\in G\backslash H$, alors $H\cup aH$ est un groupe, mais $H\cap aH=\emptyset$. D'autre part $|H\cup aH|=2|H|$ d'après la propriété de Pierre-Gabriel, ainsi $H\cup aH$ est un sous-groupe de $G$ ayant un cardinal strictement plus grand que celui de $H$, donc $H\cup aH=G$, d'où que $|G|=2|H|$. D'après notre hypothèse de récurrence, $|G|$ est une puissance de 2 puisque $|H|$ est une puissance de $2$. 
+	\paragraph{Méthode 2 :} la méthode élégante qui utilise de l'algèbre linéaire.\\
+
+
+	On remarque que $G$ est un $\Z/2\Z$-ev lorsque que l'on définit la loi de composition externe $\cdot$ telle que $0\cdot x=1_G$ et $1\cdot x = x$; on laissera le soin au lecteur de vérifier les axiomes. On a directement, avec $\dim G$ fini, \[G\simeq (\Z/2\Z)^{\dim G}\]
+	Ce qui conclut.
+
+	\newpage
+		
+	\begin{center}
+		\bfseries\Large\textsc{Louis Marchal}
+	\end{center}
+	\subsection*{Groupes dont l'ensemble des sous-groupes est fini}
+		Soit $G$ un groupe. On note $E$ l'ensemble de ses sous-groupes, on suppose qu'il est fini.\\
+
+		Les éléments de $G$ sont tous d'ordre fini : en effet, si $g\in G$ est tel que $\ord(g)=+\infty$, alors on a que $<g>\simeq \Z$ donc $<g>$ a une infinité de sous-groupes, ce qui ne peut arriver puisque $E$ est fini. On note $E'$ l'ensemble des sous-groupes monogènes de $G$, alors $\bigcup_{H\in E'}H=G$. Ainsi, $G$ est fini puisqu'il est une union finie de groupes finis. \\
+
+		Remarques : $<g>$ désigne le plus petit sous-groupe de $G$ contenant $g$, qui est égal à $g\Z$ lorsque la loi de $G$ est notée additivement; on appelle le plus petit sous-groupe de $G$ contenant une partie $X$ de $G$, et on note $\text{Gr}(X)$, l'intersection de tous les sous-groupes de $G$ contenant $X$ : $\text{Gr}(X)$ est le sous-groupe monogène engendré par $X$. Un sous-groupe est dit homogène s'il est un sous-groupe homogène de lui-même.
+
+	\begin{center}
+		\bfseries\Large\textsc{Louis Thevenet}
+	\end{center}
+	\subsection*{Cas particulier du Lemme de Cauchy}
+		D'après le théorème de Lagrange, les éléments de $G$ sont soit d'ordre $1$, $2$, $p$ ou $2p$. On suppose par l'absurde qu'il n'existe pas d'éléments d'ordre $p$ : il en découle assez rapidement qu'il n'existe pas non plus d'éléments d'ordre $2p$ (en effet, si $x\in G$ est d'ordre $2p$, $x^2$ est d'ordre $p$). On en déduit que tous les éléments sont d'ordre soit $1$ ou $2$ et $p\geq 3$, d'où \[\forall g \in G,\ g^2=1_G\]
+		D'après le Lemme de Yanis, $G$ est une puissance de $2$.
+		Or, $|G|=2p$, qui n'est pas une puissance de $2$. Voilà l'absurdité.
+
+	\begin{center}
+		\bfseries\Large\textsc{Armand sans nom de famille}
+	\end{center}
+	\subsection*{Existence d'un idempotent}
+	Soit $a\in G$, l'application $f:n\in \N\mapsto a^{2^n}$ ne saurait être injective, puisque $E$ est fini; ainsi, il en découle qu'il existe $p,q\in \N$ deux entiers différents tels que $a^{2^p}=a^{2^q}$, ce qui peut être réécrit : $a^{2^{m+n}}=a^{2^{m}}$. On pose $b=a^{2^{m}}$, on a alors $b^{2^n}=b$, ainsi $b^{2^n-1}$ est idempotent : en effet, $(b^{2^n-1})^2=b^{2^{n}+2^{n}-2}=bb^{2^n-2}=b^{2^n-1}$. 
+
+	\begin{center}
+		\bfseries\Large\textsc{Shems}
+	\end{center}
+	\subsection*{Neutre à droite et inverse à droite}
+	On montre que tout élément est inversible : soit $g\in G$, alors $g$ admet un inverse à droite $g'$ qui admet un inverse à droite $g''$ : ainsi, $gg'g''=eg''$ donc  $g'gg'g''=g'eg''$ donc $g'ge=g'g''$ donc $g'g=e$ donc $g'$ est inversible à gauche et $e$ est un neutre à gauche ce qui conclut.
+\end{document}

@@ -1,0 +1,197 @@
+% Preamble
+\documentclass[17pt]{article}
+
+% Math related packages.
+\usepackage{amsfonts, amsthm, amsmath, amssymb, amstext}
+\usepackage{mathtools}
+\usepackage{physics}
+\usepackage{cancel, textcomp}
+\usepackage[mathscr]{euscript}
+\usepackage[nointegrals]{wasysym}
+\usepackage[left=3cm, right=3cm, top=1.5cm, bottom=1.5cm]{geometry}
+
+\usepackage{esvect}
+\usepackage{IEEEtrantools}
+
+% Font related packages.
+\usepackage[french]{babel}
+\usepackage[unicode]{hyperref}
+\usepackage[fontsize = 10pt]{scrextend}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[finemath]{kotex}
+\usepackage{dhucs-nanumfont}
+\usepackage{mathpazo}
+\usepackage{FiraMono}
+\usepackage{mathrsfs}
+
+% Other
+\usepackage{enumerate}
+\usepackage[shortlabels]{enumitem}
+\usepackage{tabularx}
+\usepackage[object=vectorian]{pgfornament}
+\usepackage{pgf}
+\usepackage{pgfpages}
+\usepackage[european,straightvoltages]{circuitikz}
+\usepackage{scalerel}
+\usepackage{stackengine}
+
+
+% A more colorful world.
+\usepackage{xcolor}
+
+% Display Source Code
+\usepackage{listings}
+\lstset{
+    language=C,
+    basicstyle=\small\ttfamily\mdseries,
+    numberstyle=\color{gray},
+    stringstyle=\color[HTML]{933797},
+    commentstyle=\color[HTML]{228B22},
+    emph={[2]from,with,import,as,pass,return,and,or,not},
+    emphstyle={[2]\color[HTML]{DD52F0}},
+    emph={[3]range,format,enumerate,print},
+    emphstyle={[3]\color[HTML]{D17032}},
+    emph={[4]if,elif,else,for,while,in,def,lambda,int,float,all,len},
+    emphstyle={[4]\color{blue}},
+    emph={[5]abs},
+    emphstyle={[5]\color{black}},
+    showstringspaces=false,
+    breaklines=true,
+    prebreak=\mbox{{\color{gray}\tiny$\searrow$}},
+    numbers=left,
+    xleftmargin=15pt
+}
+
+% OPTIONS
+\everymath\expandafter{\the\everymath\displaystyle}
+
+% COMMANDS
+\newcommand{\f}[1]{\texttt{#1}}
+\newcommand{\sct}[1]{
+	\begin{center}
+		\Large\textbf{#1}
+	\end{center}
+}
+\newcommand{\subsct}[1]{
+	\begin{center}
+		\large\textbf{#1}
+	\end{center}
+}
+\newcommand{\inl}[2]{[\![#1, #2]\!]}
+\newcommand{\q}[1]{\textbf{#1.}\quad}
+\newcommand{\urlsymbol}{\kern1pt\vbox to .5ex{}\raise.10ex\hbox{\pdfliteral{%
+    q .8 0 0 .8 0 0 cm
+    2.5 5 m 1 j 1 J .8 w
+    1 5 l 0 5 0 4 y 0 1 l 0 0 1 0 y 4 0 l 5 0 5 1 y 5 2.5 l S
+    3 3 m 6 6 l S 4 6 m 6 6 l 6 4 l S
+Q}}\kern5pt}
+
+\newcounter{iloop}
+\newcommand\openbigstar[1][0.7]{%
+  \scalerel*{%
+    \stackinset{c}{-.125pt}{c}{}{\scalebox{#1}{\color{white}{$\bigstar$}}}{%
+      $\bigstar$}%
+  }{\bigstar}
+}
+\newcommand{\Stars}[1]{\ensuremath{%
+\pgfmathtruncatemacro{\imax}{ifthenelse(int(#1)==#1,#1-1,#1)}%
+\pgfmathsetmacro{\xrest}{0.9*(1-#1+\imax)}%
+\setcounter{iloop}{0}%
+\loop\stepcounter{iloop}\ifnum\value{iloop}<\the\numexpr\imax+1
+\bigstar\repeat
+\openbigstar[\xrest]%
+\setcounter{iloop}{0}%
+\loop\stepcounter{iloop}\ifnum\value{iloop}<\the\numexpr5-\imax\relax
+\openbigstar[.9]\repeat}}
+
+
+\def\N{\mathbb N}
+\def\Z{\mathbb Z}
+\def\Q{\mathbb Q}
+\def\R{\mathbb R}
+\def\Rpe{\mathbb R_+^*}
+\def\C{\mathbb C}
+\def\K{\mathbb K}
+\def\L{\mathbb L}
+
+\def\P{\mathscr{P}}
+
+\def\Ker{\text{Ker}}
+\def\ord{\text{ord}}
+
+\def\ssi{\Leftrightarrow}
+\def\Ssi{\Longleftrightarrow}
+\def\implique{\Longrightarrow}
+
+\def\sep{\noindent\makebox[\linewidth]{\rule{\paperwidth}{0.4pt}}}
+
+% CUSTOM TITLE
+\makeatletter
+\def\@maketitle{%
+	\newpage
+	%  \null% DELETED
+	%  \vskip 2em% DELETED
+	\begin{center}%
+		\let \footnote \thanks
+		{\LARGE\bfseries \@title \par}%
+		\vskip 1em%
+		{\large
+			\lineskip .5em%
+			\begin{tabular}[t]{c}%
+				\@author
+			\end{tabular}\par}%
+		\vskip 1em%
+		{\large \@date}%
+	\end{center}%
+	\par
+	\vskip -1em}
+\makeatother
+
+\title{Semaine 7\\ Exercices}
+\author{Amar AHMANE}
+
+\begin{document}
+	\maketitle
+	\begin{center}
+		\textit{Je m'en allais, les poings dans mes poches crevées ;}\\
+		\textit{Mon paletot aussi devenait idéal ;}\\
+		\textit{J'allais sous le ciel, Muse ! et j'étais ton féal ;}\\
+		\textit{Oh ! là ! là ! que d'amours splendides j'ai rêvées !}\\
+	\end{center}
+	\begin{flushright}
+		\textit{Ma bohème}, Arthur Rimbaud
+	\end{flushright}
+	Les rappels : 
+	\begin{itemize}
+		\item[\bfseries Définition 1] Lorsque $G$ est un groupe fini, on appelle ordre de $G$ son cardinal.
+		\item[\bfseries Définition 2] Soit $G$ un groupe multiplicatif. Soit $g\in G$, alors on définit \[\ord(g)=\min\lbrace n\in\N^*\ | \ g^n=1\rbrace\]
+		Par convention, cette quantité est $+\infty$ si l'ensemble considéré ci-dessus est vide.
+		\item[\bfseries Définition 3] Soit $n\in\N^*$. On note $\mathbb P$ l'ensemble des nombres premiers. Cet entier admet une décomposition nombres premiers (résultat admis) que l'on choisit de noter de la sorte : \[n=\prod_{p\in\mathbb P}p^{v_p(n)}\]
+		où $v_p(n)$ est l'exposant de $p$ dans la décomposition en nombre premiers de $n$. Dans ce cas, le pgcd de deux entiers $m$ et $n$ non nuls est l'entier \[n\wedge m=\prod_{p\in\mathbb P}p^{\min(v_p(n),v_p(m))}\]
+		\item[\bfseries Définition 4] On dit que deux entiers sont premiers entre eux si leur pgcd est égal à 1.
+	\end{itemize}
+	Quelques résultats utiles :
+	\begin{itemize}
+		\item Théorème de Lagrange : l'ordre de chaque sous-groupe d'un groupe $G$ divise l'ordre de $G$.
+		\item Lemme de Gauss : lorsque $p$ et $q$ sont deux entiers premiers entre eux, et lorsque $p|mq$ où $m$ est un entier, on a que $p|m$.
+	\end{itemize}
+	\subsection*{Exercice : ordre du produit de deux éléments dont les ordres sont premiers entre eux (source : Oraux X-ENS, Algèbre 1, Cassini)}
+	Évidemment, l'ordre de $y^m$ est $n$, et l'ordre de $x^m$ est $n$. Or, on a $y^m\in <xy>$ et $x^n\in <xy>$ donc, d'après Lagrange, $O(x^n)=O(x)|O(xy)$ et $O(y^m)=O(y)|O(xy)$, mais il est aussi clair que $(xy)^{mn}=1$ donc $O(xy)|O(x)O(y)$ et $O(x)O(y)|O(xy)$; or, tous les entiers avec lesquels ont travaille ici sont dans $\N$, mais $|$ est une relation d'ordre sur $\N$, donc par antisymétrie $O(xy)=O(x)O(y)=mn$.
+	\subsection*{Exercice : quelques exemples de sous-groupes (source : Les maths en tête, Xavier Gourdon)}
+	Soit $G$ un groupe, $H_1$ et $H_2$ deux sous-groupes de $G$.
+	\begin{enumerate}
+		\item On suppose que $H_1\cup H_2$ est un sous-groupe de $G$ et on suppose par l'absurde que que $H_1\not\subset H_2$ et $H_2\not\subset H_1$. Il existe alors $h_1\in H_1$ tel que $h_1\notin H_2$ et $h_2\in H_2$ tel que $h_2\notin H_2$. Alors $h_1h_2\in H_1\cup H_2$ puisque $H_1\cup H_2$ est un sous-groupe : si $h_1h2\in H_1$, alors $h_2=h_1^{-1}(h_1h_2)\in H_1$ ce qui est absurde, sinon on a que $h_1h_2\in H_2$ et $h_1=(h_1h_2)h_2^{-1}\in H_2$ ce qui est aussi absurde.
+		\item $H_1\cap H_2$ est un sous-groupe de $H_1$, donc son ordre divise celui de $H_1$, de même, c'est un sous-groupe de $H_2$ donc son ordre divise celui de $H_2$. Ainsi, l'ordre de $H_1\cap H_2$ est un diviseur commun de l'ordre de $H_1$ et celui de $H_2$, donc l'ordre de $H_1\cap H_2$ est fatalement $1$, donc $H_1\cap H_2=\lbrace 1_G\rbrace$.
+	\end{enumerate}
+	\subsection*{Exercice : cardinal d'un groupe fini et Im et Ker. (source : Oraux X-ENS, Algèbre 1, Cassini)}
+	Soit $G$ un groupe fini, et $f$ un morphisme de $G$ dans lui-même.
+	\begin{enumerate}
+		\item C'est du cours.
+		\item Il y a autant de classes d'équivalences que d'images par le morphisme $f$.
+		\item Vérifications faciles, le neutre est évidemment $\bar{1}$.
+		\item Découle directement de l'équivalence $f(x)=f(y)\ssi x^{-1}y\in \Ker f$.
+		\item Conséquence de ce que PG a du démontrer la semaine dernière : les classes d'équivalences sont deux à deux disjontes et de même cardinal et leur union disjointe est égale à $G$, il suffit alors de passer au cardinal.
+		\item C'était la question la plus difficile de la semaine : il fallait se convaincre que $(\Ker f=\Ker f^2\ssi \Im f=\Im f^2)\ssi (|\Ker f|=|\Ker f^2|\ssi |\Im f|=|\Im f^2|)$; en effet, si $x\in \Ker f$, on a $f\circ f(x)=f(e)=e$ donc $x\in \Ker f^2$ donc $\Ker f\subset \Ker f^2$, d'autre part si $y\in \Im f^2$, alors il existe $x\in G$ tel que $y=f\circ f(x)\in \Im f$ donc $\Im f^2\subset \Im f$. Comme tous ces ensembles sont finis, il est clair que $\Im f=\Im f^2\ssi |\Im f|=|\Im f^2|$, et de même $\Ker f=\Ker f^2\ssi |\Ker f|=|\Ker f^2|$. L'exercice devient très simple puisque l'on sait que $|G|=|\Ker f|\times |\Im f|$, et comme $f^2$ est aussi un homomorphisme, $|G|=|\Ker f^2|\times |\Im f^2|$, je vous laisse conclure...
+	\end{enumerate}
+\end{document}

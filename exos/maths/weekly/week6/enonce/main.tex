@@ -1,0 +1,227 @@
+% Preamble
+\documentclass[17pt]{article}
+
+% Math related packages.
+\usepackage{amsfonts, amsthm, amsmath, amssymb, amstext}
+\usepackage{mathtools}
+\usepackage{physics}
+\usepackage{cancel, textcomp}
+\usepackage[mathscr]{euscript}
+\usepackage[nointegrals]{wasysym}
+\usepackage[left=3cm, right=3cm, top=1.5cm, bottom=1.5cm]{geometry}
+
+\usepackage{esvect}
+\usepackage{IEEEtrantools}
+
+% Font related packages.
+\usepackage[french]{babel}
+\usepackage[unicode]{hyperref}
+\usepackage[fontsize = 10pt]{scrextend}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[finemath]{kotex}
+\usepackage{dhucs-nanumfont}
+\usepackage{mathpazo}
+\usepackage{FiraMono}
+\usepackage{mathrsfs}
+
+% Other
+\usepackage{enumerate}
+\usepackage[shortlabels]{enumitem}
+\usepackage{tabularx}
+\usepackage[object=vectorian]{pgfornament}
+\usepackage{pgf}
+\usepackage{pgfpages}
+\usepackage[european,straightvoltages]{circuitikz}
+\usepackage{scalerel}
+\usepackage{stackengine}
+
+
+% A more colorful world.
+\usepackage{xcolor}
+
+% Display Source Code
+\usepackage{listings}
+\lstset{
+    language=C,
+    basicstyle=\small\ttfamily\mdseries,
+    numberstyle=\color{gray},
+    stringstyle=\color[HTML]{933797},
+    commentstyle=\color[HTML]{228B22},
+    emph={[2]from,with,import,as,pass,return,and,or,not},
+    emphstyle={[2]\color[HTML]{DD52F0}},
+    emph={[3]range,format,enumerate,print},
+    emphstyle={[3]\color[HTML]{D17032}},
+    emph={[4]if,elif,else,for,while,in,def,lambda,int,float,all,len},
+    emphstyle={[4]\color{blue}},
+    emph={[5]abs},
+    emphstyle={[5]\color{black}},
+    showstringspaces=false,
+    breaklines=true,
+    prebreak=\mbox{{\color{gray}\tiny$\searrow$}},
+    numbers=left,
+    xleftmargin=15pt
+}
+
+% OPTIONS
+\everymath\expandafter{\the\everymath\displaystyle}
+
+% COMMANDS
+\newcommand{\f}[1]{\texttt{#1}}
+\newcommand{\sct}[1]{
+	\begin{center}
+		\Large\textbf{#1}
+	\end{center}
+}
+\newcommand{\subsct}[1]{
+	\begin{center}
+		\large\textbf{#1}
+	\end{center}
+}
+\newcommand{\inl}[2]{[\![#1, #2]\!]}
+\newcommand{\q}[1]{\textbf{#1.}\quad}
+\newcommand{\urlsymbol}{\kern1pt\vbox to .5ex{}\raise.10ex\hbox{\pdfliteral{%
+    q .8 0 0 .8 0 0 cm
+    2.5 5 m 1 j 1 J .8 w
+    1 5 l 0 5 0 4 y 0 1 l 0 0 1 0 y 4 0 l 5 0 5 1 y 5 2.5 l S
+    3 3 m 6 6 l S 4 6 m 6 6 l 6 4 l S
+Q}}\kern5pt}
+
+\newcounter{iloop}
+\newcommand\openbigstar[1][0.7]{%
+  \scalerel*{%
+    \stackinset{c}{-.125pt}{c}{}{\scalebox{#1}{\color{white}{$\bigstar$}}}{%
+      $\bigstar$}%
+  }{\bigstar}
+}
+\newcommand{\Stars}[1]{\ensuremath{%
+\pgfmathtruncatemacro{\imax}{ifthenelse(int(#1)==#1,#1-1,#1)}%
+\pgfmathsetmacro{\xrest}{0.9*(1-#1+\imax)}%
+\setcounter{iloop}{0}%
+\loop\stepcounter{iloop}\ifnum\value{iloop}<\the\numexpr\imax+1
+\bigstar\repeat
+\openbigstar[\xrest]%
+\setcounter{iloop}{0}%
+\loop\stepcounter{iloop}\ifnum\value{iloop}<\the\numexpr5-\imax\relax
+\openbigstar[.9]\repeat}}
+
+
+\def\N{\mathbb N}
+\def\Z{\mathbb Z}
+\def\Q{\mathbb Q}
+\def\R{\mathbb R}
+\def\Rpe{\mathbb R_+^*}
+\def\C{\mathbb C}
+\def\K{\mathbb K}
+\def\L{\mathbb L}
+
+\def\P{\mathscr{P}}
+
+\def\ssi{\Leftrightarrow}
+\def\Ssi{\Longleftrightarrow}
+\def\implique{\Longrightarrow}
+
+\def\sep{\noindent\makebox[\linewidth]{\rule{\paperwidth}{0.4pt}}}
+
+% CUSTOM TITLE
+\makeatletter
+\def\@maketitle{%
+	\newpage
+	%  \null% DELETED
+	%  \vskip 2em% DELETED
+	\begin{center}%
+		\let \footnote \thanks
+		{\LARGE\bfseries \@title \par}%
+		\vskip 1em%
+		{\large
+			\lineskip .5em%
+			\begin{tabular}[t]{c}%
+				\@author
+			\end{tabular}\par}%
+		\vskip 1em%
+		{\large \@date}%
+	\end{center}%
+	\par
+	\vskip -1em}
+\makeatother
+
+\title{Semaine 6}
+\author{Pomme Bleue}
+
+\begin{document}
+	\maketitle
+	\begin{center}
+		\bfseries\Large\textsc{Pierre-Gabriel Berlureau}
+	\end{center}
+	\subsection*{Congruences modulo un sous-groupe et Théorème de Lagrange}
+	Soit $G$ un groupe noté multiplicativement et $H$ un sous-groupe de $G$.
+	\paragraph*{Définition}
+	\begin{itemize}
+		\item Les classes à droite modulo $H$ sont les ensembles $xH$ où $x$ parcourt $G$, qui ne sont pas des groupes (sauf si $x\in H$).
+		\item Les classes à gauche modulo $H$ sont les ensembles $Hx$ où $x$ parcourt $G$, qui ne sont pas des groupes (sauf si $x\in H$).
+	\end{itemize}
+	Montrer les points suivants : 
+	\begin{enumerate}[i)]
+		\item Pour tout $x\in G$, $|Hx|=|H|$.
+		\item $\lbrace Hx;\ x\in G\rbrace$ est une partition de $G$.
+	\end{enumerate}
+	On admettra qu'une propriété similaire est valable pour les classes à gauche.\\
+	On suppose à présent que $G$ est fini. On appelle alors \textit{ordre} de $G$ son cardinal. Montrer alors le Théorème de Lagrande : i.e que l'ordre de $H$ divise l'ordre de $G$.
+	
+	\begin{center}
+		\bfseries\Large\textsc{Matteo Delfour}
+	\end{center}
+	\subsection*{Morphismes de $\Q$ dans $\Z$}
+		Trouver tous les morphismes de groupes de $(\Q,+)$ dans $(\Z,+)$.
+	\begin{center}
+		\bfseries\Large\textsc{Yanis Grigy}
+	\end{center}
+	\subsection*{Petit Lemme}
+	Soit $G$ un groupe (multiplicatif) tel que pour tout $x\in G$, $x^2=1_G$. Montrer que $G$ est abélien et que $|G|$ est une puissance de $2$.
+		
+	\begin{center}
+		\bfseries\Large\textsc{Louis Marchal}
+	\end{center}
+	\subsection*{Groupes dont l'ensemble des sous-groupes est fini}
+		Caractériser les groupes dont l'ensemble des sous-groupes est fini.
+
+	\begin{center}
+		\bfseries\Large\textsc{Louis Thevenet}
+	\end{center}
+	\subsection*{Cas particulier du Lemme de Cauchy}
+		Soit $G$ un groupe (multiplicatif) de neutre $1$. Soit $g\in G$, l'ordre de $g$ est par définition : \[\text{ord}(g)=\min\lbrace n\in\N^*\ | \ x^n=1\rbrace\]
+		Cet ordre peut être $+\infty$ par convention si l'ensemble ci-dessus est vide.\\
+		On suppose que $G$ est de cardinal $2p$ avec $p$ premier et on admet le Théorème de Lagrange que Pierre-Gabriel doit démontrer dans son exercice et le Lemme que Yanis doit démontrer. Montrer alors que $G$ contient un élément d'ordre $p$.
+
+	\newpage
+	\begin{center}
+		\bfseries\Large\textsc{Armand sans nom de famille}
+	\end{center}
+	\subsection*{Existence d'un idempotent}
+	Soit $E$ un ensemble fini muni d'une loi de composition interne associative. Montrer que $E$ contient un élément idempotent.
+
+	\begin{center}
+		\bfseries\Large\textsc{Shems}
+	\end{center}
+	\subsection*{Neutre à droite et inverse à droite}
+	Soit $G$ un ensemble non vide muni d'une loi associative notée multiplicativement admettant un neutre à droite $e$ : \[\forall g\in G,\ ge=g\]
+	et telle que tout élément admette un inverse à droite : \[\forall g\in G,\ \exists g'\in G,\ gg'=e\]
+	Montrer que cette loi définit une structure de groupe.
+	\newpage
+	\begin{center}
+		\Large\bfseries Indications
+	\end{center}
+	\paragraph{Pierre-Gabriel BERLUREAU} Le point i) résulte de la bijection induite par la multiplication par $a$. Le point ii) nécessaite de vérifier que $Ha$ est la classe  de $a$ pour la relation d'équivalence. Pour le Théorème de Lagrange, remarquer que les parts de la partition sont toutes de même taille.
+
+	\paragraph{Matteo DELFOUR} Analyse-Synthèse où on utilisera à un moment le fait que les sous-groupes de $(\Z, +)$ sont les $n\Z$.
+
+	\paragraph{Yanis GRIGY} La commutativité est simple à montrer. Pour ce qui est du reste, faire une récurrence sur $|G|$.
+
+	\paragraph{Louis MARCHAL} Viens me voir.
+
+	\paragraph{Louis THEVENET} Par l'absurde, montrer que pour tout $x\in G$, $x^2=1$, utiliser le Lemme de l'exercice de Yanis et en déduire une absurdité.
+
+	\paragraph{Armand sans nom de famille} Considérer, pour $x\in G$, $f_x:n\in N\mapsto a^{2^n}$. Est-elle injective ?
+
+	\paragraph{Shems} Pour $g\in G$, il existe un inverse à droite pour $g$ noté $g'$ et un inverse à droite pour $g'$ noté $g''$. Se débrouiller avec ça.
+\end{document}

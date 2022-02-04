@@ -1,0 +1,205 @@
+% Preamble
+\documentclass[17pt]{article}
+
+% Math related packages.
+\usepackage{amsfonts, amsthm, amsmath, amssymb, amstext}
+\usepackage{mathtools}
+\usepackage{physics}
+\usepackage{cancel, textcomp}
+\usepackage[mathscr]{euscript}
+\usepackage[nointegrals]{wasysym}
+\usepackage[left=2.5cm, right=2.5cm, top=1.5cm, bottom=1.5cm]{geometry}
+
+\usepackage{esvect}
+\usepackage{IEEEtrantools}
+
+% Font related packages.
+\usepackage[french]{babel}
+\usepackage[unicode]{hyperref}
+\usepackage[fontsize = 10pt]{scrextend}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[finemath]{kotex}
+\usepackage{dhucs-nanumfont}
+\usepackage{mathpazo}
+\usepackage{FiraMono}
+\usepackage{mathrsfs}
+
+% Other
+\usepackage{enumerate}
+\usepackage[shortlabels]{enumitem}
+\usepackage{tabularx}
+\usepackage[object=vectorian]{pgfornament}
+\usepackage{pgf}
+\usepackage{pgfpages}
+\usepackage[european,straightvoltages]{circuitikz}
+\usepackage{scalerel}
+\usepackage{stackengine}
+
+
+% A more colorful world.
+\usepackage{xcolor}
+
+% Display Source Code
+\usepackage{listings}
+\lstset{
+    language=C,
+    basicstyle=\small\ttfamily\mdseries,
+    numberstyle=\color{gray},
+    stringstyle=\color[HTML]{933797},
+    commentstyle=\color[HTML]{228B22},
+    emph={[2]from,with,import,as,pass,return,and,or,not},
+    emphstyle={[2]\color[HTML]{DD52F0}},
+    emph={[3]range,format,enumerate,print},
+    emphstyle={[3]\color[HTML]{D17032}},
+    emph={[4]if,elif,else,for,while,in,def,lambda,int,float,all,len},
+    emphstyle={[4]\color{blue}},
+    emph={[5]abs},
+    emphstyle={[5]\color{black}},
+    showstringspaces=false,
+    breaklines=true,
+    prebreak=\mbox{{\color{gray}\tiny$\searrow$}},
+    numbers=left
+}
+
+% OPTIONS
+\everymath\expandafter{\the\everymath\displaystyle}
+
+% Tikz libraries
+\usetikzlibrary{angles, quotes}
+
+% COMMANDS
+\newcommand{\f}[1]{\texttt{#1}}
+\newcommand{\sct}[1]{
+	\begin{center}
+		\Large\textbf{#1}
+	\end{center}
+}
+\newcommand{\subsct}[1]{
+	\begin{center}
+		\large\textbf{#1}
+	\end{center}
+}
+\newcommand{\inl}[2]{[\![#1, #2]\!]}
+\newcommand{\q}[1]{\textbf{#1.}\quad}
+\newcommand{\urlsymbol}{\kern1pt\vbox to .5ex{}\raise.10ex\hbox{\pdfliteral{%
+    q .8 0 0 .8 0 0 cm
+    2.5 5 m 1 j 1 J .8 w
+    1 5 l 0 5 0 4 y 0 1 l 0 0 1 0 y 4 0 l 5 0 5 1 y 5 2.5 l S
+    3 3 m 6 6 l S 4 6 m 6 6 l 6 4 l S
+Q}}\kern5pt}
+
+\newcounter{iloop}
+\newcommand\openbigstar[1][0.7]{%
+  \scalerel*{%
+    \stackinset{c}{-.125pt}{c}{}{\scalebox{#1}{\color{white}{$\bigstar$}}}{%
+      $\bigstar$}%
+  }{\bigstar}
+}
+\newcommand{\Stars}[1]{\ensuremath{%
+\pgfmathtruncatemacro{\imax}{ifthenelse(int(#1)==#1,#1-1,#1)}%
+\pgfmathsetmacro{\xrest}{0.9*(1-#1+\imax)}%
+\setcounter{iloop}{0}%
+\loop\stepcounter{iloop}\ifnum\value{iloop}<\the\numexpr\imax+1
+\bigstar\repeat
+\openbigstar[\xrest]%
+\setcounter{iloop}{0}%
+\loop\stepcounter{iloop}\ifnum\value{iloop}<\the\numexpr5-\imax\relax
+\openbigstar[.9]\repeat}}
+
+\def\N{\mathbb N}
+\def\Z{\mathbb Z}
+\def\Q{\mathbb Q}
+\def\R{\mathbb R}
+\def\Rpe{\mathbb R_+^*}
+\def\C{\mathbb C}
+\def\K{\mathbb K}
+\def\L{\mathbb L}
+
+\def\Cinf{\mathcal{C}^{\infty}}
+\def\P{\mathscr{P}}
+
+\def\ssi{\Leftrightarrow}
+\def\Ssi{\Longleftrightarrow}
+\def\implique{\Longrightarrow}
+\def\reciproque{\Longleftarrow}
+
+\def\Ker{\text{Ker}}
+\def\Im{\text{Im}}
+
+\def\sh{\text{sh}}
+\def\ch{\text{ch}}
+\def\Id#1{\text{Id}_{#1}}
+
+\def\sep{\noindent\makebox[\linewidth]{\rule{\paperwidth}{0.4pt}}}
+
+% CUSTOM TITLE
+\makeatletter
+\def\@maketitle{%
+	\newpage
+	%  \null% DELETED
+	%  \vskip 2em% DELETED
+	\begin{center}%
+		\let \footnote \thanks
+		{\LARGE \bfseries\@title \par}%
+		\vskip 1em%
+		{\large
+			\lineskip .5em%
+			\begin{tabular}[t]{c}%
+				\@author
+			\end{tabular}\par}%
+		\vskip 1em%
+		{\large \@date}%
+		\vskip 1cm%
+	\end{center}%
+	\par
+	\vskip -1em}
+\makeatother
+
+\title{Divers}
+\author{Amar AHMANE\\ MP2I}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Structures algébriques}
+	\subsection*{Caractérisation des corps parmi les Anneaux commutatifs finis}
+	Soit $(A, +, \times)$ un anneau commutatif fini. Montrons que $A$ est un corps si et seulement si il possède exactement un élément nilpotent et exactement deux éléments idempotents.\\
+
+
+	$\underline{\implique}$ Supposons que $A$ est un corps. $0_A$ est un élément nilpotent et $0_A$, montrons qu'il est le seul. Soit $a\in A$ un élément nilpotent, il existe alors $p\in\N^*$ tel que $a^p=0_A$; $a$ est inversible, on compose alors à gauche par $(a^{p-1})^{-1}$, d'où $(a^{p-1})^{-1}a^{p-1}a=(a^{p-1})^{-1}0_A$ i.e $a=0_A$.\\
+	D'autre part, $0_A$ et $1_A$ sont deux éléments idempotents, montrons que ce sont les seuls.\\
+	Soit $a\in A\backslash\lbrace 0_A\rbrace$ un élément idempotent; on considère le morphisme \[\varphi_a:\begin{array}{ccc} (A,+)&\to&(A,+)\\x&\mapsto&xa\end{array}\]
+	Comme $A$ est un corps et donc un anneau intègre, $\Ker(\varphi_a)=\lbrace 0_A\rbrace$ et donc $\varphi_a$ est injectif. Or, on a $\varphi_a(a)=a$ et $\varphi_a(1_A)=a$, par injectivité de $\varphi_a$, $a=1_A$. Ce qui conclut.\\
+
+
+	$\underline{\reciproque}$ Supposons que $A$ possède exactement un élément nilpotent et exactement deux éléments idempotents. Ainsi, ces éléments sont $0_A$ et $0_A$ et $1_A$.\\
+	Soit $a\in A\backslash\lbrace 0_A\rbrace$. Comme $A$ est fini, il existe $p\in\N$ et $q\in\N\backslash\lbrace p\rbrace$ tels que $a^p=a^q$\footnotemark[1]. Supposons, sans perte de généralité que $p>q$, alors
+	\[\forall n\in\N,\ a^{p^n}=a^{q^n}\footnotemark[2]\]
+	Donc $a^{p^q}=a^{q^q}$; or
+	\begin{align*}
+		p^q-q^q &= (p-q)\sum_{k=0}^{q-1}p^kq^{q-1-k}\\
+				&\geq \sum_{k=0}^{q-1}p^kq^{q-1-k}\\
+				&\geq \sum_{k=0}^{q-1}q^kq^{q-1-k}\\
+				&\geq \sum_{k=0}^{q-1}q^{q-1}\\
+				&\geq q(q^{q-1})\\
+				&\geq q^q
+	\end{align*}
+	D'où que $p^q-2q^q\geq0$. Ainsi, en composant par $a^{p^q-2q^q}$, on a 
+	\begin{align*}
+		a^{p^q}a^{p^q-2q^q} &= a^{q^q}a^{p^q-2q^q}\\
+		a^{p^q+p^q-2q^q}    &= a^{q^q+p^q-2q^q}\\
+		a^{2(p^q-q^q)}      &= a^{p^q-q^q}\\
+		(a^{p^q-q^q})^2     &= a^{p^q-q^q}
+	\end{align*}
+	Ainsi, $a^{p^q-q^q}$ est idempotent, donc $a^{p^q-q^q}=1_A$ donc $a^{p^q-q^q-1}a=1_A$ et, par commutativité, $a$ est inversible d'inverse $a^{p^q-q^q-1}$.
+	\footnotetext[1]{Par l'absurde, en niant logiquement cette assertion, on arrive à montrer que $|A|>|A|$.}
+	\footnotetext[2]{Par récurrence double sur $n$. Partie intéressante de l'hérédité : $a^{p^{n+2}}=a^{pq^{n+1}}$ et $a^{q^{n+2}}=a^{qp^{n+1}}$ or $a^{pq^{n+1}}=a^{pqq^n}=a^{pqp^n}=a^{qp^{n+1}}$.}
+
+
+	\paragraph{Autre méthode} J'ai réfléchi à la méthode que vous avez proposée et j'ai réussi à trouver ceci comme solution qui me semble correcte. On considère $a\in A$ un élément différent de $0_A$ et on pose $f:n\in\N\mapsto a^{2^n}$. $f$ ne saurait être injective, ainsi, il existe deux entiers $p$ et $q$ tels que $f(p)=f(q)$, ce que l'on peut réécrire $a^{2^{n+m}}=a^{2^n}$, ainsi, en posant $b=a^{2^n}$, on a $b^{2^m}=b$ et on se rend compte rapidement que $b^{2^m-1}$ est idempotent : en effet, $(b^{2^m-1})^2=b^{2(2^m-1)}=b^{2^m}b^{2^m-2}=b^{2^m-1}$. 
+
+	\subsection*{Les nilpotents d'un anneau ne sauraient être inversibles}
+	Étant donné $(A,+,\times)$ un anneau, soit $a\in A$ un nilpotent. Si on suppose par l'absurde que $a$ est inversible, on a à fortiori que $a=0_A$ : dans un mail que Berlureau vous a adressé tout à l'heure, le problème que je rencontre ici vous a été exposé et vous assuriez, en réponse, que $0_A$ n'est pas inversible; or, je me demandais s'il fallait pas en plus demander que $0_A\neq 1_A$, sans quoi le neutre pour la multiplication serait $0_A$ et donc ce dernier serait inversible.
+\end{document}
+

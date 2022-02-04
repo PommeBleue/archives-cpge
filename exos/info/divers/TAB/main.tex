@@ -1,0 +1,170 @@
+\documentclass[a4paper,12pt,reqno]{amsart}
+\usepackage{latexsym}
+\usepackage{amsmath,amsthm,amssymb,amscd}
+\usepackage{fullpage}
+\usepackage{xcolor}
+\usepackage{csquotes}
+%\usepackage{eucal}
+\usepackage{parskip}
+\usepackage{mathtools}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+\mathtoolsset{showonlyrefs}
+
+\usepackage[activate={true,nocompatibility},final,tracking=true,kerning=true,spacing=true]{microtype}
+\usepackage[pdfencoding=unicode,pdftex,bookmarks=true,bookmarksnumbered]{hyperref}
+\definecolor{citecolour}{rgb}{0.0, 0.0, 0.8}
+\colorlet{linkcolour}{green!50!black}
+\hypersetup{colorlinks,breaklinks,
+		linkcolor=linkcolour,citecolor=citecolour,
+		filecolor=linkcolour, urlcolor=linkcolour}
+\usepackage{version}
+
+
+\newtheorem{prevtheorem}{Théorème}
+\renewcommand*{\theprevtheorem}{\Roman{prevtheorem}}
+\newtheorem{prevcorollary}{Corollary}
+\renewcommand*{\theprevcorollary}{\Roman{prevcorollary}}
+\newtheorem{prevlemma}{Lemma}
+\renewcommand*{\theprevlemma}{\Roman{prevlemma}}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{propdef}[theorem]{Proposition-Définition}
+\newtheorem*{propositionno}{Proposition}
+\newtheorem*{corollaryno}{Corollary}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{property}{Property}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem*{conjectureno}{Conjecture}
+\newtheorem*{theoremno}{Theorem}
+
+
+\theoremstyle{remark}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{exs}[theorem]{Examples}
+\newtheorem{définition}[theorem]{Définition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{remarks}[theorem]{Remarks}
+\newtheorem{problem}[theorem]{Problem}
+
+\numberwithin{equation}{section}
+\usepackage[shortlabels]{enumitem}
+\begingroup
+ \makeatletter
+ \@for\theoremstyle:=definition,remark,plain\do{%
+ \expandafter\g@addto@macro\csname th@\theoremstyle\endcsname{%
+ \addtolength\thm@preskip\parskip
+ }%
+ }
+
+\DeclareMathOperator{\set}{\mathfrak{F}}
+\DeclareMathOperator{\X}{\mathfrak{X}}
+\DeclareMathOperator{\Y}{\mathfrak{Y}}
+\DeclareMathOperator{\N}{\mathbf{N}}
+\DeclareMathOperator{\Z}{\mathbf{Z}}
+\DeclareMathOperator{\Syl}{Syl}
+\DeclareMathOperator{\ab}{ab}
+\DeclareMathOperator{\Hall}{Hall}
+\DeclareMathOperator{\cart}{Cart}
+\DeclareMathOperator{\cent}{\mathbf{C}}
+\DeclareMathOperator{\soc}{\mathbf{Soc}}
+\DeclareMathOperator{\nsup}{nsup}
+\DeclareMathOperator{\norm}{\mathrel{\unlhd}}
+\DeclareMathOperator{\aut}{\mathbf{Aut}}
+\DeclareMathOperator{\gl}{GL}
+\DeclareMathOperator{\zent}{\mathbf{Z}}
+\DeclareMathOperator{\fratt}{\mathbf{\Phi}}
+
+
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\K}{\mathbb{K}}
+\newcommand{\z}{\mathfrak{z}}
+\newcommand{\gensub}[1]{\langle{#1}\rangle}
+
+\includeversion{comment}
+\renewcommand{\leq}{\leqslant}
+\renewcommand{\geq}{\geqslant}
+\newcommand{\md}[1]{\,\left(\textnormal{mod}\ #1\right)}
+\renewcommand\qedsymbol{$\blacksquare$}
+\renewenvironment{proof}{{\textit{Preuve} }}{\hfill $\square$ \\}
+\newenvironment{proofofA}{{\bf {Proof of Theorem \ref{Thm:A}.} }}{\hfill $\square$ \\}
+\renewcommand\qedsymbol{$\blacksquare$}
+\newenvironment{proofofC}{{\bf {Proof of Theorem \ref{Thm:C}.} }}{\hfill $\blacksquare$ \\}
+\newenvironment{proofof}{{\bf {Proof.} }}{\hfill $\blacksquare$ \\}
+
+
+
+
+\begin{document}
+\title{Généralisation d'un résultat de complexité à une classe plus large d'algorithmes récursifs}
+\author{Amar AHMANE \& Pierre-Gabriel Berlureau}
+
+
+\begin{abstract}
+Si on note $\mathcal A$ un algorithme prenant en entrée un seul paramètre de taille $n$. Dans l'hypothèse où $\mathcal A$ est algorithme récursif utilisant la stratégie \textit{diviser pour régner}, on montrera dans le Théorème~\ref{Thm:A} que, dans des conditions particulières, la complexité de l'algorithme est quasi-linéaire et on précisera la constante.
+\end{abstract}
+\maketitle
+
+\section{Introduction}
+Ce qui a motivé la recherche et la preuve du petit résultat généralisé qui sera exposé plus tard est l'exercice de Khôlle qui a été posé à Louis Thevenet. On considère l'algorithme suivant :
+
+\begin{algorithm}
+\caption{}
+\begin{algorithmic}[1]
+\Procedure{foo}{$lst$}
+	\If{\Call{Length}{$lst$} = 0}
+		\State \Return 1
+	\EndIf
+	\State $m \gets \Call{Length}{lst} / 3$
+	\State \Return \Call{foo}{$lst$[:$m$]} + \Call{foo}{$lst$[$m$:]}
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+On arrive très bien à dénombrer les différentes tailles qui apparaissent à un certain étage de l'arbre d'appel de cet algorithme récursif. On a alors le résultat suivant
+
+\begin{proposition}
+L'Algorithme 1 a une complexité en $\mathcal O\left(n\log_{\frac 32}(n)\right)$.
+\end{proposition}
+
+L'idée était alors de considérer le cas général décrit ci-dessous.
+
+\section{Résultat généralisé}
+Dans toute la suite, on notera $\mathcal A$ un algorithme récursif utilisant la stratégie \textit{diviser pour régner}. Un premier résultat que l'on va énoncer et démontrer ici consistera à dénombrer des objets d'une certaine forme dans un type d'arbres particulier. En réalité, on s'intéressera à des arbres à (au plus) $m$ fils par noeud, avec $m\geq 2$ un entier naturel, définis par récurrence d'une façon qui sera précisée plus tard. Mais avant de s'y attaquer, précisons quelques notations et définitions locales.
+
+\begin{définition}
+Soit $E$ un ensemble. On appelle arbre sur $E$ un arbre dont les noeuds sont des éléments de $E$. On notera $\mathfrak A_E$ l'ensemble des arbres sur $E$.
+\end{définition}
+
+\begin{définition}
+Soit $E$, $F$ deux ensembles et $f\in F^E$. Alors, lorsque $A\in \mathfrak A_E$, on note $\tilde{f}:\mathfrak A_E\to\mathfrak A_F$ l'application qui à $A$ associe un arbre sur $F$ dont les noeuds sont les noeuds de $A$ auxquels on aura appliqué $f$.
+\end{définition}
+
+\begin{propdef}
+Soit $m\geq 2$, $(x_1,\dots,x_m)\in(\R^*)^m$. On définit par récurrence un arbre parfait infini $A$ sur $\R^m$ de la façon suivante :
+\begin{itemize}
+	\item La racine de $A$ est $0_{\R^m}$.
+	\item Pour tout noeud $N=(n_1,\dots,n_m)$ de $A$, $N$ possède exactement $m$ fils et pour tout $i\in[\![1,m]\!]$, le $i$ème fils est le noeud $N_i=(n_1,\dots,n_i+x_i,\dots,n_m)$.
+\end{itemize}
+Ainsi, pour tout $k\in\N$, pour tout $(i_1,\dots,i_m)\in\N^m$ tel que $i_1+\dots+i_m=k$, le nombre de noeuds de valeur $(i_1x_1,i_2x_2,\dots,i_mx_m)$ à l'étage $k$ est \[\frac{k!}{i_1!\dots i_m!}\]
+Note : l'étage $0$ correspond à celui de la racine.
+\end{propdef}
+
+\begin{proof}
+On montre le résultat par récurrence sur $k$.
+\begin{itemize}
+	\item Pour $k=0$, l'étage $0$ correspond à celui de la racine, de valeur $0_{\R^m}$, qui apparaît bien $1=\frac{0!}{0!\dots 0!}$, $0_{\R^m}$ étant le seul $m$-uplet de somme $0$.
+	\item 
+\end{itemize}
+\end{proof}
+
+\begin{prevtheorem}\label{Thm:A}
+	Soit $m\in\N^*$, $m\geq 2$, $p\in \N^*\backslash\lbrace m\rbrace$ et $(q_1,\dots,q_m)\in(\N^*)^m$ un $m$-uplet d'entiers non tous égaux tels que \[\sum_{k=1}^mq_k=p\]
+	Soit $\mathcal A$ un algorithme récursif prenant un seul paramètre et utilisant la stratégie \text{diviser pour régner} et tel que pour une entrée de taille $n$ \[T(n)=\sum_{k=1}^mT\left(\frac{q_kn}p\right)+\mathcal O(1)\]
+	où $T(n)$ représente le nombre d'opérations élémentaires effectuées par $\mathcal A$ pour une entrée de taille $n$. Alors \[T(n)=\mathcal O\left(n\log_{\frac{p}{\max(q_1,\dots,q_m)}}(n)\right)\]
+\end{prevtheorem}
+
+
+\end{document}

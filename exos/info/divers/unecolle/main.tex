@@ -1,0 +1,288 @@
+% Preamble
+\documentclass[17pt]{article}
+
+% Math related packages.
+\usepackage{amsfonts, amsthm, amsmath, amssymb, amstext}
+\usepackage{mathtools}
+\usepackage{physics}
+\usepackage{cancel, textcomp}
+\usepackage[mathscr]{euscript}
+\usepackage[nointegrals]{wasysym}
+\usepackage[left=3cm, right=3cm, top=1.5cm, bottom=1.5cm]{geometry}
+
+\usepackage{esvect}
+\usepackage{IEEEtrantools}
+
+% Font related packages.
+\usepackage[french]{babel}
+\usepackage[unicode]{hyperref}
+\usepackage[fontsize = 10pt]{scrextend}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[finemath]{kotex}
+\usepackage{dhucs-nanumfont}
+\usepackage{mathpazo}
+\usepackage{FiraMono}
+\usepackage{mathrsfs}
+
+% Other
+\usepackage{enumerate}
+\usepackage[shortlabels]{enumitem}
+\usepackage{tabularx}
+\usepackage[object=vectorian]{pgfornament}
+\usepackage{pgf}
+\usepackage{pgfpages}
+\usepackage[european,straightvoltages]{circuitikz}
+\usepackage{scalerel}
+\usepackage{stackengine}
+
+% The bien
+%\usepackage{tikz-qtree}
+
+
+% A more colorful world.
+\usepackage{xcolor}
+
+% Display Source Code
+\usepackage{listings}
+\lstset{
+    language=Python,
+    basicstyle=\small\ttfamily\mdseries,
+    numberstyle=\color{gray},
+    stringstyle=\color[HTML]{933797},
+    commentstyle=\color[HTML]{228B22},
+    emph={[2]from,with,import,as,pass,return,and,or,not},
+    emphstyle={[2]\color[HTML]{DD52F0}},
+    emph={[3]range,format,enumerate,print},
+    emphstyle={[3]\color[HTML]{D17032}},
+    emph={[4]if,elif,else,for,while,in,def,lambda,int,float,all,len},
+    emphstyle={[4]\color{blue}},
+    emph={[5]abs},
+    emphstyle={[5]\color{black}},
+    showstringspaces=false,
+    breaklines=true,
+    prebreak=\mbox{{\color{gray}\tiny$\searrow$}},
+    numbers=left,
+    xleftmargin=15pt
+}
+
+% OPTIONS
+\everymath\expandafter{\the\everymath\displaystyle}
+
+% COMMANDS
+\newcommand{\f}[1]{\texttt{#1}}
+\newcommand{\sct}[1]{
+	\begin{center}
+		\Large\textbf{#1}
+	\end{center}
+}
+\newcommand{\subsct}[1]{
+	\begin{center}
+		\large\textbf{#1}
+	\end{center}
+}
+\newcommand{\inl}[2]{[\![#1, #2]\!]}
+\newcommand{\q}[1]{\textbf{#1.}\quad}
+\newcommand{\urlsymbol}{\kern1pt\vbox to .5ex{}\raise.10ex\hbox{\pdfliteral{%
+    q .8 0 0 .8 0 0 cm
+    2.5 5 m 1 j 1 J .8 w
+    1 5 l 0 5 0 4 y 0 1 l 0 0 1 0 y 4 0 l 5 0 5 1 y 5 2.5 l S
+    3 3 m 6 6 l S 4 6 m 6 6 l 6 4 l S
+Q}}\kern5pt}
+
+\newcounter{iloop}
+\newcommand\openbigstar[1][0.7]{%
+  \scalerel*{%
+    \stackinset{c}{-.125pt}{c}{}{\scalebox{#1}{\color{white}{$\bigstar$}}}{%
+      $\bigstar$}%
+  }{\bigstar}
+}
+\newcommand{\Stars}[1]{\ensuremath{%
+\pgfmathtruncatemacro{\imax}{ifthenelse(int(#1)==#1,#1-1,#1)}%
+\pgfmathsetmacro{\xrest}{0.9*(1-#1+\imax)}%
+\setcounter{iloop}{0}%
+\loop\stepcounter{iloop}\ifnum\value{iloop}<\the\numexpr\imax+1
+\bigstar\repeat
+\openbigstar[\xrest]%
+\setcounter{iloop}{0}%
+\loop\stepcounter{iloop}\ifnum\value{iloop}<\the\numexpr5-\imax\relax
+\openbigstar[.9]\repeat}}
+
+
+\def\N{\mathbb N}
+\def\Z{\mathbb Z}
+\def\Q{\mathbb Q}
+\def\R{\mathbb R}
+\def\Rpe{\mathbb R_+^*}
+\def\C{\mathbb C}
+\def\K{\mathbb K}
+\def\L{\mathbb L}
+
+\def\P{\mathscr{P}}
+
+\def\Ker{\text{Ker}}
+\def\ord{\text{ord}}
+
+\def\ssi{\Leftrightarrow}
+\def\Ssi{\Longleftrightarrow}
+\def\implique{\Longrightarrow}
+
+\def\sep{\noindent\makebox[\linewidth]{\rule{\paperwidth}{0.4pt}}}
+
+% CUSTOM TITLE
+\makeatletter
+\def\@maketitle{%
+	\newpage
+	%  \null% DELETED
+	%  \vskip 2em% DELETED
+	\begin{center}%
+		\let \footnote \thanks
+		{\LARGE\bfseries \@title \par}%
+		\vskip 1em%
+		{\large
+			\lineskip .5em%
+			\begin{tabular}[t]{c}%
+				\@author
+			\end{tabular}\par}%
+		\vskip 1em%
+		{\large \@date}%
+	\end{center}%
+	\par
+	\vskip -1em}
+\makeatother
+
+
+\title{Une Khôlle\\ Calcul de complexité}
+\author{Amar AHMANE}
+
+\begin{document}
+	\maketitle
+	\paragraph*{Énoncé} On considère l'algorithme suivant implémenté en python
+	\begin{lstlisting}
+		def foo(lst):
+			if len(lst) == 0:
+				return 1
+			m = len(lst)//3
+			return foo(lst[:m]) + foo(lst[m:])
+	\end{lstlisting}
+	En calculer la complexité au pire des cas.
+	\paragraph*{Éléments de réponse} Si on note $T(n)$ le nombre d'opérations élémentaires effectués par l'algorithme lorsque l'entrée est de taille $n$, on remarque que \[T(n)=T\left(\frac n3\right)+T\left(\frac{2n}3\right)+\mathcal O(1)\]
+	Ceci vient de l'appel récursif fait à la ligne 5 : le coût total est égal au coût des appels sur des entrées de tailles respectives $\frac n3$ et $\frac{2n}3$ plus celui de l'addition. On peut alors représenter dans un arbre binaire les appels récursifs et les additions qui sont faites
+	\begin{center}
+		\begin{tikzpicture}
+			\coordinate (O) at (0, 0);
+			\node (racine) at (O) [] {$n$};
+			\coordinate (e11c) at (-1, -1);
+			\coordinate (e12c) at (1, -1);
+			\node (e11) at (e11c) [] {$\frac n3$};
+			\node (e12) at (e12c) [] {$\frac{2n}3$};
+			\coordinate (p1c) at (0, -1);
+			\node (p1) at (p1c) [] {$+$};
+			\coordinate (e21c) at (-1.5, -2.5);
+			\coordinate (e22c) at (-0.5, -2.5);
+			\coordinate (e23c) at (0.5, -2.5);
+			\coordinate (e24c) at (1.5, -2.5);
+			\node (e21) at (e21c) [] {$\frac n9$};
+			\node (e22) at (e22c) [] {$\frac{2n}9$};
+			\node (e23) at (e23c) [] {$\frac{2n}9$};
+			\node (e24) at (e24c) [] {$\frac{4n}9$};
+			\coordinate (p2c) at (-1, -2.5);
+			\coordinate (p3c) at (1, -2.5);
+			\node (p2) at (p2c) [] {$+$};
+			\node (p3) at (p3c) [] {$+$};
+
+			\draw (racine) -- (e11);
+			\draw (racine) -- (e12);
+			\draw (e11) -- (e21);
+			\draw (e11) -- (e22);
+			\draw (e12) -- (e23);
+			\draw (e12) -- (e24);
+		\end{tikzpicture}\\
+		\textsc{Figure 1} – Arbre représentant les appels récursifs à la fonction \f{foo}
+	\end{center} 
+	La première chose que l'on remarque est que la valeur du noeud tout à gauche du dernier étage de l'arbre semble décroitre plus rapidement que celle du noeud tout à droite du dernier étage du fait de la présence d'une puissance de 2 en facteur. En fait, si l'on regarde de plus près, notamment en dessinant le troisième étage, on remarque un motif et on arrive à dénombrer les différentes tailles qui apparaîssent : faisons ça
+	\begin{center}
+		\begin{tikzpicture}
+			\coordinate (O) at (0, 0);
+			\node (racine) at (O) [] {$n$};
+			\coordinate (e11c) at (-2, -1);
+			\coordinate (e12c) at (2, -1);
+			\node (e11) at (e11c) [] {$\frac n3$};
+			\node (e12) at (e12c) [] {$\frac{2n}3$};
+			\coordinate (p1c) at (0, -1);
+			\node (p1) at (p1c) [] {$+$};
+			\coordinate (e21c) at (-3, -2.5);
+			\coordinate (e22c) at (-1, -2.5);
+			\coordinate (e23c) at (1, -2.5);
+			\coordinate (e24c) at (3, -2.5);
+			\node (e21) at (e21c) [] {$\frac n9$};
+			\node (e22) at (e22c) [] {$\frac{2n}9$};
+			\node (e23) at (e23c) [] {$\frac{2n}9$};
+			\node (e24) at (e24c) [] {$\frac{4n}9$};
+			\coordinate (p2c) at (-2, -2.5);
+			\coordinate (p3c) at (2, -2.5);
+			\node (p2) at (p2c) [] {$+$};
+			\node (p3) at (p3c) [] {$+$};
+			\coordinate (e31c) at (-3.5, -4.5);
+			\coordinate (e32c) at (-2.5, -4.5);
+			\coordinate (e33c) at (-1.5, -4.5);
+			\coordinate (e34c) at (-0.5, -4.5);
+			\coordinate (e35c) at (0.5, -4.5);
+			\coordinate (e36c) at (1.5, -4.5);
+			\coordinate (e37c) at (2.5, -4.5);
+			\coordinate (e38c) at (3.5, -4.5);
+			\node (e31) at (e31c) [] {$\frac n{27}$};
+			\node (e32) at (e32c) [] {$\frac{2n}{27}$};
+			\node (e33) at (e33c) [] {$\frac{2n}{27}$};
+			\node (e34) at (e34c) [] {$\frac{4n}{27}$};
+			\node (e35) at (e35c) [] {$\frac{2n}{27}$};
+			\node (e36) at (e36c) [] {$\frac{4n}{27}$};
+			\node (e37) at (e37c) [] {$\frac{4n}{27}$};
+			\node (e38) at (e38c) [] {$\frac{8n}{27}$};
+			\coordinate (p4c) at (-1, -4.5);
+			\coordinate (p5c) at (-3, -4.5);
+			\coordinate (p6c) at (1, -4.5);
+			\coordinate (p7c) at (3, -4.5);
+			\node (p4) at (p4c) [] {$+$};
+			\node (p5) at (p5c) [] {$+$};
+			\node (p6) at (p6c) [] {$+$};
+			\node (p7) at (p7c) [] {$+$};
+
+			\draw (racine) -- (e11);
+			\draw (racine) -- (e12);
+			\draw (e11) -- (e21);
+			\draw (e11) -- (e22);
+			\draw (e12) -- (e23);
+			\draw (e12) -- (e24);
+			\draw (e21) -- (e31);
+			\draw (e21) -- (e32);
+			\draw (e22) -- (e33);
+			\draw (e22) -- (e34);
+			\draw (e23) -- (e35);
+			\draw (e23) -- (e36);
+			\draw (e24) -- (e37);
+			\draw (e24) -- (e38);
+		\end{tikzpicture}\\
+		\textsc{Figure 1} – Arbre représentant les appels récursifs à la fonction \f{foo}
+	\end{center}
+	On fait alors la conjecture que, pour un étage $k$ donné, pour un entier $i\in\inl0k$, le problème de taille $\frac{2^in}{3^k}$ est traîté $C^i_k$ fois.
+	\newpage
+	Montrons cela par récurrence :
+	\begin{itemize}
+		\item Pour $k=0$, tout est OK, il n'y a que la racine qui est traîtée $C^0_0$ fois i.e 1 fois.
+		\item Pour un étage $k$ donné, on suppose que notre conjecture est vérifiée. On montre qu'elle reste vraie à l'étage $k+1$. Soit $i\in\inl0{k+1}$ : pour arriver à un problème de taille $\frac{2^in}{3^{k+1}}$, on a du soit partir d'un problème de taille $\frac{2^{i-1}n}{3^k}$ et descendre à droite, soit partir d'un problème de taille $\frac{2^in}{3^k}$ et descendre à gauche : ceci n'est pas vrai si $i=0$ ou $i=k+1$, en écartant ces cas particuliers, on a que le nombre de problèmes de taille $\frac{2^in}{3^{k+1}}$ est égal à \[C^i_k+C^{i-1}_k=C^i_{k+1}\]
+		Dans le cas où $i=0$, il n'y a qu'une seule possibilité et pour $i=k+1$ aussi, ce qui achève de montrer que notre conjecture reste vraie à l'étage $k+1$.
+		\item Conclusion : notre conjecture est vraie quel que soit l'étage auquel on se place.
+	\end{itemize}
+	On estime alors le nombre d'opérations élémentaires (c'est à dire le nombre d'additions) à la moitié du nombre de noeuds décrits par $(k,i)\in\N^2$ tels que $\frac{2^in}{3^k}\geq 1$. C'est ainsi que, pour un étage $k$ donné, et pour $i\in\inl0k$, on notera \[\beta_{ki}=\begin{cases}0&\text{si }\frac{2^in}{3^k}<1\\1& \text{sinon}\end{cases}\]
+	En se rappelant que le terme tout à droite du dernier étage est celui qui décroît le moins rapidement et qu'il représente un problème de taille $\frac{2^mn}{3^m}$ où $m$ est l'étage, on en déduit qu'il détermine la hauteur de l'arbre puisqu'il est le dernier à être plus grand que 1, ainsi la hauteur est $m=\lfloor\log_{\frac32}(n)\rfloor$. D'où la majoration suivante pour $S$, le nombre de sommes effectuées : 
+	\begin{align*}
+		S   &=\frac12 \sum_{k=0}^m\sum_{i=0}^kC^i_k\beta_{ki}\\
+			&\leq \sum_{k=0}^m\sum_{i=0}^kC^i_k\frac{2^in}{3^k}\\
+			&\leq \sum_{k=0}^m\frac n{3^k}\sum_{i=0}^kC^i_k2^i\\
+			&\leq \sum_{k=0}^m\frac n{3^k}3^k\\
+			&\leq \sum_{k=0}^mn\\
+			&\leq (m+1)n=\mathcal O(n\log_{\frac32}(n))
+	\end{align*}
+	Ce qui achève de montrer que $T(n)=O(n\log_{\frac32}(n))$.
+\end{document}
