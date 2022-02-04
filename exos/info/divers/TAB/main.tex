@@ -156,7 +156,10 @@ Note : l'étage $0$ correspond à celui de la racine.
 On montre le résultat par récurrence sur $k$.
 \begin{itemize}
 	\item Pour $k=0$, l'étage $0$ correspond à celui de la racine, de valeur $0_{\R^m}$, qui apparaît bien $1=\frac{0!}{0!\dots 0!}$, $0_{\R^m}$ étant le seul $m$-uplet de somme $0$.
-	\item 
+	\item Soit $k\in\N$. On suppose notre proposition vraie pour l'étage $k$. Soit $(i_1,\dots,i_m)\in\N^m$ tel que $i_1+\dots+i_m=k+1$. Il est clair que $(i_1,\dots,i_m)$ n'est pas le $m$-uplet nul, ainsi, l'ensemble $K=\lbrace j\in[\![1,m]\!]|i_j\neq 0\rbrace$ est non vide; on a alors nécessairement l'existence d'un $j\in K$ tel que un noeud de valeur $(i_1x_1,\dots,i_mx_m)$ soit le $j$ème fils de $(i_1x_1,\dots,(i_j-1)x_j,\dots,i_mx_m)$. Ainsi, les noeuds de cette valeur sont au nombre de \[\sum_{j\in K}\frac{k!}{i_1!\dots(i_j-1)!\dots i_m!}\]
+	Puisque, par hypothèse de récurrence, il y a $\frac{k!}{i_1!\dots(i_j-1)!\dots i_m!}$ de noeuds de valeur $(i_1x_1,\dots,(i_j-1)x_j,\dots,i_mx_m)$ pour $j\in K$. Or,
+	\[\sum_{j\in K}\frac{k!}{i_1!\dots(i_j-1)!\dots i_m!}=\frac{\sum_{j\in K}i_j(k!)}{i_1!\dots i_m!}=\frac{(k!)\overbrace{\sum_{j\in K}i_j}^{=k+1}}{i_1!\dots i_m!}=\frac{(k+1)!}{i_1!\dots i_m!}\]
+	\item D'après le principe de récurrence, on a montré le résultat voulu pour tout $k\in \N$.
 \end{itemize}
 \end{proof}
 
